@@ -55,12 +55,23 @@ async function seed() {
       console.log(error)
     }
   }
+  const createOrder = async () => {
+    try {
+      await Order.create({
+        userLoggedIn: faker.random.boolean(),
+        status: Math.ceil(Math.random() * 4)
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
   for (let i = 0; i < 100; i++) {
     await createUser()
     await createProduct()
     await createReview()
     if (i < 10) {
       await createCategory()
+      await createOrder()
     }
   }
 
