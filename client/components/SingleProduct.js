@@ -27,7 +27,7 @@ const SingleProduct = props => {
 
 const mapState = state => {
   return {
-    ...state.singleProject
+    ...state.singleProduct
   }
 }
 
@@ -37,7 +37,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(
-  mapState,
-  mapDispatch
-)(SingleProduct)
+export default connect(mapState, mapDispatch)(SingleProduct)
