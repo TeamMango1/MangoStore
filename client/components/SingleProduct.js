@@ -11,7 +11,7 @@ const SingleProduct = props => {
         <tbody>
           <tr>
             <td>Price</td>
-            <td>{props.price}</td>
+            <td>${props.price}</td>
           </tr>
           <tr>
             <td>Stock</td>
@@ -27,7 +27,7 @@ const SingleProduct = props => {
 
 const mapState = state => {
   return {
-    ...state.singleProject
+    ...state.SingleProduct
   }
 }
 
@@ -37,7 +37,4 @@ const mapDispatch = dispatch => {
   }
 }
 
-export default connect(
-  mapState,
-  mapDispatch
-)(SingleProduct)
+export default connect(mapState, mapDispatch)(SingleProduct)

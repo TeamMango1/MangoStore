@@ -7,13 +7,20 @@ module.exports = router
  */
 router.get('/', async (req, res, next) => {
   try {
-    const products = await Product.findAll({})
+    const products = await Product.findAll()
     res.json(products)
   } catch (err) {
     next(err)
   }
 })
-
+router.post('/', async (req, res, next) => {
+  try {
+    const newProduct = await Product.create(req.body)
+    res.json(newProduct)
+  } catch (err) {
+    next(err)
+  }
+})
 /**
  * get single product (/api/products/:id)
  */
