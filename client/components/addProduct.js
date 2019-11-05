@@ -42,6 +42,7 @@ class addProduct extends React.Component {
               name="name"
               value={this.state.name}
               onChange={this.handleChange}
+              required
             />
             <br />
             <label htmlFor="description">description</label>
@@ -53,8 +54,8 @@ class addProduct extends React.Component {
               maxLength="500"
               wrap="hard"
               onChange={this.handleChange}
+              required
             >
-              {' '}
               {this.state.description}
             </textarea>
             <br />
@@ -92,6 +93,6 @@ class addProduct extends React.Component {
   }
 }
 const mapAddProductDispatch = dispatch => ({
-  addingProduct: product => dispatch(addProduct(product))
+  addingProduct: product => dispatch(postProduct(product))
 })
 export default connect(null, mapAddProductDispatch)(addProduct)
