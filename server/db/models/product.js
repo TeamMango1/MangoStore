@@ -4,8 +4,8 @@ const db = require('../db')
 const Product = db.define('product', {
   name: {
     type: Sequelize.STRING,
-    allowNull: false,
-    unique: true
+    allowNull: false
+    // unique: true
   },
   description: {
     type: Sequelize.TEXT,

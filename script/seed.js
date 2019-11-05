@@ -2,7 +2,7 @@
 
 const db = require('../server/db')
 const faker = require('faker')
-const {User} = require('../server/db/models')
+const {User, Product, Review, Category, Order} = require('../server/db/models')
 
 faker.seed(69)
 
@@ -23,8 +23,45 @@ async function seed() {
       console.log(error)
     }
   }
+  const createProduct = async () => {
+    try {
+      await Product.create({
+        name: faker.commerce.productName(),
+        description: faker.lorem.sentence(),
+        photoURL: faker.image.fashion(),
+        price: faker.commerce.price(),
+        inventory: faker.random.number()
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const createReview = async () => {
+    try {
+      await Review.create({
+        reviewText: faker.lorem.paragraph(),
+        rating: Math.ceil(Math.random() * 5)
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const createCategory = async () => {
+    try {
+      await Category.create({
+        name: faker.lorem.word()
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
   for (let i = 0; i < 100; i++) {
     await createUser()
+    await createProduct()
+    await createReview()
+    if (i < 10) {
+      await createCategory()
+    }
   }
 
   // console.log(`seeded ${users.length} users`)
