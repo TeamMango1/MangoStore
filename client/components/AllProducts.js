@@ -12,7 +12,7 @@ export const Products = props => {
       <div>
         {allProducts.length > 0 ? (
           allProducts.map(product => (
-            <ProductList key={product.id} product={product} />
+            <ProductsList key={product.id} product={product} />
           ))
         ) : (
           <div> No PRODUCTS </div>
