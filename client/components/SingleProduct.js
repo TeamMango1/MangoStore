@@ -37,7 +37,7 @@ class SingleProduct extends React.Component {
 
 const mapState = state => {
   return {
-    ...state.singleProject
+    ...state.singleProduct
   }
 }
 
@@ -47,7 +47,6 @@ const mapDispatch = dispatch => {
     fetchProduct: id => dispatch(fetchProduct(id))
   }
 }
-
 export default connect(
   mapState,
   mapDispatch

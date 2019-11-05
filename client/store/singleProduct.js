@@ -1,10 +1,10 @@
 import axios from 'axios'
 
-const GOT_PROJECT = 'GOT_PRODUCT'
+const GOT_PRODUCT = 'GOT_PRODUCT'
 
 export const gotProduct = product => {
   return {
-    type: GOT_PROJECT,
+    type: GOT_PRODUCT,
     product
   }
 }
@@ -27,7 +27,7 @@ const initialState = {}
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case GOT_PROJECT: {
+    case GOT_PRODUCT: {
       return action.product
     }
     default: {
