@@ -2,7 +2,15 @@
 
 const db = require('../server/db')
 const faker = require('faker')
-const {User, Product, Review, Category, Order} = require('../server/db/models')
+const {
+  User,
+  Product,
+  Review,
+  Category,
+  Order,
+  ProductCategory,
+  ProductOrder
+} = require('../server/db/models')
 
 faker.seed(69)
 
@@ -12,70 +20,99 @@ async function seed() {
 
   const createUser = async () => {
     try {
-      await User.create({
+      let currentUser = await User.create({
         email: faker.internet.email(),
         password: faker.internet.password(),
         firstName: faker.name.firstName(),
         lastName: faker.name.lastName(),
         isAdmin: faker.random.boolean()
       })
+      return currentUser
     } catch (error) {
       console.log(error)
     }
   }
   const createProduct = async () => {
     try {
-      await Product.create({
+      let currentProduct = await Product.create({
         name: faker.commerce.productName(),
         description: faker.lorem.sentence(),
         photoURL: faker.image.fashion(),
         price: faker.commerce.price(),
         inventory: faker.random.number()
       })
+      return currentProduct
     } catch (error) {
       console.log(error)
     }
   }
   const createReview = async () => {
     try {
-      await Review.create({
+      let currentReview = await Review.create({
         reviewText: faker.lorem.paragraph(),
         rating: Math.ceil(Math.random() * 5)
       })
+      return currentReview
     } catch (error) {
       console.log(error)
     }
   }
   const createCategory = async () => {
     try {
-      await Category.create({
+      let currentCategory = await Category.create({
         name: faker.lorem.word()
       })
+      return currentCategory
     } catch (error) {
       console.log(error)
     }
   }
   const createOrder = async () => {
     try {
-      await Order.create({
+      let currentOrder = await Order.create({
         userLoggedIn: faker.random.boolean(),
         status: Math.ceil(Math.random() * 4)
+      })
+      return currentOrder
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  const createProductCategory = async num => {
+    try {
+      await ProductCategory.create({
+        productId: num,
+        categoryId: Math.ceil(Math.random() * 9)
       })
     } catch (error) {
       console.log(error)
     }
   }
-  for (let i = 0; i < 100; i++) {
-    await createUser()
-    await createProduct()
-    await createReview()
-    if (i < 10) {
-      await createCategory()
-      await createOrder()
+  const createProductOrder = async num => {
+    try {
+      await ProductOrder.create({
+        orderId: Math.ceil(Math.random() * 9),
+        productId: num
+      })
+    } catch (error) {
+      console.log(error)
     }
   }
+  for (let i = 1; i < 10; i++) {
+    await createCategory()
+    await createOrder()
+  }
 
-  // console.log(`seeded ${users.length} users`)
+  for (let i = 1; i < 100; i++) {
+    let currentUser = await createUser()
+    let currentProduct = await createProduct()
+    let currentReview = await createReview()
+    currentUser.addReview(currentReview)
+    currentProduct.addReview(currentReview)
+    await createProductOrder(i)
+    await createProductCategory(i)
+  }
+
   console.log(`seeded successfully`)
 }
 
