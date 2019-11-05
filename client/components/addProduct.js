@@ -84,6 +84,7 @@ class addProduct extends React.Component {
               value={this.state.inventory}
               onChange={this.handleChange}
             />
+            <button type="submit">ADD THIS PRODUCT NOW!!!</button>
           </form>
         </div>
       </div>

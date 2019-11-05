@@ -20,7 +20,9 @@ const SingleProduct = props => {
         </tbody>
       </table>
       <p>{props.description}</p>
-      <button onClick={props.addToCart}>Add to cart</button>
+      <button type="button" onClick={props.addToCart}>
+        Add to cart
+      </button>
     </div>
   )
 }
