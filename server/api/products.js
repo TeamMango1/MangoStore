@@ -29,7 +29,8 @@ router.get('/:id', async (req, res, next) => {
     const products = await Product.findByPk(req.params.id, {
       include: [
         {
-          model: Review
+          model: Review,
+          as: 'review'
         }
       ]
     })
