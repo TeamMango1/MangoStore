@@ -2,6 +2,20 @@ const router = require('express').Router()
 const {User} = require('../db/models')
 module.exports = router
 
+
+/**
+ *  GET all users (api/users)
+ */
+
+router.get('/', async(req,res,next)=>{
+  try{
+    let allUsers = await User.findAll()
+    res.json(allUsers).status(200)
+  } catch(error){
+    next(error)
+  }
+})
+
 /**
  *  GET single user (api/users/:id)
  */
@@ -16,6 +30,7 @@ router.get('/:userId', async (req, res, next) => {
     next(err)
   }
 })
+
 
 /**
  *  PUT single user (api/users/:id)
