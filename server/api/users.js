@@ -2,16 +2,48 @@ const router = require('express').Router()
 const {User} = require('../db/models')
 module.exports = router
 
-router.get('/', async (req, res, next) => {
+/**
+ *  GET single user (api/users/:id)
+ */
+
+router.get('/:userId', async (req, res, next) => {
   try {
-    const users = await User.findAll({
-      // explicitly select only the id and email fields - even though
-      // users' passwords are encrypted, it won't help if we just
-      // send everything to anyone who asks!
-      attributes: ['id', 'email']
+    let user = await User.findOne({
+      where: {id: req.params.userId}
     })
-    res.json(users)
+    res.json(user)
   } catch (err) {
     next(err)
+  }
+})
+
+/**
+ *  PUT single user (api/users/:id)
+ */
+
+router.put('/:userId', async (req, res, next) => {
+  try {
+    let oldUser = await User.findById(req.params.userId)
+    await oldUser.update({
+      email: req.body.email,
+      password: req.body.password,
+      googleId: req.body.googleId
+    })
+  } catch (error) {
+    next(error)
+  }
+})
+
+/**
+ *  DELETE single user (api/users/:id)
+ */
+
+router.delete('/', async (req, res, next) => {
+  try {
+    await User.destroy({
+      where: {id: req.body.id}
+    })
+  } catch (error) {
+    next(error)
   }
 })
