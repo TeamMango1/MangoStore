@@ -1,18 +1,33 @@
 'use strict'
 
 const db = require('../server/db')
+const faker = require('faker')
 const {User} = require('../server/db/models')
+
+faker.seed(69)
 
 async function seed() {
   await db.sync({force: true})
   console.log('db synced!')
 
-  const users = await Promise.all([
-    User.create({email: 'cody@email.com', password: '123'}),
-    User.create({email: 'murphy@email.com', password: '123'})
-  ])
+  const createUser = async () => {
+    try {
+      await User.create({
+        email: faker.internet.email(),
+        password: faker.internet.password(),
+        firstName: faker.name.firstName(),
+        lastName: faker.name.lastName(),
+        isAdmin: faker.random.boolean()
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+  for (let i = 0; i < 100; i++) {
+    await createUser()
+  }
 
-  console.log(`seeded ${users.length} users`)
+  // console.log(`seeded ${users.length} users`)
   console.log(`seeded successfully`)
 }
 
