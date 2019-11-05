@@ -8,7 +8,8 @@ class SingleProduct extends React.Component {
     super()
   }
   componentDidMount() {
-    this.props.fetchProduct()
+    const projectId = this.props.match.params.id;
+    this.props.fetchProduct(projectId)
   }
   render() {
     return (
