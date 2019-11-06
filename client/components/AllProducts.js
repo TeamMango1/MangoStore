@@ -14,6 +14,13 @@ export class Products extends React.Component {
     return (
       <div>
         <div>
+          <div>
+            <form>
+              <input placeholder="search by name"/>
+            </form>
+          </div>
+        </div>
+        <div>
           <Link to="/products/add">ADD PRODUCTS</Link>
         </div>
         <div>
