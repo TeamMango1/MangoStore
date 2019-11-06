@@ -24,12 +24,17 @@ faker.seed(SEED)
 
 const createUser = async () => {
   try {
+    const pass = faker.internet.password();
     let currentUser = await User.create({
       email: faker.internet.email(),
-      password: faker.internet.password(),
+      password: pass,
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
-      isAdmin: faker.random.boolean()
+      isAdmin: faker.random.boolean(),
+
+
+      // TESTING TODO
+      unhashedPasswordForTesting:pass,
     })
     return currentUser
   } catch (error) {
