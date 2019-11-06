@@ -3,15 +3,12 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import ProductsList from './ProductsList'
 import {fetchProducts} from '../store/allProductsReducer'
-import AddProduct from './AddProduct'
 export class Products extends React.Component {
   componentDidMount() {
     this.props.loadProducts()
   }
   render() {
     const allProducts = this.props.allProducts
-    console.log(allProducts.length)
-    if(allProducts.length!==0){
       return (
         <div>
           <div>
@@ -27,9 +24,7 @@ export class Products extends React.Component {
             )}
           </div>
         </div>
-      )} else{
-        return (<div/>)
-      }
+      )
   }
 }
 
