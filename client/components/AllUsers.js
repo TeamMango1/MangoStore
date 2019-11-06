@@ -3,10 +3,16 @@ import {connect} from 'react-redux'
 import {fetchUsers} from '../store/allUsers'
 import UserCard from './UserCard'
 
-const AllUsers = props => {
-  return (
-    <div>{props.users.map(user => <UserCard key={user.id} user={user} />)}</div>
-  )
+class AllUsers extends React.Component {
+  componentDidMount(){
+    this.props.loadUsers()
+  }
+  render(){
+    return (
+      <div>{this.props.users.map(user => <UserCard key={user.id} user={user} />)}</div>
+    )
+  }
+
 }
 
 const mapState = state => {
