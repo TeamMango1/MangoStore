@@ -1,12 +1,8 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {fetchProduct} from '../store/singleProduct'
 
 class SingleProduct extends React.Component {
-  constructor() {
-    super()
-  }
   componentDidMount() {
     const projectId = this.props.match.params.id;
     this.props.fetchProduct(projectId)
@@ -29,7 +25,7 @@ class SingleProduct extends React.Component {
           </tbody>
         </table>
         <p>{this.props.description}</p>
-        <button onClick={this.props.addToCart}>Add to cart</button>
+        <button type="button" onClick={this.props.addToCart}>Add to cart</button>
       </div>
     )
   }
