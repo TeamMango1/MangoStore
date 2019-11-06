@@ -12,26 +12,35 @@ const {
   ProductOrder
 } = require('../server/db/models')
 
-faker.seed(69)
+const SEED = 42069
 
-async function seed() {
-  await db.sync({force: true})
-  console.log('db synced!')
+const ORDER_COUNT = 40
+const USER_COUNT = 100
+const PRODUCT_COUNT = 100
+const REVIEW_COUNT = 100
+const CATEGORY_COUNT = 10
 
-  const createUser = async () => {
-    try {
-      let currentUser = await User.create({
-        email: faker.internet.email(),
-        password: faker.internet.password(),
-        firstName: faker.name.firstName(),
-        lastName: faker.name.lastName(),
-        isAdmin: faker.random.boolean()
-      })
-      return currentUser
-    } catch (error) {
-      console.log(error)
-    }
+faker.seed(SEED)
+
+const createUser = async () => {
+  try {
+    const pass = faker.internet.password();
+    let currentUser = await User.create({
+      email: faker.internet.email(),
+      password: pass,
+      firstName: faker.name.firstName(),
+      lastName: faker.name.lastName(),
+      isAdmin: faker.random.boolean(),
+
+
+      // TESTING TODO
+      unhashedPasswordForTesting:pass,
+    })
+    return currentUser
+  } catch (error) {
+    console.log(error)
   }
+
   const createProduct = async () => {
     try {
       let currentProduct = await Product.create({
@@ -46,70 +55,90 @@ async function seed() {
       console.log(error)
     }
   }
-  const createReview = async () => {
-    try {
-      let currentReview = await Review.create({
-        reviewText: faker.lorem.paragraph(),
-        rating: Math.ceil(Math.random() * 5)
-      })
-      return currentReview
-    } catch (error) {
-      console.log(error)
-    }
+}
+const createReview = async () => {
+  try {
+    let currentReview = await Review.create({
+      reviewText: faker.lorem.paragraph(),
+      rating: Math.ceil(Math.random() * 5)
+    })
+    return currentReview
+  } catch (error) {
+    console.log(error)
   }
-  const createCategory = async () => {
-    try {
-      let currentCategory = await Category.create({
-        name: faker.lorem.word()
-      })
-      return currentCategory
-    } catch (error) {
-      console.log(error)
-    }
+}
+const createCategory = async () => {
+  try {
+    let currentCategory = await Category.create({
+      name: faker.lorem.word()
+    })
+    return currentCategory
+  } catch (error) {
+    console.log(error)
   }
-  const createOrder = async () => {
-    try {
-      let currentOrder = await Order.create({
-        userLoggedIn: faker.random.boolean(),
-        status: Math.ceil(Math.random() * 4)
-      })
-      return currentOrder
-    } catch (error) {
-      console.log(error)
-    }
+}
+const createOrder = async () => {
+  try {
+    let currentOrder = await Order.create({
+      status: Order.rawAttributes.status.values[Math.floor(Math.random() * 4)]
+    })
+    return currentOrder
+  } catch (error) {
+    console.log(error)
   }
-  const createProductCategory = async num => {
-    try {
-      await ProductCategory.create({
-        productId: num,
-        categoryId: Math.ceil(Math.random() * 9)
-      })
-    } catch (error) {
-      console.log(error)
-    }
+}
+const createProductCategory = async num => {
+  try {
+    await ProductCategory.create({
+      productId: num,
+      categoryId: Math.ceil(Math.random() * (CATEGORY_COUNT - 1))
+    })
+  } catch (error) {
+    console.log(error)
   }
-  const createProductOrder = async num => {
-    try {
-      await ProductOrder.create({
-        orderId: Math.ceil(Math.random() * 9),
-        productId: num
-      })
-    } catch (error) {
-      console.log(error)
-    }
+}
+const createProductOrder = async num => {
+  try {
+    await ProductOrder.create({
+      orderId: Math.ceil(Math.random() * (ORDER_COUNT - 1)),
+      productId: num
+    })
+  } catch (error) {
+    console.log(error)
   }
-  for (let i = 1; i < 10; i++) {
+}
+
+async function seed() {
+  await db.sync({force: true})
+  console.log('db synced!')
+
+  for (let i = 1; i < CATEGORY_COUNT; i++) {
     await createCategory()
-    await createOrder()
   }
 
-  for (let i = 1; i < 100; i++) {
+  for (let i = 1; i < REVIEW_COUNT; i++) {
+    await createReview()
+  }
+
+  for (let i = 1; i < USER_COUNT; i++) {
     let currentUser = await createUser()
+    const currentReview = await Review.findByPk(i)
+    await currentUser.addReview(currentReview)
+  }
+
+  for (let i = 1; i < ORDER_COUNT; i++) {
+    const currentOrder = await createOrder()
+    const randUser = await User.findByPk(
+      Math.ceil(Math.random() * (USER_COUNT - 1))
+    )
+    randUser.addOrder(currentOrder)
+  }
+
+  for (let i = 1; i < PRODUCT_COUNT; i++) {
     let currentProduct = await createProduct()
-    let currentReview = await createReview()
-    currentUser.addReview(currentReview)
-    currentProduct.addReview(currentReview)
     await createProductOrder(i)
+    const currentReview = await Review.findByPk(i)
+    currentProduct.addReview(currentReview)
     await createProductCategory(i)
   }
 
