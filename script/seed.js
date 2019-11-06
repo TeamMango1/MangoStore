@@ -37,7 +37,7 @@ async function seed() {
       let currentProduct = await Product.create({
         name: faker.commerce.productName(),
         description: faker.lorem.sentence(),
-        photoURL: faker.image.fashion(),
+        photoURL: faker.randome.image(),
         price: faker.commerce.price(),
         inventory: faker.random.number()
       })
