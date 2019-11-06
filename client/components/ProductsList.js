@@ -8,14 +8,16 @@ const ProductsList = props => {
     <div>
       <Link to={`/products/${id}`}>
         <div>
-            <h3>{name}</h3>
-        </div>
-        <div>
           <div>
-            <img src={photoURL} />
+            <h3>{name}</h3>
           </div>
+          <div>
+            <div>
+              <img src={photoURL} />
+            </div>
+          </div>
+          <div>${price}</div>
         </div>
-        <div>${price}</div>
       </Link>
     </div>
   )
