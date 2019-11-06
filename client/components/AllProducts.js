@@ -8,32 +8,28 @@ export class Products extends React.Component {
   componentDidMount() {
     this.props.loadProducts()
   }
-
   render() {
     const allProducts = this.props.allProducts
-    return (
-      <div>
+    console.log(allProducts.length)
+    if(allProducts.length!==0){
+      return (
         <div>
           <div>
-            <form>
-              <input placeholder="search by name"/>
-            </form>
+            <Link to="/product/add">ADD PRODUCTS</Link>
+          </div>
+          <div>
+            {allProducts.length > 0 ? (
+              allProducts.map(product => (
+                <ProductsList key={product.id} product={product} />
+              ))
+            ) : (
+              <div> No PRODUCTS </div>
+            )}
           </div>
         </div>
-        <div>
-          <Link to="/products/add">ADD PRODUCTS</Link>
-        </div>
-        <div>
-          {allProducts.length > 0 ? (
-            allProducts.map(product => (
-              <ProductsList key={product.id} product={product} />
-            ))
-          ) : (
-            <div> No PRODUCTS </div>
-          )}
-        </div>
-      </div>
-    )
+      )} else{
+        return (<div/>)
+      }
   }
 }
 
