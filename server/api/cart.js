@@ -25,8 +25,8 @@ const CART = 'CART'
  *  GET a cart by user
  */
 
-router.get('/:userId', async (req, res, next) => {
-  const id = req.params.userId
+router.get('/', async (req, res, next) => {
+  const id = req.user.dataValues.id
   try {
     const carts = await Order.findAll({
       where: {userId: id, status: CART}
