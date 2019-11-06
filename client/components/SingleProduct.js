@@ -4,28 +4,30 @@ import {fetchProduct} from '../store/singleProduct'
 
 class SingleProduct extends React.Component {
   componentDidMount() {
-    const projectId = this.props.match.params.id;
+    const projectId = this.props.match.params.id
     this.props.fetchProduct(projectId)
   }
   render() {
     return (
       <div>
-        <img src={this.props.photoUrl} />
-        <h1>{this.props.name}</h1>
+        <img src={this.props.singleProduct.photoURL} />
+        <h1>{this.props.singleProduct.name}</h1>
         <table>
           <tbody>
             <tr>
               <td>Price</td>
-              <td>{this.props.price}</td>
+              <td>{this.props.singleProduct.price}</td>
             </tr>
             <tr>
               <td>Stock</td>
-              <td>{this.props.inventory}</td>
+              <td>{this.props.singleProduct.inventory}</td>
             </tr>
           </tbody>
         </table>
-        <p>{this.props.description}</p>
-        <button type="button" onClick={this.props.addToCart}>Add to cart</button>
+        <p>{this.props.singleProduct.description}</p>
+        <button type="button" onClick={this.props.addToCart}>
+          Add to cart
+        </button>
       </div>
     )
   }
@@ -33,7 +35,7 @@ class SingleProduct extends React.Component {
 
 const mapState = state => {
   return {
-    ...state.singleProduct
+    singleProduct: state.singleProduct
   }
 }
 
@@ -43,7 +45,4 @@ const mapDispatch = dispatch => {
     fetchProduct: id => dispatch(fetchProduct(id))
   }
 }
-export default connect(
-  mapState,
-  mapDispatch
-)(SingleProduct)
+export default connect(mapState, mapDispatch)(SingleProduct)

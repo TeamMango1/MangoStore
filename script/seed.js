@@ -113,6 +113,22 @@ async function seed() {
     await createProductCategory(i)
   }
 
+  await User.create({
+    email: 'default@gmail.com',
+    password: 'password',
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    isAdmin: false
+  })
+
+  await User.create({
+    email: 'admin@gmail.com',
+    password: 'password',
+    firstName: faker.name.firstName(),
+    lastName: faker.name.lastName(),
+    isAdmin: true
+  })
+
   console.log(`seeded successfully`)
 }
 
