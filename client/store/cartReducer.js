@@ -7,8 +7,8 @@ const GOT_CART = 'GOT_CART'
 
 //ACTION CREATORS
 export const gotCart = cart => ({type: GOT_CART, cart})
-export const addToCart = item => ({type: ADD_TO_CART, item})
-export const removeFromCart = productId => ({
+export const addedToCart = item => ({type: ADD_TO_CART, item})
+export const removedFromCart = productId => ({
   type: REMOVE_FROM_CART,
   id: productId
 })
@@ -17,8 +17,30 @@ export const removeFromCart = productId => ({
 export const fetchCart = function(userId) {
   return async dispatch => {
     try {
-      let singleUser = await axios.get(`/api/users/${userId}`)
-      dispatch(setSingleUser(singleUser.data))
+      let {data} = await axios.get(`/api/cart/${userId}`)
+      dispatch(gotCart(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const addToCart = (productId, userId) => {
+  return async dispatch => {
+    try {
+      let {data} = await axios.post(`/api/cart`, {productId, userId})
+      dispatch(addedToCart(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
+export const removeFromCart = (productId, userId) => {
+  return async dispatch => {
+    try {
+      let {data} = await axios.delete(`/api/cart`, {productId, userId})
+      dispatch(removedFromCart(data))
     } catch (error) {
       console.log(error)
     }

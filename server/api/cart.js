@@ -4,20 +4,20 @@ module.exports = router
 
 // order cart enum status
 
-router.use((req, res, next) => {
-  try {
-    const id = req.user.dataValues.id
-    // const id = req.session.passport.user;
-    if (!id) {
-      console.log('oof')
-      res.sendStatus(403)
-      throw new Error('User did a thing')
-    }
-  } catch (err) {
-    next(err)
-  }
-  next()
-})
+// router.use((req, res, next) => {
+//   try {
+//     const id = req.user.dataValues.id
+//     // const id = req.session.passport.user;
+//     if (!id) {
+//       console.log('oof')
+//       res.sendStatus(403)
+//       throw new Error('User did a thing')
+//     }
+//     next()
+//   } catch (err) {
+//     next(err)
+//   }
+// })
 
 const CART = 'CART'
 
