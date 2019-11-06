@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import ProductsList from './ProductsList'
+import {Link} from 'react-router-dom'
 
 export const Products = props => {
   const allProducts = props.allProducts

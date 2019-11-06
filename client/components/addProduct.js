@@ -2,7 +2,7 @@ import React from 'react'
 import postProduct from '../store/AllProducts'
 import {connect} from 'react-redux'
 
-class addProduct extends React.Component {
+class AddProduct extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -95,4 +95,4 @@ class addProduct extends React.Component {
 const mapAddProductDispatch = dispatch => ({
   addingProduct: product => dispatch(postProduct(product))
 })
-export default connect(null, mapAddProductDispatch)(addProduct)
+export default connect(null, mapAddProductDispatch)(AddProduct)
