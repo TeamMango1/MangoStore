@@ -85,7 +85,7 @@ const createProductCategory = async num => {
   try {
     await ProductCategory.create({
       productId: num,
-      categoryId: Math.ceil(Math.random() * 9)
+      categoryId: Math.ceil(Math.random() * (CATEGORY_COUNT - 1))
     })
   } catch (error) {
     console.log(error)
@@ -94,7 +94,7 @@ const createProductCategory = async num => {
 const createProductOrder = async num => {
   try {
     await ProductOrder.create({
-      orderId: Math.ceil(Math.random() * 9),
+      orderId: Math.ceil(Math.random() * (ORDER_COUNT - 1)),
       productId: num
     })
   } catch (error) {
@@ -116,20 +116,8 @@ async function seed() {
 
   for (let i = 1; i < USER_COUNT; i++) {
     let currentUser = await createUser()
-    const currentReview = await Review.findByPk(
-      Math.ceil(Math.random() * (REVIEW_COUNT - 1))
-    )
+    const currentReview = await Review.findByPk(i)
     currentUser.addReview(currentReview)
-  }
-
-  for (let i = 0; i < PRODUCT_COUNT; i++) {
-    let currentProduct = await createProduct()
-    await createProductOrder(i)
-    const currentReview = await Review.findByPk(
-      Math.ceil(Math.random() * (REVIEW_COUNT - 1))
-    )
-    currentProduct.addReview(currentReview)
-    await createProductCategory(i)
   }
 
   for (let i = 0; i < ORDER_COUNT; i++) {
@@ -137,7 +125,15 @@ async function seed() {
     const randUser = await User.findByPk(
       Math.ceil(Math.random() * (USER_COUNT - 1))
     )
-    currentOrder.addUser()
+    randUser.addOrder(currentOrder)
+  }
+
+  for (let i = 0; i < PRODUCT_COUNT; i++) {
+    let currentProduct = await createProduct()
+    await createProductOrder(i)
+    const currentReview = await Review.findByPk(i)
+    currentProduct.addReview(currentReview)
+    await createProductCategory(i)
   }
 
   await User.create({

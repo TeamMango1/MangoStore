@@ -6,7 +6,7 @@ const Category = require('./category')
 const Order = require('./order')
 const ProductOrder = require('./productOrder')
 
-User.hasOne(Order)
+User.hasMany(Order)
 Order.belongsToMany(Product, {through: ProductOrder})
 Product.belongsToMany(Order, {through: ProductOrder})
 Product.belongsToMany(Category, {through: 'ProductCategory'})
