@@ -110,25 +110,25 @@ async function seed() {
     await createCategory()
   }
 
-  for (let i = 0; i < REVIEW_COUNT; i++) {
+  for (let i = 1; i < REVIEW_COUNT; i++) {
     await createReview()
   }
 
   for (let i = 1; i < USER_COUNT; i++) {
     let currentUser = await createUser()
     const currentReview = await Review.findByPk(i)
-    currentUser.addReview(currentReview)
+    await currentUser.addReview(currentReview)
   }
 
-  for (let i = 0; i < ORDER_COUNT; i++) {
-    const currentOrder = createOrder()
+  for (let i = 1; i < ORDER_COUNT; i++) {
+    const currentOrder = await createOrder()
     const randUser = await User.findByPk(
       Math.ceil(Math.random() * (USER_COUNT - 1))
     )
     randUser.addOrder(currentOrder)
   }
 
-  for (let i = 0; i < PRODUCT_COUNT; i++) {
+  for (let i = 1; i < PRODUCT_COUNT; i++) {
     let currentProduct = await createProduct()
     await createProductOrder(i)
     const currentReview = await Review.findByPk(i)
