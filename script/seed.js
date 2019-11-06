@@ -40,19 +40,20 @@ const createUser = async () => {
   } catch (error) {
     console.log(error)
   }
-}
-const createProduct = async () => {
-  try {
-    let currentProduct = await Product.create({
-      name: faker.commerce.productName(),
-      description: faker.lorem.sentence(),
-      photoURL: faker.random.image(),
-      price: faker.commerce.price(),
-      inventory: faker.random.number()
-    })
-    return currentProduct
-  } catch (error) {
-    console.log(error)
+
+  const createProduct = async () => {
+    try {
+      let currentProduct = await Product.create({
+        name: faker.commerce.productName(),
+        description: faker.lorem.sentence(),
+        photoURL: faker.random.image(),
+        price: faker.commerce.price(),
+        inventory: faker.random.number()
+      })
+      return currentProduct
+    } catch (error) {
+      console.log(error)
+    }
   }
 }
 const createReview = async () => {

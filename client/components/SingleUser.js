@@ -5,14 +5,15 @@ import {fetchUserView, updateUser} from '../store/userView'
 
 export class UserView extends React.Component {
   componentDidMount() {
-    this.props.loadUserView(this.props.match.params.userId)
+    this.props.loadUserView(this.props.match.params.id)
   }
   render() {
     const {userView} = this.props
 
     return (
       <div id="UserView">
-        <h3>Name: {userView.name}</h3>
+        <h3>firstName: {userView.firstName}</h3>
+        <h3>lastName: {userView.lastName}</h3>
         <h3>Email: {userView.email}</h3>
       </div>
     )

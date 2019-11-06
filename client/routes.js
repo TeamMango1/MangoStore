@@ -10,7 +10,8 @@ import {
   SingleUser,
   AllUsers,
   AllProducts,
-  Cart
+  Cart,
+  AddProduct
 } from './components'
 import {me} from './store'
 
@@ -30,6 +31,10 @@ class Routes extends Component {
         {/* Routes placed here are available to all visitors */}
         <Route path="/login" component={Login} />
         <Route path="/signup" component={Signup} />
+        <Route exact path="/" component={AllProducts}/>
+        <Route path="/products/:id" component={SingleProduct} />
+        <Route exact path="/products" component={AllProducts} />
+        <Route exact path="/product/add" component={AddProduct} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -39,6 +44,7 @@ class Routes extends Component {
             <Route exact path="/users" component={AllUsers} />
             <Route path="/users/:id" component={SingleUser} />
             <Route exact path="/cart" component={Cart} />
+            <Route exact path="/product/add" component={AddProduct} />
           </Switch>
         )}
         {/* Displays our Login component as a fallback */}

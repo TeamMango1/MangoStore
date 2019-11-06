@@ -3,20 +3,22 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 const ProductsList = props => {
-  const {id, name, photoURL, Price} = props.product
+  const {id, name, photoURL, price} = props.product
   return (
     <div>
-      <div>
-        <Link to={`/products/${id}`}>
-          <h3>{name}</h3>
-        </Link>
-      </div>
-      <div>
+      <Link to={`/products/${id}`}>
         <div>
-          <img src={photoURL} />
+          <div>
+            <h3>{name}</h3>
+          </div>
+          <div>
+            <div>
+              <img src={photoURL} />
+            </div>
+          </div>
+          <div>${price}</div>
         </div>
-      </div>
-      <div>${Price}</div>
+      </Link>
     </div>
   )
 }
