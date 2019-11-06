@@ -17,8 +17,8 @@ export const addProduct = product => {
 export const fetchProducts = () => {
   return async dispatch => {
     try {
-      const allProducts = await axios.get('api/products')
-      dispatch(gotProducts(allProducts))
+      const {data} = await axios.get('api/products')
+      dispatch(gotProducts(data))
     } catch (err) {
       console.log('ERROR', err)
     }
@@ -27,8 +27,8 @@ export const fetchProducts = () => {
 export const postProduct = product => {
   return async dispatch => {
     try {
-      const newProduct = await axios.post('api/products', product)
-      dispatch(addProduct(newProduct))
+      const {data} = await axios.post('api/products', product)
+      dispatch(addProduct(data))
     } catch (err) {
       console.log('ERROR', err)
     }

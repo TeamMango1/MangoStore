@@ -11,14 +11,14 @@ export const gotProduct = product => {
 
 export const fetchProduct = id => {
   return async dispatch => {
-    const {data} = await axios.get(`api/products/${id}`)
+    const {data} = await axios.get(`/api/products/${id}`)
     dispatch(gotProduct(data))
   }
 }
 
 export const editProduct = product => {
   return async dispatch => {
-    const {data} = await axios.put('api/products/', product)
+    const {data} = await axios.put('/api/products/', product)
     dispatch(gotProduct(data))
   }
 }

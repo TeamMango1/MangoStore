@@ -1,31 +1,31 @@
 import React from 'react'
 import {connect} from 'react-redux'
 
-import {fetchSingleUser, updateUser} from '../store/singleUser'
+import {fetchUserView, updateUser} from '../store/userView'
 
-export class SingleUser extends React.Component {
+export class UserView extends React.Component {
   componentDidMount() {
-    this.props.loadSingleUser(this.props.match.params.userId)
+    this.props.loadUserView(this.props.match.params.userId)
   }
   render() {
-    const {singleUser} = this.props
+    const {userView} = this.props
 
     return (
-      <div id="singleUser">
-        <h3>Name: {singleUser.name}</h3>
-        <h3>Email: {singleUser.email}</h3>
+      <div id="UserView">
+        <h3>Name: {userView.name}</h3>
+        <h3>Email: {userView.email}</h3>
       </div>
     )
   }
 }
 
 const mapStateToProps = state => ({
-  singleUser: state.singleUser
+  userView: state.userView
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadSingleUser: id => dispatch(fetchSingleUser(id)),
-  updateSingleUser: updatedUser => dispatch(updateUser(updatedUser))
+  loadUserView: id => dispatch(fetchUserView(id)),
+  updateUserView: updatedUser => dispatch(updateUser(updatedUser))
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(SingleUser)
+export default connect(mapStateToProps, mapDispatchToProps)(UserView)

@@ -26,7 +26,7 @@ router.post('/', async (req, res, next) => {
  */
 router.get('/:id', async (req, res, next) => {
   try {
-    const products = await Product.findByPk(req.params.id, {
+    const product = await Product.findByPk(req.params.id, {
       include: [
         {
           model: Review,
@@ -34,7 +34,7 @@ router.get('/:id', async (req, res, next) => {
         }
       ]
     })
-    res.json(products)
+    res.json(product)
   } catch (err) {
     next(err)
   }
