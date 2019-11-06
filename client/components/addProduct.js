@@ -1,5 +1,5 @@
 import React from 'react'
-import postProduct from '../store/AllProducts'
+import postProduct from '../store/allProductsReducer'
 import {connect} from 'react-redux'
 
 class AddProduct extends React.Component {

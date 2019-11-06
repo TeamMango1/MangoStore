@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import ProductsList from './ProductsList'
 import {fetchProducts} from '../store/allProductsReducer'
-
+import AddProduct from './AddProduct'
 export class Products extends React.Component {
   componentDidMount() {
     this.props.loadProducts()
