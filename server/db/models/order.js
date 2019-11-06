@@ -1,16 +1,11 @@
 const Sequelize = require('sequelize')
 const db = require('../db')
 
+// if you want the enum : Order.rawAttributes.status.values
+
 const Order = db.define('order', {
-  userLoggedIn: {
-    type: Sequelize.BOOLEAN
-  },
   status: {
-    type: Sequelize.INTEGER,
-    validate: {
-      min: 1,
-      max: 4
-    }
+    type: Sequelize.ENUM("PROCESSING","COMPLETED","CANCELED", "CART")
   }
 })
 
