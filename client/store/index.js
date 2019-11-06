@@ -4,7 +4,7 @@ import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import user from './user'
 import singleProduct from './singleProduct'
-import allProducts from './AllProducts'
+import allProducts from './allProductsReducer'
 import allUsers from './allUsers'
 import userView from './userView'
 
