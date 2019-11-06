@@ -32,6 +32,7 @@ class Navbar extends React.Component {
               <Link to="/products">Products</Link>
             </div>
           )}
+          <Link to="/cart">Cart</Link>
         </nav>
         <hr />
       </div>

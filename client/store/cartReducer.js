@@ -14,10 +14,11 @@ export const removedFromCart = productId => ({
 })
 
 //THUNKS
-export const fetchCart = function(userId) {
+export const fetchCart = function() {
   return async dispatch => {
     try {
-      let {data} = await axios.get(`/api/cart/${userId}`)
+      console.log('in reducer')
+      let {data} = await axios.get(`/api/cart`)
       dispatch(gotCart(data))
     } catch (error) {
       console.log(error)
