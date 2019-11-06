@@ -3,7 +3,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
 const ProductsList = props => {
-  const {id, name, photoURL, Price} = props.product
+  const {id, name, photoURL, price} = props.product
   return (
     <div>
       <div>
@@ -16,7 +16,7 @@ const ProductsList = props => {
           <img src={photoURL} />
         </div>
       </div>
-      <div>${Price}</div>
+      <div>${price}</div>
     </div>
   )
 }
