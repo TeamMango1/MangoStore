@@ -9,7 +9,7 @@ class AllUsers extends React.Component {
   }
   render(){
     return (
-      <div>{this.props.users.map(user => <UserCard key={user.id} user={user} />)}</div>
+      <div>{this.props.users.map(user => <UserCard key={user.id} user={user} />)}<br/></div>
     )
   }
 

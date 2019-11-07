@@ -94,14 +94,10 @@ class SingleProduct extends React.Component {
             </div>: <div/>
           }
             <div>
-              {reviews.map(review => {
-                return (
-                  <div>
-                    <div>Ratings: {review.rating} Stars </div>
-                    <p>Reviews: {review.reviewText}</p>
-                  </div>
-                )
-              })}
+              {reviews.map(review => (<div key={review.id}>
+                <div>Ratings: {review.rating} Stars </div>
+                <p>Reviews: {review.reviewText}</p>
+              </div>))}
             </div>
           </div>
         </div>
@@ -119,7 +115,7 @@ const mapState = state => {
 }
 
 const mapDispatch = dispatch => {
-  return {  
+  return {
     addToCart: id => dispatch(addToCart(id)),
     fetchProduct: id => dispatch(fetchProduct(id)),
     postReview: (review,productId,userId) => dispatch(postReview(review,productId,userId))
