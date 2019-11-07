@@ -41,6 +41,8 @@ export class Products extends React.Component {
         <div>
           <div>
             <Link to="/product/add">ADD PRODUCTS</Link>
+            <br/>
+            <Link to="/categories">CATEGORIES</Link>
           </div>
           <select onChange={this.handleChange}>
           <option>none</option>
@@ -56,11 +58,8 @@ export class Products extends React.Component {
 
 const mapState = state => ({
   allProducts: state.allProducts,
-<<<<<<< HEAD
-  filter: state.selectedProductFilter
-=======
+  filter: state.selectedProductFilter,
   isAdmin: state.user.isAdmin
->>>>>>> master
 })
 
 const mapDispatch = dispatch => ({
