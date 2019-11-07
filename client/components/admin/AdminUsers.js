@@ -1,18 +1,27 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchUsers} from '../../store/allUsers'
+import {fetchUsers, deleteUser} from '../../store/allUsers'
 import AdminUserCard from './AdminUserCard'
 
 class AllUsers extends React.Component {
-  componentDidMount(){
+  componentDidMount() {
     this.props.loadUsers()
   }
-  render(){
+  render() {
     return (
-      <div>{this.props.users.map(user => <AdminUserCard key={user.id} user={user} />)}</div>
+      <div className="container">
+        <div className="row">
+          {this.props.users.map(user => (
+            <AdminUserCard
+              key={user.id}
+              user={user}
+              deleteUser={this.props.deleteUser}
+            />
+          ))}
+        </div>
+      </div>
     )
   }
-
 }
 
 const mapState = state => {
@@ -23,7 +32,8 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    loadUsers: () => dispatch(fetchUsers())
+    loadUsers: () => dispatch(fetchUsers()),
+    deleteUser: id => dispatch(deleteUser(id))
   }
 }
 

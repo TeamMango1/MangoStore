@@ -1,18 +1,17 @@
 const router = require('express').Router()
 const {User} = require('../db/models')
-const {isAdmin} = require("./middleware")
+const {isAdmin} = require('./middleware')
 module.exports = router
-
 
 /**
  *  GET all users (api/users)
  */
 
-router.get('/', isAdmin, async(req,res,next)=>{
-  try{
+router.get('/', isAdmin, async (req, res, next) => {
+  try {
     let allUsers = await User.findAll()
     res.json(allUsers).status(200)
-  } catch(error){
+  } catch (error) {
     next(error)
   }
 })
@@ -29,7 +28,6 @@ router.get('/:userId', async (req, res, next) => {
     next(err)
   }
 })
-
 
 /**
  *  PUT single user (api/users/:id)
@@ -52,11 +50,12 @@ router.put('/:userId', async (req, res, next) => {
  *  DELETE single user (api/users/:id)
  */
 
-router.delete('/', isAdmin, async (req, res, next) => {
+router.delete('/:userId', isAdmin, async (req, res, next) => {
   try {
     await User.destroy({
-      where: {id: req.body.id}
+      where: {id: req.body.userId}
     })
+    res.sendStatus(200)
   } catch (error) {
     next(error)
   }

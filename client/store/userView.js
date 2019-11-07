@@ -2,11 +2,9 @@ import axios from 'axios'
 
 // ACTION TYPES
 const SET_SINGLE_USER = 'SET_SINGLE_USER' // edit + fetch will use this action type.
-const DELETE_SINGLE_USER = 'DELETE_SINGLE_USER'
 
 //ACTION CREATORS
 export const setSingleUser = singleUser => ({type: SET_SINGLE_USER, singleUser})
-export const deleteUserId = userId => ({type: DELETE_SINGLE_USER, userId})
 
 //THUNKS
 export const fetchUserView = function(userId) {
@@ -36,25 +34,12 @@ export const updateUser = function(updatedUser) {
   }
 }
 
-export const deleteUser = function(userId) {
-  return async dispatch => {
-    try {
-      await axios.delete(`/api/users/${userId}`)
-      dispatch(deleteUserId(userId))
-    } catch (error) {
-      console.log(error)
-    }
-  }
-}
-
 const singleUser = {}
 
 export default function(state = singleUser, action) {
   switch (action.type) {
     case SET_SINGLE_USER:
       return action.singleUser
-    case DELETE_SINGLE_USER:
-      return singleUser
     default:
       return state
   }

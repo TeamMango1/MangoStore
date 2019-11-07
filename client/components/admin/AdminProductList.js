@@ -1,5 +1,5 @@
 import React from 'react'
-import ProductCard from './AdminProductCard'
+import AdminProductCard from './AdminProductCard'
 
 export default class ProductList extends React.Component {
   render() {
@@ -8,7 +8,7 @@ export default class ProductList extends React.Component {
         <div className="row">
           {this.props.products.length > 0 ? (
             this.props.products.map(product => (
-              <ProductCard key={product.id} product={product} />
+              <AdminProductCard key={product.id} product={product} />
             ))
           ) : (
             <div> No PRODUCTS </div>
