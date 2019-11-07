@@ -14,11 +14,12 @@ export class Products extends React.Component {
           {this.props.isAdmin ?
             <div>
               <Link to="/product/add">ADD PRODUCTS</Link>
+              <br/>
+              <Link to="/categories">VIEW CATEGORIES</Link>
             </div>
             :
             <div/>
           }
-          <Link to="/categories">VIEW CATEGORIES</Link>
           <div>
             {allProducts.length > 0 ? (
               allProducts.map(product => (

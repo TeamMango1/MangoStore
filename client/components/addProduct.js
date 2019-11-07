@@ -20,7 +20,6 @@ class AddProduct extends React.Component {
   }
   handleSumbit(event) {
     event.preventDefault()
-    console.log(this.state)
     this.props.addnewProduct(this.state)
     this.setState({
       name: '',
