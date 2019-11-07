@@ -2,23 +2,6 @@ const router = require('express').Router()
 const {Order, Product, ProductOrder} = require('../db/models')
 module.exports = router
 
-// order cart enum status
-
-// router.use((req, res, next) => {
-//   try {
-//     const id = req.user.dataValues.id
-//     // const id = req.session.passport.user;
-//     if (!id) {
-//       console.log('oof')
-//       res.sendStatus(403)
-//       throw new Error('User did a thing')
-//     }
-//     next()
-//   } catch (err) {
-//     next(err)
-//   }
-// })
-
 const CART = 'CART'
 
 /**
@@ -49,8 +32,10 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const id = req.body.userId
-    const cartOrder = await Order.findOrCreate({userId: id, status: CART})
+    const id = req.user.dataValues.id
+    const cartOrder = await Order.findOrCreate({
+      where: {userId: id, status: CART}
+    })
     const product = await Product.findByPk(req.body.productId)
     await cartOrder.addProduct(product)
     res.json(product)
@@ -65,10 +50,13 @@ router.post('/', async (req, res, next) => {
 
 router.delete('/', async (req, res, next) => {
   try {
-    const id = req.body.userId
-    const cartOrder = await Order.findOrCreate({userId: id, status: CART})
+    const id = req.user.dataValues.id
+    const cartOrder = await Order.findOrCreate({
+      where: {userId: id, status: CART}
+    })
     const product = await Product.findByPk(req.body.productId)
-    await cartOrder.removeProduct(product)
+    if(product)
+      await cartOrder.removeProduct(product)
     res.json(product)
   } catch (error) {
     next(error)

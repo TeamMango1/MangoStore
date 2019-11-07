@@ -3,6 +3,7 @@ import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 import { removeProduct } from '../store/allProductsReducer'
 
+
 const ProductCard = props => {
   const {id, name, photoURL, categories, price} = props.product
 
@@ -37,10 +38,10 @@ const mapstate = state => (
     isAdmin: state.user.isAdmin
   }
 )
-const mapDeleteDispatch = dispatch => (
+const mapDispatch = dispatch => (
   {
-    delete:id => dispatch(removeProduct(id))
+    delete:id => dispatch(removeProduct(id)),
   }
 )
 
-export default ProductCard
+export default connect(mapstate,mapDispatch)(ProductCard)

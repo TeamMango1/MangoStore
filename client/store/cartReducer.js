@@ -28,10 +28,10 @@ export const fetchCart = function() {
   }
 }
 
-export const addToCart = (productId, userId) => {
+export const addToCart = (productId) => {
   return async dispatch => {
     try {
-      let {data} = await axios.post(`/api/cart`, {productId, userId})
+      let {data} = await axios.post(`/api/cart`, {productId})
       dispatch(addedToCart(data))
     } catch (error) {
       console.log(error)
@@ -39,10 +39,10 @@ export const addToCart = (productId, userId) => {
   }
 }
 
-export const removeFromCart = (productId, userId) => {
+export const removeFromCart = (productId) => {
   return async dispatch => {
     try {
-      let {data} = await axios.delete(`/api/cart`, {productId, userId})
+      let {data} = await axios.delete(`/api/cart`, {productId})
       dispatch(removedFromCart(data))
     } catch (error) {
       console.log(error)
