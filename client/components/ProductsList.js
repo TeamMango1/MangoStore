@@ -20,17 +20,25 @@ const ProductsList = props => {
           <div>${price}</div>
         </div>
       </Link>
-      <div>
-        <button type="button" onClick={()=>props.delete(id)}> X </button>
-      </div>
+      {props.isAdmin?
+        <div>
+          <button type="button" onClick={()=>props.delete(id)}> X </button>
+        </div>
+        :
+        <div />
+      }
     </div>
   )
 }
-
+const mapstate = state => (
+  {
+    isAdmin: state.user.isAdmin
+  }
+)
 const mapDeleteDispatch = dispatch => (
   {
     delete:id => dispatch(removeProduct(id))
   }
 )
 
-export default connect(null,mapDeleteDispatch)(ProductsList)
+export default connect(mapstate,mapDeleteDispatch)(ProductsList)

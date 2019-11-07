@@ -11,9 +11,13 @@ export class Products extends React.Component {
     const allProducts = this.props.allProducts
       return (
         <div>
-          <div>
-            <Link to="/product/add">ADD PRODUCTS</Link>
-          </div>
+          {this.props.isAdmin ?
+            <div>
+              <Link to="/product/add">ADD PRODUCTS</Link>
+            </div>
+            :
+            <div/>
+          }
           <div>
             {allProducts.length > 0 ? (
               allProducts.map(product => (
@@ -29,7 +33,8 @@ export class Products extends React.Component {
 }
 
 const mapState = state => ({
-  allProducts: state.allProducts
+  allProducts: state.allProducts,
+  isAdmin: state.user.isAdmin
 })
 
 const mapDispatch = dispatch => ({
