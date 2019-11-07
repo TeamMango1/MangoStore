@@ -33,17 +33,24 @@ export class Products extends React.Component {
       : this.props.allProducts
     return (
       <div>
-        <div>
-          <Link to="/product/add">ADD PRODUCTS</Link>
-          <br />
-          <Link to="/categories">CATEGORIES</Link>
+        <div className="navbar-nav nav-fill">
+          <div className="nav-item">
+            <Link className="nav-link" to="/product/add">
+              ADD PRODUCTS
+            </Link>
+          </div>
+          <div className="nav-item">
+            <Link className="nav-link" to="/categories">
+              CATEGORIES
+            </Link>
+            <select className="nav-item" onChange={this.handleChange}>
+              <option>none</option>
+              <option>rem</option>
+              <option>quo</option>
+              <option>unde</option>
+            </select>
+          </div>
         </div>
-        <select onChange={this.handleChange}>
-          <option>none</option>
-          <option>rem</option>
-          <option>quo</option>
-          <option>unde</option>
-        </select>
         <ProductList products={products} />
       </div>
     )
