@@ -1,17 +1,31 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
-import {connect} from 'react-redux'
 
 const UserCard = props => {
   const user = props.user
   return (
-    <div>
+    <div className="col-4 card">
       <Link to={`/adminhub/users/${user.id}`}>
-        <div>
-          {user.firstName} {props.user.lastName}
-        </div>
-        <div>{user.email}</div>
+        {user.firstName} {user.lastName}
       </Link>
+      <div>{user.email}</div>
+      <div className="container">
+        <div className="row">
+          <button type="button" className="btn btn-primary col-4">
+            Reset
+          </button>
+          <button type="button" className="btn btn-success col-4">
+            Promote
+          </button>
+          <button
+            type="button"
+            className="btn btn-danger col-4"
+            onClick={() => props.deleteUser(user.id)}
+          >
+            Delete
+          </button>
+        </div>
+      </div>
     </div>
   )
 }
