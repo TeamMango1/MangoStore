@@ -3,10 +3,11 @@ import {connect} from 'react-redux'
 
 class Cart extends React.Component {
   render() {
+    const cart = this.props.cart? this.props.cart:[]
     return (
       <div>
         <ul>
-          {this.props.cart.map(item => {
+          {cart.map(item => {
             return <li key={item.id}>{item.name}</li>
           })}
         </ul>
