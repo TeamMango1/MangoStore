@@ -57,7 +57,7 @@ router.post(`/:id`, async (req, res, next) => {
   try {
     const newReview = await Review.create({
       reviewText: req.body.review.reviewText,
-      rating: req.body.review.ratings,
+      rating: req.body.review.rating,
       userId: req.body.userId,
       productId: req.params.id
     })

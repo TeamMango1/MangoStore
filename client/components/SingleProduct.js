@@ -25,26 +25,32 @@ class SingleProduct extends React.Component {
     })
   }
   handleSubmit(event) {
+    event.preventDefault()
     const projectId = this.props.match.params.id
 
-    event.preventDefault()
+
     this.props.postReview(
+
       this.state,
       this.props.match.params.id,
       this.props.userId
     )
     this.setState({
-      reviewText: '',
+      reviewText:'',
       rating: null
     })
     this.props.fetchProduct(projectId)
   }
+
+
   render() {
     const {singleProduct} = this.props
     let categories = singleProduct.categories
     let reviews = singleProduct.review
 
+
     if (categories && reviews) {
+
       return (
         <div className="container">
           <div className="row">
