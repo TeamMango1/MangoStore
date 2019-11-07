@@ -5,7 +5,6 @@ import {fetchProducts} from '../store/allProductsReducer'
 import ProductList from './ProductList'
 import {setFilter, clearFilter} from '../store/selectedProductFilter'
 import {fetchCategories} from '../store/categoryStore'
-import {Link} from 'react-router-dom'
 
 export class Products extends React.Component {
   constructor() {
@@ -38,12 +37,12 @@ export class Products extends React.Component {
           <div className="row">
             <div className="col-4">
               <Link className="nav-link" to="/product/add">
-                ADD PRODUCTS
+                ADD PRODUCT
               </Link>
             </div>
             <div className="col-4">
               <Link className="nav-link" to="/categories">
-                CATEGORIES
+                ADD CATEGORY
               </Link>
             </div>
           </div>
