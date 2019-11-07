@@ -49,6 +49,31 @@ router.post('/', isAdmin, async (req, res, next) => {
   }
 })
 
+
+/**
+ * POST new review on a product
+ */
+
+router.post(`/:id`, async (req,res,next)=>{
+  try{
+    console.log('REQ.BODY::::',req.body)
+    const newReview = await Review.create({
+      reviewText: req.body.review.reviewText,
+      rating:req.body.review.ratings,
+      userId:req.body.userId,
+      productId: req.params.id
+    })
+    res.json(newReview)
+  } catch (error){
+    next(error)
+  }
+})
+
+/**
+ * edit product (/api/products/)
+ * currently assumes that req.body is the same as the form
+ */
+
 router.put('', isAdmin, async (req, res, next) => {
   try {
     const product = await Product.update(
