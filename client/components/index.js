@@ -3,13 +3,13 @@
  * This way, we can import all of our components from the same place, rather than
  * having to figure out which file they belong to!
  */
-export {default as Navbar} from './navbar'
-export {default as UserHome} from './user-home'
-export {default as SingleProduct} from './SingleProduct'
-export {default as AllProducts} from './AllProducts'
-export {default as SingleUser} from './SingleUser'
-export {default as AllUsers} from './AllUsers'
-export {default as AddProduct} from './addProduct'
-export {default as Categories} from './categories'
+export {default as Navbar} from './Navbar'
+export {default as Categories} from './Categories'
 export {default as Cart} from './Cart'
-export {Login, Signup} from './auth-form'
+export {default as AllProducts} from './AllProducts'
+export {default as SingleProduct} from './SingleProduct'
+export {default as AddProduct} from './AddProduct'
+export {default as UserHome} from './UserHome'
+export {default as AllUsers} from './AllUsers'
+export {default as SingleUser} from './SingleUser'
+export {Login, Signup} from './AuthForm'

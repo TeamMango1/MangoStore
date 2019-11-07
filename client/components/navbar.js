@@ -5,7 +5,6 @@ import {Link} from 'react-router-dom'
 import {logout} from '../store'
 import {fetchCart} from '../store/cartReducer'
 
-
 class Navbar extends React.Component {
   componentDidMount() {
     this.props.loadCart()
@@ -14,28 +13,30 @@ class Navbar extends React.Component {
   render() {
     return (
       <div>
-        <h1>BOILERMAKER</h1>
+        <h1>Mangonificent™ 🍍</h1>
         <nav>
           {this.props.isLoggedIn ? (
-            <div>
+            <React.Fragment>
               {/* The navbar will show these links after you log in */}
-              {isAdmin?<div><Link to="/products">Products</Link>
-                  <Link to="/users">users</Link></div>
-                  :
-                  <div />}
+              {this.props.isAdmin ? (
+                <Link to="/adminhub">Manage Site</Link>
+              ) : (
+                ''
+              )}
               <Link to="/products">Products</Link>
               <Link to="/home">Home</Link>
+
               <a href="#" onClick={this.props.handleClick}>
                 Logout
               </a>
-            </div>
+            </React.Fragment>
           ) : (
-            <div>
+            <React.Fragment>
               {/* The navbar will show these links before you log in */}
               <Link to="/login">Login</Link>
               <Link to="/signup">Sign Up</Link>
               <Link to="/products">Products</Link>
-            </div>
+            </React.Fragment>
           )}
           <Link to="/cart">Cart</Link>
         </nav>
@@ -51,7 +52,7 @@ class Navbar extends React.Component {
 const mapState = state => {
   return {
     isLoggedIn: !!state.user.id,
-    cart: state.cart
+    cart: state.cart,
     isAdmin: state.user.isAdmin
   }
 }

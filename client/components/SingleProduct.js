@@ -8,28 +8,37 @@ class SingleProduct extends React.Component {
     this.props.fetchProduct(projectId)
   }
   render() {
+    const {singleProduct} = this.props
+    let categories = singleProduct.categories
+
+    if(categories){
     return (
       <div>
-        <img src={this.props.singleProduct.photoURL} />
-        <h1>{this.props.singleProduct.name}</h1>
+        <img src={singleProduct.photoURL} />
+        <h1>{singleProduct.name}</h1>
         <table>
           <tbody>
             <tr>
               <td>Price</td>
-              <td>{this.props.singleProduct.price}</td>
+              <td>{singleProduct.price}</td>
             </tr>
             <tr>
               <td>Stock</td>
-              <td>{this.props.singleProduct.inventory}</td>
+              <td>{singleProduct.inventory}</td>
+            </tr>
+            <tr>
+              <td>Category</td>
+              <td>{categories[0].name}</td>
             </tr>
           </tbody>
         </table>
-        <p>{this.props.singleProduct.description}</p>
+        <p>{singleProduct.description}</p>
         <button type="button" onClick={this.props.addToCart}>
           Add to cart
         </button>
       </div>
     )
+    } else return <div></div>
   }
 }
 

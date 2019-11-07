@@ -24,7 +24,7 @@ faker.seed(SEED)
 
 const createUser = async () => {
   try {
-    const pass = faker.internet.password();
+    const pass = faker.internet.password()
     let currentUser = await User.create({
       email: faker.internet.email(),
       password: pass,
@@ -32,30 +32,30 @@ const createUser = async () => {
       lastName: faker.name.lastName(),
       isAdmin: faker.random.boolean(),
 
-
       // TESTING TODO
-      unhashedPasswordForTesting:pass,
+      unhashedPasswordForTesting: pass
     })
     return currentUser
   } catch (error) {
     console.log(error)
   }
+}
 
-  const createProduct = async () => {
-    try {
-      let currentProduct = await Product.create({
-        name: faker.commerce.productName(),
-        description: faker.lorem.sentence(),
-        photoURL: faker.random.image(),
-        price: faker.commerce.price(),
-        inventory: faker.random.number()
-      })
-      return currentProduct
-    } catch (error) {
-      console.log(error)
-    }
+const createProduct = async () => {
+  try {
+    let currentProduct = await Product.create({
+      name: faker.commerce.productName(),
+      description: faker.lorem.sentence(),
+      photoURL: faker.random.image(),
+      price: faker.commerce.price(),
+      inventory: faker.random.number()
+    })
+    return currentProduct
+  } catch (error) {
+    console.log(error)
   }
 }
+
 const createReview = async () => {
   try {
     let currentReview = await Review.create({

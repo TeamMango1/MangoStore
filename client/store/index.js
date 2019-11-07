@@ -9,14 +9,17 @@ import allUsers from './allUsers'
 import userView from './userView'
 import allCategories from './categoryStore'
 import cart from './cartReducer'
+import selectedProductFilter from './selectedProductFilter'
+
 const reducer = combineReducers({
   user,
   allUsers,
   userView,
   allProducts,
   singleProduct,
+  selectedProductFilter,
+  cart,
   allCategories,
-  cart
 })
 
 const middleware = composeWithDevTools(
