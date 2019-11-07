@@ -67,7 +67,7 @@ class SingleProduct extends React.Component {
           </button>
           <div>
             <div>Reviews </div>
-            <div>
+            {this.props.isLoggedIn ? <div>
               <form onSubmit={this.handleSubmit}>
                 <label htmlFor='rating'>Rating</label>
                 <input
@@ -89,7 +89,8 @@ class SingleProduct extends React.Component {
                 />
                 <button type="submit">Add Review</button>
               </form>
-            </div>
+            </div>: <div/>
+          }
             <div>
               {reviews.map(review => {
                 return (
