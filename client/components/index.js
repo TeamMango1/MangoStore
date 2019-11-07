@@ -6,14 +6,13 @@
 export {default as Navbar} from './Navbar'
 export {default as Categories} from './Categories'
 export {default as Cart} from './Cart'
-export {default as AdminAllProducts} from './AdminAllProduct'
-export {default as AdminProductList} from './AdminProductList'
-export {default as AdminProductCard} from './AdminProductCard'
-export {default as AdminSingleProduct} from './AdminSingleProduct'
+export {Login, Signup} from './AuthForm'
+
 export {default as AllProducts} from './AllProducts'
 export {default as SingleProduct} from './SingleProduct'
 export {default as AddProduct} from './AddProduct'
-export {default as UserHome} from './UserHome'
-export {default as AllUsers} from './AllUsers'
+
 export {default as SingleUser} from './SingleUser'
-export {Login, Signup} from './AuthForm'
+export {default as UserHome} from './UserHome'
+
+export {default as AdminHub} from './admin/AdminHub'

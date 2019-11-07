@@ -1,13 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {fetchProducts} from '../store/allProductsReducer'
+import {fetchProducts} from '../../store/allProductsReducer'
 import AdminProductList from './AdminProductList'
-import {setFilter,clearFilter} from '../store/selectedProductFilter'
-
+import {setFilter, clearFilter} from '../../store/selectedProductFilter'
 
 export class AdminProducts extends React.Component {
-  constructor(){
+  constructor() {
     super()
 
     this.handleChange = this.handleChange.bind(this)
@@ -16,33 +15,34 @@ export class AdminProducts extends React.Component {
     this.props.loadProducts()
   }
 
-  handleChange(event){
-    console.log('EVENTTARGETVALUE',event.target.value)
-    if(event.target.value === 'none') this.props.clearFilter()
+  handleChange(event) {
+    if (event.target.value === 'none') this.props.clearFilter()
     else this.props.setFilter(event.target.value)
   }
 
   render() {
-    const products = this.props.filter ? this.props.allProducts.filter((product)=>{
-      for(let i = 0; i < product.categories.length; i++){
-        if(product.categories[i].name === this.props.filter) return true
-      }
-      return false
-    }):this.props.allProducts
+    const products = this.props.filter
+      ? this.props.allProducts.filter(product => {
+          for (let i = 0; i < product.categories.length; i++) {
+            if (product.categories[i].name === this.props.filter) return true
+          }
+          return false
+        })
+      : this.props.allProducts
     return (
       <div>
         <div>
           <Link to="/product/add">ADD PRODUCTS</Link>
-          <br/>
+          <br />
           <Link to="/categories">CATEGORIES</Link>
         </div>
         <select onChange={this.handleChange}>
-        <option>none</option>
-        <option>rem</option>
-        <option>quo</option>
-        <option>unde</option>
+          <option>none</option>
+          <option>rem</option>
+          <option>quo</option>
+          <option>unde</option>
         </select>
-        < AdminProductList products={products} />
+        <AdminProductList products={products} />
       </div>
     )
   }
@@ -56,7 +56,7 @@ const mapState = state => ({
 
 const mapDispatch = dispatch => ({
   loadProducts: () => dispatch(fetchProducts()),
-  setFilter: (filter) => dispatch(setFilter(filter)),
+  setFilter: filter => dispatch(setFilter(filter)),
   clearFilter: () => dispatch(clearFilter())
 })
 
