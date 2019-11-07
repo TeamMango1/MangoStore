@@ -18,6 +18,7 @@ export class Products extends React.Component {
             :
             <div/>
           }
+          <Link to="/categories">VIEW CATEGORIES</Link>
           <div>
             {allProducts.length > 0 ? (
               allProducts.map(product => (
