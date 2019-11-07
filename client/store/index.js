@@ -7,17 +7,26 @@ import singleProduct from './singleProduct'
 import allProducts from './allProductsReducer'
 import allUsers from './allUsers'
 import userView from './userView'
+import allCategories from './categoryStore'
 import cart from './cartReducer'
+<<<<<<< HEAD
 import selectedProductFilter from './selectedProductFilter'
 
+=======
+>>>>>>> master
 const reducer = combineReducers({
   user,
   allUsers,
   userView,
   allProducts,
   singleProduct,
+<<<<<<< HEAD
   cart,
   selectedProductFilter
+=======
+  allCategories,
+  cart
+>>>>>>> master
 })
 
 const middleware = composeWithDevTools(

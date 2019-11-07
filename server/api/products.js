@@ -15,14 +15,7 @@ router.get('/', async (req, res, next) => {
     next(err)
   }
 })
-router.post('/', async (req, res, next) => {
-  try {
-    const newProduct = await Product.create(req.body)
-    res.json(newProduct)
-  } catch (err) {
-    next(err)
-  }
-})
+
 /**
  * get single product (/api/products/:id)
  */
@@ -38,7 +31,6 @@ router.get('/:id', async (req, res, next) => {
           model:Category,
           as: 'categories'
         }
-
       ]
     })
     res.json(product)
@@ -51,10 +43,11 @@ router.get('/:id', async (req, res, next) => {
  * post new product (/api/products/)
  * currently assumes that req.body is the same as the form
  */
-router.post('', async (req, res, next) => {
+
+router.post('/', async (req, res, next) => {
   try {
-    const product = await Product.create({where: {...req.body}})
-    res.json(product)
+    const newProduct = await Product.create(req.body)
+    res.json(newProduct)
   } catch (err) {
     next(err)
   }
@@ -79,6 +72,7 @@ router.put('', async (req, res, next) => {
 router.delete('/:id', async (req, res, next) => {
   try {
     await Product.destroy({where: {id: req.params.id}})
+    res.sendStatus(204)
   } catch (err) {
     next(err)
   }

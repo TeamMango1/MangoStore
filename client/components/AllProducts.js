@@ -39,7 +39,6 @@ export class Products extends React.Component {
 
       return (
         <div>
-
           <div>
             <Link to="/product/add">ADD PRODUCTS</Link>
           </div>
@@ -57,7 +56,11 @@ export class Products extends React.Component {
 
 const mapState = state => ({
   allProducts: state.allProducts,
+<<<<<<< HEAD
   filter: state.selectedProductFilter
+=======
+  isAdmin: state.user.isAdmin
+>>>>>>> master
 })
 
 const mapDispatch = dispatch => ({
