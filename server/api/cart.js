@@ -32,7 +32,7 @@ router.get('/', async (req, res, next) => {
       where: {userId: id, status: CART}
     })
     if (carts.length === 0) {
-      res.send({})
+      res.json([])
     } else {
       const cart = carts[0]
       const products = await cart.getProducts()
