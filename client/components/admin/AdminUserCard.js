@@ -6,7 +6,7 @@ const UserCard = props => {
   const user = props.user
   return (
     <div>
-      <Link to={`/users/${user.id}`}>
+      <Link to={`/adminhub/users/${user.id}`}>
         <div>
           {user.firstName} {props.user.lastName}
         </div>

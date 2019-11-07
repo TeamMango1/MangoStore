@@ -4,55 +4,85 @@ import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/allProductsReducer'
 import ProductList from './ProductList'
 import {setFilter, clearFilter} from '../store/selectedProductFilter'
-
+import {fetchCategories} from '../store/categoryStore'
 
 export class Products extends React.Component {
   constructor() {
     super()
+    this.state = {
+      search: ''
+    }
 
     this.handleChange = this.handleChange.bind(this)
+    this.searchHandleChange = this.searchHandleChange.bind(this)
   }
   componentDidMount() {
     this.props.loadProducts()
+    this.props.getCategories()
   }
 
   handleChange(event) {
-    console.log('EVENTTARGETVALUE', event.target.value)
-
     if (event.target.value === 'none') this.props.clearFilter()
     else this.props.setFilter(event.target.value)
   }
+  searchHandleChange(event) {
+    this.setState({
+      search: event.target.value
+    })
+  }
 
   render() {
-    const products = this.props.filter
-      ? this.props.allProducts.filter(product => {
-          for (let i = 0; i < product.categories.length; i++) {
-            if (product.categories[i].name === this.props.filter) return true
-          }
-          return false
-        })
-      : this.props.allProducts
+    let products = ''
+    if (this.state.search !== '') {
+      products = this.props.allProducts.filter(product =>
+        product.name.includes(this.state.search)
+      )
+    } else {
+      products = this.props.filter
+        ? this.props.allProducts.filter(product => {
+            for (let i = 0; i < product.categories.length; i++) {
+              if (product.categories[i].name === this.props.filter) return true
+            }
+            return false
+          })
+        : this.props.allProducts
+    }
+
     return (
-      <div>
-        <div className="navbar-nav nav-fill">
-          <div className="nav-item">
-            <Link className="nav-link" to="/product/add">
-              ADD PRODUCTS
-            </Link>
+      <div className="container">
+        {this.props.isAdmin ? (
+          <div className="row">
+            <div className="col-4">
+              <Link className="nav-link" to="/product/add">
+                ADD PRODUCT
+              </Link>
+            </div>
+            <div className="col-4">
+              <Link className="nav-link" to="/categories">
+                ADD CATEGORY
+              </Link>
+            </div>
           </div>
-          <div className="nav-item">
-            <Link className="nav-link" to="/categories">
-              CATEGORIES
-            </Link>
-            <select className="nav-item" onChange={this.handleChange}>
-              <option>none</option>
-              <option>rem</option>
-              <option>quo</option>
-              <option>unde</option>
-            </select>
-          </div>
+        ) : (
+          <div />
+        )}
+
+        <select className="col-4 custom-select" onChange={this.handleChange}>
+          <option>none</option>
+          {this.props.categories.map(category => {
+            return <option key={category.id}>{category.name}</option>
+          })}
+        </select>
+        <br />
+        <input
+          name="search"
+          onChange={this.searchHandleChange}
+          defaultValue={this.state.search}
+          placeholder="search"
+        />
+        <div>
+          <ProductList products={products} />
         </div>
-        <ProductList products={products} />
       </div>
     )
   }
@@ -60,13 +90,16 @@ export class Products extends React.Component {
 
 const mapState = state => ({
   allProducts: state.allProducts,
-  filter: state.selectedProductFilter
+  filter: state.selectedProductFilter,
+  isAdmin: state.user.isAdmin,
+  categories: state.allCategories
 })
 
 const mapDispatch = dispatch => ({
   loadProducts: () => dispatch(fetchProducts()),
   setFilter: filter => dispatch(setFilter(filter)),
-  clearFilter: () => dispatch(clearFilter())
+  clearFilter: () => dispatch(clearFilter()),
+  getCategories: () => dispatch(fetchCategories())
 })
 
 export default connect(mapState, mapDispatch)(Products)
