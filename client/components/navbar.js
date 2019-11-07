@@ -13,32 +13,49 @@ class Navbar extends React.Component {
   render() {
     return (
       <div>
-        <h1>Mangonificent™ 🍍</h1>
-        <nav>
-          {this.props.isLoggedIn ? (
-            <React.Fragment>
-              {/* The navbar will show these links after you log in */}
-              {this.props.isAdmin ? (
-                <Link to="/adminhub">Manage Site</Link>
-              ) : (
-                ''
-              )}
-              <Link to="/products">Products</Link>
-              <Link to="/home">Home</Link>
-
-              <a href="#" onClick={this.props.handleClick}>
-                Logout
-              </a>
-            </React.Fragment>
-          ) : (
-            <React.Fragment>
-              {/* The navbar will show these links before you log in */}
-              <Link to="/login">Login</Link>
-              <Link to="/signup">Sign Up</Link>
-              <Link to="/products">Products</Link>
-            </React.Fragment>
-          )}
-          <Link to="/cart">Cart</Link>
+        <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
+          <h1 className="navbar-brand">Mangonificent™ 🍍</h1>
+          <div className="navbar-nav">
+            {this.props.isLoggedIn ? (
+              <React.Fragment>
+                {/* The navbar will show these links after you log in */}
+                {this.props.isAdmin ? (
+                  <Link to="/adminhub">Manage Site</Link>
+                ) : (
+                  ''
+                )}
+                <div className="nav-item">
+                  <Link className="nav-link" to="/products">
+                    Products
+                  </Link>
+                </div>
+                <div className="nav-item">
+                  <Link className="nav-link" to="/home">
+                    Home
+                  </Link>
+                </div>
+                <a
+                  className="nav-link"
+                  href="#"
+                  onClick={this.props.handleClick}
+                >
+                  Logout
+                </a>
+              </React.Fragment>
+            ) : (
+              <React.Fragment>
+                {/* The navbar will show these links before you log in */}
+                <Link to="/login">Login</Link>
+                <Link to="/signup">Sign Up</Link>
+                <Link to="/products">Products</Link>
+              </React.Fragment>
+            )}
+            <div className="nav-item">
+              <Link className="nav-link" to="/cart">
+                Cart
+              </Link>
+            </div>
+          </div>
         </nav>
         <hr />
       </div>
