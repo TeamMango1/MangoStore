@@ -6,7 +6,7 @@ const DELETED_ORDER = 'DELETED_ORDER'
 
 const initialState = []
 
-const gotOrders = users => ({type: GET_ORDERS, users})
+const gotOrders = orders => ({type: GET_ORDERS, orders})
 const editedStatus = order => ({type: EDITED_ORDER_STATUS, order})
 const deletedOrder = id => ({type: DELETED_ORDER, id})
 
@@ -15,8 +15,8 @@ const deletedOrder = id => ({type: DELETED_ORDER, id})
  */
 export const fetchOrders = () => async dispatch => {
   try {
-    const res = await axios.get('/api/orders')
-    dispatch(gotOrders(res.data || initialState))
+    const {data} = await axios.get('/api/orders')
+    dispatch(gotOrders(data))
   } catch (err) {
     console.error(err)
   }

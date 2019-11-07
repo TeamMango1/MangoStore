@@ -10,6 +10,7 @@ import userView from './userView'
 import allCategories from './categoryStore'
 import cart from './cartReducer'
 import selectedProductFilter from './selectedProductFilter'
+import orders from './orders'
 
 const reducer = combineReducers({
   user,
@@ -20,6 +21,7 @@ const reducer = combineReducers({
   selectedProductFilter,
   cart,
   allCategories,
+  orders
 })
 
 const middleware = composeWithDevTools(

@@ -1,17 +1,28 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {fetchOrders} from '../../store/orders'
+import AdminOrderRow from './AdminOrderRow'
 
 export class AdminOrders extends React.Component {
+  componentDidMount() {
+    this.props.loadOrders()
+  }
   render() {
-    return <h1>List of all orders for admins</h1>
+    return (
+      <ul>
+        {this.props.orders.map(order => {
+          return <AdminOrderRow key={order.id} order={order} />
+        })}
+      </ul>
+    )
   }
 }
 
-const mapState = () => {
-  return {}
+const mapState = state => {
+  return {orders: state.orders}
 }
-const mapDispatch = () => {
-  return {}
+const mapDispatch = dispatch => {
+  return {loadOrders: () => dispatch(fetchOrders())}
 }
 
 export default connect(mapState, mapDispatch)(AdminOrders)

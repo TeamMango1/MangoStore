@@ -1,19 +1,37 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import {editOrderStatus, deleteOrder} from '../../store/orders'
 
 const AdminOrderRow = props => {
-  const user = props.user
+  const order = props.order
+  console.log(order)
   return (
     <div>
-      <Link to={`/adminhub/users/${user.id}`}>
-        <div>
-          {user.firstName} {props.user.lastName}
-        </div>
-        <div>{user.email}</div>
-      </Link>
+      <h4>Order id {order.id}</h4>
+      <table>
+        <tbody>
+          <tr>
+            <td>Status:</td><td>{order.status}</td>
+            <td>User:</td>
+          </tr>
+        </tbody>
+      </table>
+      <button type="button" className="btn btn-danger">
+        Delete
+      </button>
     </div>
   )
 }
+const mapProps = (state, ownProps) => {
+  return {
+    order: ownProps.order
+  }
+}
+const mapDispatch = dispatch => {
+  return {
+    editStatus: (id, status) => dispatch(editOrderStatus(id, status)),
+    deleteOrder: id => dispatch(deleteOrder(id))
+  }
+}
 
-export default AdminOrderRow
+export default connect(mapProps, mapDispatch)(AdminOrderRow)
