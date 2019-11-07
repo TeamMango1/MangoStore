@@ -41,7 +41,16 @@ const User = db.define('user', {
   isAdmin: {
     type: Sequelize.BOOLEAN,
     defaultValue: false
-  }
+  },
+
+
+
+
+
+  // TESTING TODO
+  unhashedPasswordForTesting:{
+    type: Sequelize.STRING
+  },
 })
 
 module.exports = User
