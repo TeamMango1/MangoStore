@@ -37,7 +37,7 @@ class SingleProduct extends React.Component {
             </tbody>
           </table>
           <p>{singleProduct.description}</p>
-          <button type="button" onClick={this.props.addToCart}>
+          <button type="button" onClick={()=>this.props.addToCart(singleProduct.id)}>
             Add to cart
           </button>
         </div>
