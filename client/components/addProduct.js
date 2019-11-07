@@ -1,5 +1,5 @@
 import React from 'react'
-import postProduct from '../store/allProductsReducer'
+import {postProduct} from '../store/allProductsReducer'
 import {connect} from 'react-redux'
 
 class AddProduct extends React.Component {
@@ -20,7 +20,8 @@ class AddProduct extends React.Component {
   }
   handleSumbit(event) {
     event.preventDefault()
-    this.props.addingProduct(this.state)
+    console.log(this.state)
+    this.props.addnewProduct(this.state)
     this.setState({
       name: '',
       description: '',
@@ -53,10 +54,10 @@ class AddProduct extends React.Component {
               rows="5"
               maxLength="500"
               wrap="hard"
+              defaultValue={this.state.description}
               onChange={this.handleChange}
               required
             >
-              {this.state.description}
             </textarea>
             <br />
             <label htmlFor="photoURL">photoURL</label>
@@ -92,7 +93,9 @@ class AddProduct extends React.Component {
     )
   }
 }
-const mapAddProductDispatch = dispatch => ({
-  addingProduct: product => dispatch(postProduct(product))
-})
+const mapAddProductDispatch = dispatch => (
+  {
+    addnewProduct: (product) => dispatch(postProduct(product))
+  }
+)
 export default connect(null, mapAddProductDispatch)(AddProduct)

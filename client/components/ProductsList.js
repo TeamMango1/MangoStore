@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import { removeProduct } from '../store/allProductsReducer'
 
 const ProductsList = props => {
   const {id, name, photoURL, price} = props.product
@@ -19,8 +20,17 @@ const ProductsList = props => {
           <div>${price}</div>
         </div>
       </Link>
+      <div>
+        <button type="button" onClick={()=>props.delete(id)}> X </button>
+      </div>
     </div>
   )
 }
 
-export default ProductsList
+const mapDeleteDispatch = dispatch => (
+  {
+    delete:id => dispatch(removeProduct(id))
+  }
+)
+
+export default connect(null,mapDeleteDispatch)(ProductsList)
