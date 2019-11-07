@@ -1,23 +1,21 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 
-
 const ProductCard = props => {
   const {id, name, photoURL, categories, price} = props.product
   return (
-    <div>
+    <div className="col-4 card">
       <Link to={`/products/${id}`}>
         <div>
           <div>
-            <h3>{name}</h3>
+            <h3 className="card-title">{name}</h3>
           </div>
           <div>
             <div>
-              <img src={photoURL} />
+              <img className="card-image-top" src={photoURL} />
             </div>
           </div>
           <div>${price}</div>
-          <div>Category: {categories[0].name}</div>
         </div>
       </Link>
     </div>

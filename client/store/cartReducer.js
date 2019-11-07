@@ -18,7 +18,9 @@ export const fetchCart = function() {
   return async dispatch => {
     try {
       console.log('in reducer')
+
       let {data} = await axios.get(`/api/cart`)
+      console.log('DATA',data)
       dispatch(gotCart(data))
     } catch (error) {
       console.log(error)
