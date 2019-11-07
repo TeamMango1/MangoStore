@@ -17,10 +17,7 @@ export const removedFromCart = productId => ({
 export const fetchCart = function() {
   return async dispatch => {
     try {
-      console.log('in reducer')
-
       let {data} = await axios.get(`/api/cart`)
-      console.log('DATA',data)
       dispatch(gotCart(data))
     } catch (error) {
       console.log(error)
@@ -28,7 +25,7 @@ export const fetchCart = function() {
   }
 }
 
-export const addToCart = (productId) => {
+export const addToCart = productId => {
   return async dispatch => {
     try {
       let {data} = await axios.post(`/api/cart`, {productId})
@@ -39,11 +36,11 @@ export const addToCart = (productId) => {
   }
 }
 
-export const removeFromCart = (productId) => {
+export const removeFromCart = productId => {
   return async dispatch => {
     try {
-      let {data} = await axios.delete(`/api/cart`, {productId})
-      dispatch(removedFromCart(data))
+      await axios.delete(`/api/cart`, {data: {productId}})
+      dispatch(removedFromCart(productId))
     } catch (error) {
       console.log(error)
     }

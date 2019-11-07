@@ -56,7 +56,7 @@ router.delete('/', isLoggedIn, async (req, res, next) => {
     const cartOrder = await Order.findOne({
       where: {userId, status: CART}
     })
-    if(!cartOrder){
+    if (!cartOrder) {
       res.sendStatus(404) // no cart to delete from
       return
     }
