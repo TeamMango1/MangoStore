@@ -28,8 +28,11 @@ class SingleProduct extends React.Component {
                 <td>{singleProduct.inventory}</td>
               </tr>
               <tr>
-                <td>Category</td>
-                <td>{categories[0].name}</td>
+                {categories.length > 0 ? (
+                  <td>Category: {categories[0].name}</td>
+                ) : (
+                  <td />
+                )}
               </tr>
             </tbody>
           </table>
