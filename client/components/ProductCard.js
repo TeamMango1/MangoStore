@@ -2,8 +2,9 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-const ProductsList = props => {
-  const {id, name, photoURL, price} = props.product
+const ProductCard = props => {
+  const {id, name, photoURL, categories, price} = props.product
+
   return (
     <div>
       <Link to={`/products/${id}`}>
@@ -17,10 +18,11 @@ const ProductsList = props => {
             </div>
           </div>
           <div>${price}</div>
+          <div>Category: {categories[0].name}</div>
         </div>
       </Link>
     </div>
   )
 }
 
-export default ProductsList
+export default ProductCard

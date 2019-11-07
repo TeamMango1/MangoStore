@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Product, Review} = require('../db/models')
+const {Product, Category, Review} = require('../db/models')
 module.exports = router
 
 /**
@@ -7,7 +7,9 @@ module.exports = router
  */
 router.get('/', async (req, res, next) => {
   try {
-    const products = await Product.findAll()
+    const products = await Product.findAll({
+      include:[{model:Category}]
+    })
     res.json(products)
   } catch (err) {
     next(err)
@@ -30,8 +32,13 @@ router.get('/:id', async (req, res, next) => {
       include: [
         {
           model: Review,
-          as: 'review'
+          as: 'review',
+        },
+        {
+          model:Category,
+          as: 'categories'
         }
+
       ]
     })
     res.json(product)
