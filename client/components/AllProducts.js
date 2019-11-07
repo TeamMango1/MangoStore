@@ -5,13 +5,16 @@ import {fetchProducts} from '../store/allProductsReducer'
 import ProductList from './ProductList'
 import {setFilter, clearFilter} from '../store/selectedProductFilter'
 import {fetchCategories} from '../store/categoryStore'
-import {Link} from 'react-router-dom'
 
 export class Products extends React.Component {
   constructor() {
     super()
+    this.state = {
+      search: ''
+    }
 
     this.handleChange = this.handleChange.bind(this)
+    this.searchHandleChange = this.searchHandleChange.bind(this)
   }
   componentDidMount() {
     this.props.loadProducts()
@@ -22,16 +25,29 @@ export class Products extends React.Component {
     if (event.target.value === 'none') this.props.clearFilter()
     else this.props.setFilter(event.target.value)
   }
+  searchHandleChange(event) {
+    this.setState({
+      search: event.target.value
+    })
+  }
 
   render() {
-    const products = this.props.filter
-      ? this.props.allProducts.filter(product => {
-          for (let i = 0; i < product.categories.length; i++) {
-            if (product.categories[i].name === this.props.filter) return true
-          }
-          return false
-        })
-      : this.props.allProducts
+    let products = ''
+    if (this.state.search !== '') {
+      products = this.props.allProducts.filter(product =>
+        product.name.includes(this.state.search)
+      )
+    } else {
+      products = this.props.filter
+        ? this.props.allProducts.filter(product => {
+            for (let i = 0; i < product.categories.length; i++) {
+              if (product.categories[i].name === this.props.filter) return true
+            }
+            return false
+          })
+        : this.props.allProducts
+    }
+
     return (
       <div className="container">
         {this.props.isAdmin ? (
@@ -57,6 +73,13 @@ export class Products extends React.Component {
             return <option key={category.id}>{category.name}</option>
           })}
         </select>
+        <br />
+        <input
+          name="search"
+          onChange={this.searchHandleChange}
+          defaultValue={this.state.search}
+          placeholder="search"
+        />
         <div>
           <ProductList products={products} />
         </div>
