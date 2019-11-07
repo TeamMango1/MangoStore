@@ -34,7 +34,6 @@ class Navbar extends React.Component {
                     Home
                   </Link>
                 </div>
-
                 <a
                   className="nav-link"
                   href="#"

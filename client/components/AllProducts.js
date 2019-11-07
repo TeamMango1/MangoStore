@@ -1,6 +1,5 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/allProductsReducer'
 import ProductList from './ProductList'
 import {setFilter, clearFilter} from '../store/selectedProductFilter'
@@ -60,7 +59,6 @@ export class Products extends React.Component {
 const mapState = state => ({
   allProducts: state.allProducts,
   filter: state.selectedProductFilter,
-  isAdmin: state.user.isAdmin
 })
 
 const mapDispatch = dispatch => ({
