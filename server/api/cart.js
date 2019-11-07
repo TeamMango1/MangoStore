@@ -1,23 +1,6 @@
 const router = require('express').Router()
 const {Order, Product, ProductOrder} = require('../db/models')
-module.exports = router
-
-// order cart enum status
-
-// router.use((req, res, next) => {
-//   try {
-//     const id = req.user.dataValues.id
-//     // const id = req.session.passport.user;
-//     if (!id) {
-//       console.log('oof')
-//       res.sendStatus(403)
-//       throw new Error('User did a thing')
-//     }
-//     next()
-//   } catch (err) {
-//     next(err)
-//   }
-// })
+const {isLoggedIn} = require('./middleware')
 
 const CART = 'CART'
 
@@ -25,8 +8,8 @@ const CART = 'CART'
  *  GET a cart by user
  */
 
-router.get('/', async (req, res, next) => {
-  const id = req.user.dataValues.id
+router.get('/', isLoggedIn, async (req, res, next) => {
+  const id = req.user.id
   try {
     const carts = await Order.findAll({
       where: {userId: id, status: CART}
@@ -47,12 +30,16 @@ router.get('/', async (req, res, next) => {
  * add an item to cart
  */
 
-router.post('/', async (req, res, next) => {
+router.post('/', isLoggedIn, async (req, res, next) => {
   try {
-    const id = req.body.userId
-    const cartOrder = await Order.findOrCreate({userId: id, status: CART})
-    const product = await Product.findByPk(req.body.productId)
-    await cartOrder.addProduct(product)
+    const userId = req.user.id
+    const productId = req.body.productId
+    const cartOrders = await Order.findOrCreate({
+      where: {userId, status: CART}
+    })
+    const cartOrder = cartOrders[0]
+    await ProductOrder.findOrCreate({where: {orderId: cartOrder.id, productId}})
+    const product = await Product.findByPk(productId)
     res.json(product)
   } catch (error) {
     next(error)
@@ -63,14 +50,27 @@ router.post('/', async (req, res, next) => {
  * remove an item from the cart
  */
 
-router.delete('/', async (req, res, next) => {
+router.delete('/', isLoggedIn, async (req, res, next) => {
   try {
-    const id = req.body.userId
-    const cartOrder = await Order.findOrCreate({userId: id, status: CART})
-    const product = await Product.findByPk(req.body.productId)
-    await cartOrder.removeProduct(product)
-    res.json(product)
+    const userId = req.user.id
+    const cartOrder = await Order.findOne({
+      where: {userId, status: CART}
+    })
+    if(!cartOrder){
+      res.sendStatus(404) // no cart to delete from
+      return
+    }
+    const productId = req.body.productId
+    await ProductOrder.destroy({
+      where: {
+        orderId: cartOrder.id,
+        productId
+      }
+    })
+    res.sendStatus(200)
   } catch (error) {
     next(error)
   }
 })
+
+module.exports = router

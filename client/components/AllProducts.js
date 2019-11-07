@@ -4,6 +4,7 @@ import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/allProductsReducer'
 import ProductList from './ProductList'
 import {setFilter, clearFilter} from '../store/selectedProductFilter'
+import {Link} from 'react-router-dom'
 
 export class Products extends React.Component {
   constructor() {
@@ -59,7 +60,7 @@ export class Products extends React.Component {
 
 const mapState = state => ({
   allProducts: state.allProducts,
-  filter: state.selectedProductFilter,
+  filter: state.selectedProductFilter
 })
 
 const mapDispatch = dispatch => ({

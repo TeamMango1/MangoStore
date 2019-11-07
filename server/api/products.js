@@ -1,5 +1,6 @@
 const router = require('express').Router()
 const {Product, Category, Review} = require('../db/models')
+const {isAdmin} = require('./middleware')
 module.exports = router
 
 /**
@@ -8,7 +9,7 @@ module.exports = router
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll({
-      include:[{model:Category}]
+      include: [{model: Category}]
     })
     res.json(products)
   } catch (err) {
@@ -25,10 +26,10 @@ router.get('/:id', async (req, res, next) => {
       include: [
         {
           model: Review,
-          as: 'review',
+          as: 'review'
         },
         {
-          model:Category,
+          model: Category,
           as: 'categories'
         }
       ]
@@ -39,12 +40,7 @@ router.get('/:id', async (req, res, next) => {
   }
 })
 
-/**
- * post new product (/api/products/)
- * currently assumes that req.body is the same as the form
- */
-
-router.post('/', async (req, res, next) => {
+router.post('/', isAdmin, async (req, res, next) => {
   try {
     const newProduct = await Product.create(req.body)
     res.json(newProduct)
@@ -52,6 +48,7 @@ router.post('/', async (req, res, next) => {
     next(err)
   }
 })
+
 
 /**
  * POST new review on a product
@@ -76,7 +73,8 @@ router.post(`/:id`, async (req,res,next)=>{
  * edit product (/api/products/)
  * currently assumes that req.body is the same as the form
  */
-router.put('', async (req, res, next) => {
+
+router.put('', isAdmin, async (req, res, next) => {
   try {
     const product = await Product.update(
       {...req.body},
@@ -88,7 +86,7 @@ router.put('', async (req, res, next) => {
   }
 })
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', isAdmin, async (req, res, next) => {
   try {
     await Product.destroy({where: {id: req.params.id}})
     res.sendStatus(204)
