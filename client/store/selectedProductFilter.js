@@ -14,6 +14,7 @@ const initialState = null
 const reducer = (state = initialState, action)=>{
   switch(action.type){
     case SET_FILTER:
+      console.log('action.filter',action.filter)
       return action.filter
     case CLEAR_FILTER:
       return initialState;
