@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchProduct} from '../store/singleProduct'
+import {addToCart} from '../store/cartReducer'
 
 class SingleProduct extends React.Component {
   componentDidMount() {
@@ -36,7 +37,7 @@ class SingleProduct extends React.Component {
             </tbody>
           </table>
           <p>{singleProduct.description}</p>
-          <button type="button" onClick={this.props.addToCart}>
+          <button type="button" onClick={()=>this.props.addToCart(singleProduct.id)}>
             Add to cart
           </button>
         </div>
@@ -53,7 +54,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    addToCart: () => dispatch({type: 'TEMP'}),
+    addToCart: id => dispatch(addToCart(id)),
     fetchProduct: id => dispatch(fetchProduct(id))
   }
 }
