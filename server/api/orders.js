@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order, Product, ProductOrder} = require('../db/models')
+const {Order, Product, User, ProductOrder} = require('../db/models')
 const {isLoggedIn, isAdmin} = require('./middleware')
 
 const statuses = {
@@ -9,9 +9,20 @@ const statuses = {
   CART: 'CART'
 }
 
-router.get('/', isAdmin, async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
-    const Orders = await Order.findAll()
+    const Orders = await Order.findAll({
+      include: [
+        {
+          model: Product,
+          attributes: ['name']
+        },
+        {
+          model: User,
+          attributes: ['email', 'firstName', 'lastName']
+        }
+      ]
+    })
     res.json(Orders)
   } catch (err) {
     next(err)
@@ -40,7 +51,10 @@ router.delete('/', isAdmin, async (req, res, next) => {
   try {
     const id = req.body.orderId
     await Order.destroy({where: {id}})
+    res.sendStatus(200)
   } catch (err) {
     next(err)
   }
 })
+
+module.exports = router
