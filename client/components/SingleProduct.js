@@ -9,9 +9,12 @@ class SingleProduct extends React.Component {
   }
   render() {
     const {singleProduct} = this.props
-    let categories = singleProduct.categories
 
-    if(categories){
+    let categories = singleProduct.categories
+    let reviews = singleProduct.review
+
+
+    if(categories && reviews){
     return (
       <div>
         <img src={singleProduct.photoURL} />
@@ -30,9 +33,16 @@ class SingleProduct extends React.Component {
               <td>Category</td>
               <td>{categories[0].name}</td>
             </tr>
+
           </tbody>
         </table>
         <p>{singleProduct.description}</p>
+        <div>
+              <div>Reviews </div>
+              <div>{
+                reviews.map(review =>{return <p>{review.reviewText}</p>}
+                )}</div>
+          </div>
         <button type="button" onClick={this.props.addToCart}>
           Add to cart
         </button>
