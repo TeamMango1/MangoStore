@@ -7,14 +7,15 @@ import singleProduct from './singleProduct'
 import allProducts from './allProductsReducer'
 import allUsers from './allUsers'
 import userView from './userView'
+import allCategories from './categoryStore'
 import cart from './cartReducer'
-
 const reducer = combineReducers({
   user,
   allUsers,
   userView,
   allProducts,
   singleProduct,
+  allCategories,
   cart
 })
 
