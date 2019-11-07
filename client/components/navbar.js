@@ -20,7 +20,9 @@ class Navbar extends React.Component {
               <React.Fragment>
                 {/* The navbar will show these links after you log in */}
                 {this.props.isAdmin ? (
-                  <Link to="/adminhub">Manage Site</Link>
+                  <div className="nav-item">
+                    <Link className="nav-link" to="/adminhub">Manage Site</Link>
+                  </div>
                 ) : (
                   ''
                 )}
