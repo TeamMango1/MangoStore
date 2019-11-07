@@ -1,9 +1,11 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
+import {connect} from 'react-redux'
+import { removeProduct } from '../store/allProductsReducer'
 
-
-const ProductCard = props => {
+const AdminProductCard = props => {
   const {id, name, photoURL, categories, price} = props.product
+
   return (
     <div>
       <Link to={`/products/${id}`}>
@@ -20,8 +22,16 @@ const ProductCard = props => {
           <div>Category: {categories[0].name}</div>
         </div>
       </Link>
+      <div>
+        <button type="button" onClick={()=>props.delete(id)}> X </button>
+      </div>
     </div>
   )
 }
+const mapDeleteDispatch = dispatch => (
+  {
+    delete:id => dispatch(removeProduct(id))
+  }
+)
 
-export default ProductCard
+export default connect(null,mapDeleteDispatch)(AdminProductCard)

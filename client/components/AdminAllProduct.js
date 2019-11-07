@@ -1,11 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {fetchProducts} from '../store/allProductsReducer'
-import ProductList from './ProductList'
+import AdminProductList from './AdminProductList'
 import {setFilter,clearFilter} from '../store/selectedProductFilter'
 
 
-export class Products extends React.Component {
+export class AdminProducts extends React.Component {
   constructor(){
     super()
 
@@ -17,7 +18,6 @@ export class Products extends React.Component {
 
   handleChange(event){
     console.log('EVENTTARGETVALUE',event.target.value)
-
     if(event.target.value === 'none') this.props.clearFilter()
     else this.props.setFilter(event.target.value)
   }
@@ -29,24 +29,29 @@ export class Products extends React.Component {
       }
       return false
     }):this.props.allProducts
-
-      return (
+    return (
+      <div>
         <div>
-          <select onChange={this.handleChange}>
-          <option>none</option>
-          <option>rem</option>
-          <option>quo</option>
-          <option>unde</option>
-          </select>
-          < ProductList products={products} />
+          <Link to="/product/add">ADD PRODUCTS</Link>
+          <br/>
+          <Link to="/categories">CATEGORIES</Link>
         </div>
-      )
+        <select onChange={this.handleChange}>
+        <option>none</option>
+        <option>rem</option>
+        <option>quo</option>
+        <option>unde</option>
+        </select>
+        < AdminProductList products={products} />
+      </div>
+    )
   }
 }
 
 const mapState = state => ({
   allProducts: state.allProducts,
   filter: state.selectedProductFilter,
+  isAdmin: state.user.isAdmin
 })
 
 const mapDispatch = dispatch => ({
@@ -55,4 +60,4 @@ const mapDispatch = dispatch => ({
   clearFilter: () => dispatch(clearFilter())
 })
 
-export default connect(mapState, mapDispatch)(Products)
+export default connect(mapState, mapDispatch)(AdminProducts)
