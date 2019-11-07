@@ -37,12 +37,12 @@ export class Products extends React.Component {
           <div className="row">
             <div className="col-4">
               <Link className="nav-link" to="/product/add">
-                ADD PRODUCTS
+                ADD PRODUCT
               </Link>
             </div>
             <div className="col-4">
               <Link className="nav-link" to="/categories">
-                CATEGORIES
+                ADD CATEGORY
               </Link>
             </div>
           </div>
