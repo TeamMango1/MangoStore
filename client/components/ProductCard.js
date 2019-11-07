@@ -23,4 +23,4 @@ const ProductCard = props => {
   )
 }
 
-export default connect(mapstate,mapDispatch)(ProductCard)
+export default ProductCard
