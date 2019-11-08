@@ -1,4 +1,7 @@
 import React from 'react'
+import {connect} from 'react-redux'
+import {resetPassword} from '../store/allUsers'
+import {withRouter} from 'react-router'
 
 class PasswordReset extends React.Component {
   constructor() {
@@ -25,6 +28,9 @@ class PasswordReset extends React.Component {
     evt.preventDefault()
     if (this.state.pass1 !== this.state.pass2) {
       alert('passwords must match')
+    } else {
+      this.props.resetPassword(this.props.id, this.state.pass1)
+      this.props.history.push('/products')
     }
   }
   render() {
@@ -57,4 +63,16 @@ class PasswordReset extends React.Component {
   }
 }
 
-export default PasswordReset
+const mapState = state => {
+  return {
+    id: state.user.id
+  }
+}
+
+const mapDispatch = dispatch => {
+  return {
+    resetPassword: (id, password) => dispatch(resetPassword(id, password))
+  }
+}
+
+export default withRouter(connect(mapState, mapDispatch)(PasswordReset))

@@ -79,17 +79,40 @@ router.patch('/:userId', isAdmin, async (req, res, next) => {
 })
 
 /**
- *  PATCH trigger password reset single user (api/users/passwordreset/:id)
+ *  PATCH trigger password reset single user (api/users/triggerpasswordreset/:id)
  */
 
-router.patch('/passwordreset/:userId', isAdmin, async (req, res, next) => {
+router.patch(
+  '/triggerpasswordreset/:userId',
+  isAdmin,
+  async (req, res, next) => {
+    try {
+      await User.update(
+        {
+          passwordReset: true
+        },
+        {where: {id: req.body.userId}}
+      )
+      res.sendStatus(200)
+    } catch (error) {
+      next(error)
+    }
+  }
+)
+
+/**
+ *  PATCH reset password single user (api/users/passwordreset/:id)
+ */
+
+router.patch('/passwordreset/:userId', async (req, res, next) => {
   try {
-    await User.update(
-      {
-        passwordReset: true
-      },
-      {where: {id: req.body.userId}}
-    )
+    const user = await User.findByPk(req.body.userId)
+
+    await user.update({
+      password: req.body.password,
+      passwordReset: false
+    })
+
     res.sendStatus(200)
   } catch (error) {
     next(error)
