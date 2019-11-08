@@ -1,6 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchUsers, deleteUser, promoteUser} from '../../store/allUsers'
+import {
+  fetchUsers,
+  deleteUser,
+  promoteUser,
+  triggerPasswordReset
+} from '../../store/allUsers'
 import AdminUserCard from './AdminUserCard'
 
 class AllUsers extends React.Component {
@@ -17,6 +22,7 @@ class AllUsers extends React.Component {
               user={user}
               deleteUser={this.props.deleteUser}
               promoteUser={this.props.promoteUser}
+              triggerPasswordReset={this.props.triggerPasswordReset}
             />
           ))}
         </div>
@@ -35,7 +41,8 @@ const mapDispatch = dispatch => {
   return {
     loadUsers: () => dispatch(fetchUsers()),
     deleteUser: id => dispatch(deleteUser(id)),
-    promoteUser: id => dispatch(promoteUser(id))
+    promoteUser: id => dispatch(promoteUser(id)),
+    triggerPasswordReset: id => dispatch(triggerPasswordReset(id))
   }
 }
 

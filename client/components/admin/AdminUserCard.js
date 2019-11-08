@@ -12,7 +12,11 @@ const UserCard = props => {
       <div>{user.email}</div>
       <div className="container">
         <div className="row">
-          <button type="button" className="btn btn-primary col-4">
+          <button
+            type="button"
+            className="btn btn-primary col-4"
+            onClick={() => props.triggerPasswordReset(user.id)}
+          >
             Reset
           </button>
           <button

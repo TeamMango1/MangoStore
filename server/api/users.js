@@ -61,7 +61,7 @@ router.delete('/:userId', isAdmin, async (req, res, next) => {
 })
 
 /**
- *  PATCH single user (api/users/:id)
+ *  PATCH promote single user (api/users/:id)
  */
 
 router.patch('/:userId', isAdmin, async (req, res, next) => {
@@ -69,6 +69,25 @@ router.patch('/:userId', isAdmin, async (req, res, next) => {
     await User.update(
       {
         isAdmin: true
+      },
+      {where: {id: req.body.userId}}
+    )
+    const users = await User.findAll()
+    res.json(users)
+  } catch (error) {
+    next(error)
+  }
+})
+
+/**
+ *  PATCH trigger password reset single user (api/users/passwordreset/:id)
+ */
+
+router.patch('/passwordreset/:userId', isAdmin, async (req, res, next) => {
+  try {
+    await User.update(
+      {
+        passwordReset: true
       },
       {where: {id: req.body.userId}}
     )

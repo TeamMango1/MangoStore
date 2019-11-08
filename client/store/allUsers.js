@@ -50,6 +50,15 @@ export const promoteUser = function(userId) {
   }
 }
 
+export const triggerPasswordReset = function(userId) {
+  return async dispatch => {
+    const {data} = await axios.patch(`/api/users/passwordreset/${userId}`, {
+      userId
+    })
+    dispatch(getUsers(data))
+  }
+}
+
 /**
  * REDUCER
  */
