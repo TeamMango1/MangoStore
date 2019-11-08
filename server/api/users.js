@@ -72,8 +72,7 @@ router.patch('/:userId', isAdmin, async (req, res, next) => {
       },
       {where: {id: req.body.userId}}
     )
-    const users = await User.findAll()
-    res.json(users)
+    res.sendStatus(200)
   } catch (error) {
     next(error)
   }
@@ -91,8 +90,7 @@ router.patch('/passwordreset/:userId', isAdmin, async (req, res, next) => {
       },
       {where: {id: req.body.userId}}
     )
-    const users = await User.findAll()
-    res.json(users)
+    res.sendStatus(200)
   } catch (error) {
     next(error)
   }

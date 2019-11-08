@@ -13,7 +13,8 @@ import {
   AddProduct,
   Categories,
   Cart,
-  AdminHub
+  AdminHub,
+  PasswordReset
 } from './components'
 import {me} from './store'
 
@@ -48,6 +49,7 @@ class Routes extends Component {
             <Route exact path="/cart" component={Cart} />
             <Route exact path="/product/add" component={AddProduct} />
             <Route exact path="/categories" component={Categories} />
+            <Route exact path="/passwordreset" component={PasswordReset} />
             {isAdmin && <Route path="/adminhub" component={AdminHub} />}
           </Switch>
         )}
