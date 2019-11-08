@@ -6,7 +6,6 @@ module.exports = router
 /**
  *  GET all users (api/users)
  */
-
 router.get('/', isAdmin, async (req, res, next) => {
   try {
     let allUsers = await User.findAll()
@@ -49,6 +48,7 @@ router.put('/:userId', async (req, res, next) => {
 /**
  *  DELETE single user (api/users/:id)
  */
+
 
 router.delete('/:userId', isAdmin, async (req, res, next) => {
   try {

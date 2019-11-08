@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {fetchProducts} from '../../store/allProductsReducer'
 import {fetchCategories} from '../../store/categoryStore'
+
 import AdminProductList from './AdminProductList'
 import {setFilter, clearFilter} from '../../store/selectedProductFilter'
 
@@ -43,6 +44,7 @@ export class AdminProducts extends React.Component {
           {this.props.categories.map(category => {
             return <option key={category.id}>{category.name}</option>
           })}
+
         </select>
         <AdminProductList products={products} />
       </div>

@@ -72,13 +72,13 @@ router.post(`/:id`, async (req, res, next) => {
  * currently assumes that req.body is the same as the form
  */
 
-router.put('', isAdmin, async (req, res, next) => {
+router.put('/:id', isAdmin, async (req, res, next) => {
   try {
     const product = await Product.update(
       {...req.body},
       {returning: true, where: {id: req.body.id}}
     )
-    res.json(product)
+    res.json(product).status(204)
   } catch (err) {
     next(err)
   }
