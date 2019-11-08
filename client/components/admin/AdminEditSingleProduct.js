@@ -73,6 +73,13 @@ class EditSingleProduct extends React.Component{
               value={this.state.inventory}
               onChange={this.handleChange}
             />
+            <br/>
+            <label htmlFor="availibility">availibility</label>
+            <br/>
+            <select name="availibility" value={this.state.availibility} onChange={this.handleChange}>
+              <option value={true}>True</option>
+              <option value={false}>False</option>
+            </select>
             <button type="submit">SUBMIT</button>
           </form>
       </div>

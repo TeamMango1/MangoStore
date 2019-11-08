@@ -10,7 +10,8 @@ class AddProduct extends React.Component {
       description: '',
       photoURL: '',
       price: 0.0,
-      inventory: 1
+      inventory: 1,
+      availibility:true
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSumbit = this.handleSumbit.bind(this)
@@ -26,7 +27,8 @@ class AddProduct extends React.Component {
       description: '',
       photoURL: '',
       price: 0.0,
-      inventory: 1
+      inventory: 1,
+      availibility: true
     })
   }
   render() {
@@ -85,6 +87,13 @@ class AddProduct extends React.Component {
               value={this.state.inventory}
               onChange={this.handleChange}
             />
+            <br/>
+            <label htmlFor="availibility">availibility</label>
+            <br />
+            <select name='availibility' onChange={this.handleChange}>
+              <option value={true} selected>TRUE</option>
+              <option value={false}>FALSE</option>
+            </select>
             <button type="submit">ADD THIS PRODUCT NOW!!!</button>
           </form>
         </div>
