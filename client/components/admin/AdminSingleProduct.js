@@ -1,6 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchProduct} from '../../store/singleProduct'
+import {Link} from 'react-router-dom'
+
 
 class SingleProduct extends React.Component {
   componentDidMount() {
@@ -14,6 +16,7 @@ class SingleProduct extends React.Component {
     if(categories){
     return (
       <div>
+        <Link to={`/adminhub/products/${singleProduct.id}/edit`}>EDIT</Link>
         <img src={singleProduct.photoURL} />
         <h1>{singleProduct.name}</h1>
         <table>

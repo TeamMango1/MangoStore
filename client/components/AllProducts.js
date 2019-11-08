@@ -35,7 +35,7 @@ export class Products extends React.Component {
     let products = ''
     if (this.state.search !== '') {
       products = this.props.allProducts.filter(product =>
-        product.name.includes(this.state.search)
+        product.name.toLowerCase().includes(this.state.search.toLowerCase())
       )
     } else {
       products = this.props.filter
@@ -50,23 +50,6 @@ export class Products extends React.Component {
 
     return (
       <div className="container">
-        {this.props.isAdmin ? (
-          <div className="row">
-            <div className="col-4">
-              <Link className="nav-link" to="/product/add">
-                ADD PRODUCT
-              </Link>
-            </div>
-            <div className="col-4">
-              <Link className="nav-link" to="/categories">
-                ADD CATEGORY
-              </Link>
-            </div>
-          </div>
-        ) : (
-          <div />
-        )}
-
         <select className="col-4 custom-select" onChange={this.handleChange}>
           <option>none</option>
           {this.props.categories.map(category => {

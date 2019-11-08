@@ -1,7 +1,9 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-import {removeProduct} from '../../store/allProductsReducer'
+
+import { removeProduct } from '../../store/allProductsReducer'
+
 
 const AdminProductCard = props => {
   const {id, name, photoURL, categories, price} = props.product
@@ -29,6 +31,7 @@ const AdminProductCard = props => {
     </div>
   )
 }
+
 const mapDeleteDispatch = dispatch => ({
   delete: id => dispatch(removeProduct(id))
 })
