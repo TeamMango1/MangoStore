@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Dialog from 'react-bootstrap-dialog'
+import {Link} from "react-router-dom"
 
 import {editOrderStatus, deleteOrder} from '../../store/orders'
 
@@ -22,7 +23,6 @@ class AdminOrderRow extends React.Component {
   }
   handleSelectChange(event) {
     const value = event.target.value
-    console.log(value)
     this.setState({toBeConfirmed: value})
     this.dialog.show({
       body: `Change the status of this order to ${toTitle(
@@ -52,7 +52,7 @@ class AdminOrderRow extends React.Component {
     const order = this.props.order
     return (
       <div className="col-4 card">
-        <h4>Order {order.id}</h4>
+        <Link to = {`orders/${order.id}`}><h4>Order {order.id}</h4></Link>
         <table>
           <tbody>
             <tr>
