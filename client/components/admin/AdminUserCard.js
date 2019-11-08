@@ -2,7 +2,6 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-
 const UserCard = props => {
   const user = props.user
   return (
@@ -16,7 +15,11 @@ const UserCard = props => {
           <button type="button" className="btn btn-primary col-4">
             Reset
           </button>
-          <button type="button" className="btn btn-success col-4">
+          <button
+            type="button"
+            className="btn btn-success col-4"
+            onClick={() => props.promoteUser(user.id)}
+          >
             Promote
           </button>
           <button

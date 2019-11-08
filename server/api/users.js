@@ -49,13 +49,31 @@ router.put('/:userId', async (req, res, next) => {
  *  DELETE single user (api/users/:id)
  */
 
-
 router.delete('/:userId', isAdmin, async (req, res, next) => {
   try {
     await User.destroy({
       where: {id: req.body.userId}
     })
     res.sendStatus(200)
+  } catch (error) {
+    next(error)
+  }
+})
+
+/**
+ *  PATCH single user (api/users/:id)
+ */
+
+router.patch('/:userId', isAdmin, async (req, res, next) => {
+  try {
+    await User.update(
+      {
+        isAdmin: true
+      },
+      {where: {id: req.body.userId}}
+    )
+    const users = await User.findAll()
+    res.json(users)
   } catch (error) {
     next(error)
   }

@@ -39,6 +39,17 @@ export const deleteUser = function(userId) {
   }
 }
 
+export const promoteUser = function(userId) {
+  return async dispatch => {
+    try {
+      const {data} = await axios.patch(`/api/users/${userId}`, {userId})
+      dispatch(getUsers(data))
+    } catch (error) {
+      console.log(error)
+    }
+  }
+}
+
 /**
  * REDUCER
  */
