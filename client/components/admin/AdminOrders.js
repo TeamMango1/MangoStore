@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchOrders} from '../../store/orders'
-import AdminOrderRow from './AdminOrderRow'
+import AdminOrderRow from './AdminOrderCard'
 
 export class AdminOrders extends React.Component {
   componentDidMount() {
@@ -9,11 +9,13 @@ export class AdminOrders extends React.Component {
   }
   render() {
     return (
-      <ul>
-        {this.props.orders.map(order => {
-          return <AdminOrderRow key={order.id} order={order} />
-        })}
-      </ul>
+      <div className="container">
+        <div className="row">
+          {this.props.orders.map(order => {
+            return <AdminOrderRow key={order.id} order={order} />
+          })}
+        </div>
+      </div>
     )
   }
 }
