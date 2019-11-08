@@ -21,6 +21,7 @@ export class AdminOrders extends React.Component {
 const mapState = state => {
   return {orders: state.orders}
 }
+
 const mapDispatch = dispatch => {
   return {loadOrders: () => dispatch(fetchOrders())}
 }
