@@ -50,23 +50,6 @@ export class Products extends React.Component {
 
     return (
       <div className="container">
-        {this.props.isAdmin ? (
-          <div className="row">
-            <div className="col-4">
-              <Link className="nav-link" to="/product/add">
-                ADD PRODUCT
-              </Link>
-            </div>
-            <div className="col-4">
-              <Link className="nav-link" to="/categories">
-                ADD CATEGORY
-              </Link>
-            </div>
-          </div>
-        ) : (
-          <div />
-        )}
-
         <select className="col-4 custom-select" onChange={this.handleChange}>
           <option>none</option>
           {this.props.categories.map(category => {

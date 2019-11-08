@@ -21,7 +21,7 @@ class Navbar extends React.Component {
                 {/* The navbar will show these links after you log in */}
                 {this.props.isAdmin ? (
                   <div className="nav-item">
-                    <Link className="nav-link" to="/adminhub">Manage Site</Link>
+                    <Link className="nav-link" to="/adminhub/products">Manage Site</Link>
                   </div>
                 ) : (
                   ''
