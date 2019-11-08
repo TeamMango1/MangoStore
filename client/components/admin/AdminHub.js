@@ -5,6 +5,7 @@ import {
   AdminNavbar,
   AdminProducts,
   AdminSingleProduct,
+  AdminEditSingleProduct,
   AdminUsers,
   AdminSingleUser,
   AdminOrders
@@ -17,7 +18,8 @@ class AdminHub extends React.Component {
         <AdminNavbar />
         <Switch>
           <Route exact path="/adminhub/products" component={AdminProducts} />
-          <Route path="/adminhub/products/:id" component={AdminSingleProduct} />
+          <Route exact path="/adminhub/products/:id" component={AdminSingleProduct} />
+          <Route path="/adminhub/products/:id/edit" component={AdminEditSingleProduct}/>
 
           <Route exact path="/adminhub/users" component={AdminUsers} />
           <Route path="/adminhub/users/:id" component={AdminSingleUser} />
