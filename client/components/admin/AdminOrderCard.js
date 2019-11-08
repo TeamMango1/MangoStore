@@ -3,7 +3,6 @@ import {connect} from 'react-redux'
 import Dialog from 'react-bootstrap-dialog'
 
 import {editOrderStatus, deleteOrder} from '../../store/orders'
-import DialogAction from 'react-bootstrap-dialog/dist/DialogAction'
 
 const toTitle = upper =>
   upper[0].toUpperCase() + upper.substring(1).toLowerCase()
@@ -11,12 +10,10 @@ const toTitle = upper =>
 class AdminOrderRow extends React.Component {
   constructor() {
     super()
-    console.log(this.props)
     this.state = {
       toBeConfirmed: null,
       option: 'CART'
     }
-
     this.handleSelectChange = this.handleSelectChange.bind(this)
     this.handleCancelChange = this.handleCancelChange.bind(this)
   }
@@ -53,7 +50,6 @@ class AdminOrderRow extends React.Component {
   }
   render() {
     const order = this.props.order
-    console.log(order)
     return (
       <div className="col-4 card">
         <h4>Order {order.id}</h4>

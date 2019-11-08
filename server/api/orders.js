@@ -11,7 +11,7 @@ const statuses = {
 
 router.get('/', async (req, res, next) => {
   try {
-    const Orders = await Order.findAll({
+    let query = {
       include: [
         {
           model: Product,
@@ -22,7 +22,9 @@ router.get('/', async (req, res, next) => {
           attributes: ['email', 'firstName', 'lastName']
         }
       ]
-    })
+    }
+    if (Object.keys(req.query).length !== 0) query.where = {status: req.query.status}
+    const Orders = await Order.findAll(query)
     res.json(Orders)
   } catch (err) {
     next(err)

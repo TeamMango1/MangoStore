@@ -1,7 +1,7 @@
 import React from 'react'
 import AdminProductCard from './AdminProductCard'
 
-export default class ProductList extends React.Component {
+export default class AdminProductList extends React.Component {
   render() {
     return (
       <div className="container">
