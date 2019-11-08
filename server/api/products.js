@@ -49,22 +49,20 @@ router.post('/', isAdmin, async (req, res, next) => {
   }
 })
 
-
 /**
  * POST new review on a product
  */
 
-router.post(`/:id`, async (req,res,next)=>{
-  try{
-    console.log('REQ.BODY::::',req.body)
+router.post(`/:id`, async (req, res, next) => {
+  try {
     const newReview = await Review.create({
       reviewText: req.body.review.reviewText,
-      rating:req.body.review.ratings,
-      userId:req.body.userId,
+      rating: req.body.review.ratings,
+      userId: req.body.userId,
       productId: req.params.id
     })
     res.json(newReview)
-  } catch (error){
+  } catch (error) {
     next(error)
   }
 })

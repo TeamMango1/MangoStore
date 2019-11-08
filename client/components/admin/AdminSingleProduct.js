@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import {fetchProduct} from '../../store/singleProduct'
 import {Link} from 'react-router-dom'
 
+
 class SingleProduct extends React.Component {
   componentDidMount() {
     const projectId = this.props.match.params.id
@@ -38,7 +39,8 @@ class SingleProduct extends React.Component {
         <button type="button" onClick={this.props.addToCart}>
           Add to cart
         </button>
-      </div>)
+      </div>
+    )
     } else return <div></div>
   }
 }

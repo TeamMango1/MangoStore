@@ -24,6 +24,7 @@ class AdminHub extends React.Component {
           <Route exact path="/adminhub/users" component={AdminUsers} />
           <Route path="/adminhub/users/:id" component={AdminSingleUser} />
 
+
           <Route path="/adminhub/orders" component={AdminOrders} />
         </Switch>
       </React.Fragment>
