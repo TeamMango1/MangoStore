@@ -35,7 +35,7 @@ export class Products extends React.Component {
     let products = ''
     if (this.state.search !== '') {
       products = this.props.allProducts.filter(product =>
-        product.name.includes(this.state.search)
+        product.name.toLowerCase().includes(this.state.search.toLowerCase())
       )
     } else {
       products = this.props.filter
