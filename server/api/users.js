@@ -49,12 +49,70 @@ router.put('/:userId', async (req, res, next) => {
  *  DELETE single user (api/users/:id)
  */
 
-
 router.delete('/:userId', isAdmin, async (req, res, next) => {
   try {
     await User.destroy({
       where: {id: req.body.userId}
     })
+    res.sendStatus(200)
+  } catch (error) {
+    next(error)
+  }
+})
+
+/**
+ *  PATCH promote single user (api/users/:id)
+ */
+
+router.patch('/:userId', isAdmin, async (req, res, next) => {
+  try {
+    await User.update(
+      {
+        isAdmin: true
+      },
+      {where: {id: req.body.userId}}
+    )
+    res.sendStatus(200)
+  } catch (error) {
+    next(error)
+  }
+})
+
+/**
+ *  PATCH trigger password reset single user (api/users/triggerpasswordreset/:id)
+ */
+
+router.patch(
+  '/triggerpasswordreset/:userId',
+  isAdmin,
+  async (req, res, next) => {
+    try {
+      await User.update(
+        {
+          passwordReset: true
+        },
+        {where: {id: req.body.userId}}
+      )
+      res.sendStatus(200)
+    } catch (error) {
+      next(error)
+    }
+  }
+)
+
+/**
+ *  PATCH reset password single user (api/users/passwordreset/:id)
+ */
+
+router.patch('/passwordreset/:userId', async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.body.userId)
+
+    await user.update({
+      password: req.body.password,
+      passwordReset: false
+    })
+
     res.sendStatus(200)
   } catch (error) {
     next(error)

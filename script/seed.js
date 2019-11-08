@@ -31,6 +31,7 @@ const createUser = async () => {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       isAdmin: faker.random.boolean(),
+      passwordReset: false,
 
       // TESTING TODO
       unhashedPasswordForTesting: pass
