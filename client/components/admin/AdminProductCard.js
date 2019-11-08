@@ -2,12 +2,16 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
 
-import { removeProduct } from '../../store/allProductsReducer'
-
+import {removeProduct} from '../../store/allProductsReducer'
 
 const AdminProductCard = props => {
-  const {id, name, photoURL, categories, price} = props.product
-
+  const {id, name, photoURL, price} = props.product
+  let click,
+    special = false
+  if (props.diffClick) {
+    click = props.diffClick(props.product)
+    special = true
+  }
   return (
     <div className="col-4 card">
       <Link to={`/adminhub/products/${id}`}> {name}</Link>
@@ -17,23 +21,27 @@ const AdminProductCard = props => {
         </div>
       </div>
       <div>${price}</div>
-      <div>Category: {categories[0].name}</div>
       <div>
         <button
           type="button"
           className="btn btn-danger"
-          onClick={() => props.delete(id)}
+          onClick={() => {
+            special ? click() : props.delete(id)
+          }}
         >
-          {' '}
-          Remove Product{' '}
+          {` ${props.buttonName} `}
         </button>
       </div>
     </div>
   )
 }
+const mapState = (state, own) => ({
+  buttonName: own.buttonName ? own.buttonName : 'Remove Product',
+  diffClick: own.click ? own.click : false
+})
 
 const mapDeleteDispatch = dispatch => ({
   delete: id => dispatch(removeProduct(id))
 })
 
-export default connect(null, mapDeleteDispatch)(AdminProductCard)
+export default connect(mapState, mapDeleteDispatch)(AdminProductCard)
