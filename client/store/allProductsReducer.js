@@ -1,5 +1,5 @@
 import axios from 'axios'
-
+import history from '../history';
 const initialState = []
 
 //action type
@@ -56,6 +56,7 @@ export const updateProduct = (product, id) =>{
     try{
       await axios.put(`/api/products/${id}`, product)
       dispatch(editProduct(product, id))
+      history.push('/adminhub/products')
     } catch(err){
       console.log('ERROR',err)
     }
