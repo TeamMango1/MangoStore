@@ -1,19 +1,25 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import Dialog from 'react-bootstrap-dialog'
+
 import {editOrderStatus, deleteOrder} from '../../store/orders'
 
 class AdminOrderRow extends React.Component {
   constructor() {
     super()
     this.state = {
+      toBeConfirmed: null,
       option: ''
     }
-    this.handleChange = this.handleChange.bind(this)
+    this.handleSelectChange = this.handleSelectChange.bind(this)
   }
-  handleChange(event) {
+  handleSelectChange(event) {
     const value = event.target.value
-
-    
+    this.setState({toBeConfirmed: value})
+    this.dialog.showAlert('Hello There')
+  }
+  handleConfirmChange(event) {
+    console.log(event)
   }
   render() {
     const order = this.props.order
@@ -33,7 +39,12 @@ class AdminOrderRow extends React.Component {
         <button type="button" className="btn btn-danger">
           Delete
         </button>
-        <select onChange={() => {}}>
+        <Dialog
+          ref={el => {
+            this.dialog = el
+          }}
+        />
+        <select onChange={this.handleSelectChange}>
           <option>Cart</option>
           <option>Processing</option>
           <option>Completed</option>
