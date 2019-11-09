@@ -1,7 +1,13 @@
+import axios from 'axios'
+
+//ACTION TYPE
 const GET_SINGLE_ORDER = 'GET_SINGLE_ORDER'
 
-const gotSingleOrder = order => ({type: GET_SINGLE_ORDER, order})
+//ACTION TYPE
+export const gotSingleOrder = order => ({type: GET_SINGLE_ORDER, order})
 
+
+//THUNK
 export const fetchSingleOrder = id => async dispatch => {
   try {
     console.log(id)
@@ -12,8 +18,11 @@ export const fetchSingleOrder = id => async dispatch => {
   }
 }
 
+
+
 let initialState = {}
 
+//REDUCER
 export default function(state = initialState, action) {
   switch (action.type) {
     case GET_SINGLE_ORDER:
@@ -22,3 +31,5 @@ export default function(state = initialState, action) {
       return state
   }
 }
+
+

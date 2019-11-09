@@ -13,7 +13,6 @@ export class UserHome extends React.Component {
   }
   componentDidMount() {
     this.props.loadSingleUserOrders()
-    console.log('PROPSSS', this.props)
   }
 
   handleChange(event) {
@@ -22,7 +21,6 @@ export class UserHome extends React.Component {
   }
 
   render() {
-    console.log('RENDERPROPS:', this.props)
 
     const {passwordReset} = this.props
     let orders = this.props.filter

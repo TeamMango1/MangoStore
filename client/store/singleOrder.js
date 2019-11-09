@@ -3,12 +3,8 @@ import axios from 'axios'
 const GOT_ORDER = 'GOT_ORDER'
 const REMOVED_PRODUCT_FROM_ORDER = 'REMOVED_PRODUCT_FROM_ORDER'
 
-const initialState = {
-  products: [],
-  user: {email: 'loading...'}
-}
-
 export const gotOrder = order => ({type: GOT_ORDER, order})
+
 export const removedProduct = productId => ({
   type: REMOVED_PRODUCT_FROM_ORDER,
   productId
@@ -41,6 +37,11 @@ export const removeProductFromOrder = (
   } catch (err) {
     console.log(err)
   }
+}
+
+const initialState = {
+  products: [],
+  user: {email: 'loading...'}
 }
 
 export default function(state = initialState, action) {
