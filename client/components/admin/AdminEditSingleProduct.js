@@ -3,7 +3,7 @@ import {connect} from 'react-redux'
 import {fetchProduct} from '../../store/singleProduct'
 import {updateProduct} from '../../store/allProductsReducer'
 import {fetchCategories} from '../../store/categoryStore'
-import {assignCategory} from '../../store/assignCategory'
+import {assignCategory, unassignCategory} from '../../store/assignCategory'
 import Select from 'react-select'
 class EditSingleProduct extends React.Component {
   constructor() {
@@ -12,6 +12,7 @@ class EditSingleProduct extends React.Component {
     this.handleChange = this.handleChange.bind(this)
     this.handleSumbit = this.handleSumbit.bind(this)
     this.handleAssignCategory = this.handleAssignCategory.bind(this)
+    this.handleUnassignCategory = this.handleUnassignCategory.bind(this)
   }
   componentDidMount() {
     this.props.loadcategories()
@@ -29,6 +30,10 @@ class EditSingleProduct extends React.Component {
     this.props.setcategory(category.value, this.props.match.params.id)
     this.props.loadSingleProduct(this.props.match.params.id)
   }
+  handleUnassignCategory(category){
+    this.props.removecategory(category.value,this.props.match.params.id)
+    this.props.loadSingleProduct(this.props.match.params.id)
+  }
   render() {
     const categorylist = this.props.categories.map(category => {
       return {value: category.id, label: category.name}
@@ -37,14 +42,17 @@ class EditSingleProduct extends React.Component {
       if (this.props.product.categories.length === 0) return true
       else if (
         this.props.product.categories.every(
-          category => category.id !== option.value))return true
+          category => category.id !== option.value
+        )
+      )
+        return true
       return false
     })
     let deleteoptions = categorylist.filter(option => {
       if (this.props.product.categories.length === 0) return false
-      else{
-        for(let i = 0; i <this.props.product.categories.length; i++){
-          if (this.props.product.categories[i].id===(option.value)) return true
+      else {
+        for (let i = 0; i < this.props.product.categories.length; i++) {
+          if (this.props.product.categories[i].id === option.value) return true
         }
       }
       return false
@@ -113,7 +121,6 @@ class EditSingleProduct extends React.Component {
           </select>
           <button type="submit">SUBMIT</button>
         </form>
-
         <br />
         <h3>Add Categories</h3>
         <br />
@@ -121,7 +128,7 @@ class EditSingleProduct extends React.Component {
         <br />
         <h3>Remove Categories</h3>
         <br />
-        <Select options={deleteoptions} />
+        <Select options={deleteoptions} onChange={this.handleUnassignCategory} />
       </div>
     )
   }
@@ -135,7 +142,9 @@ const mapDispatch = dispatch => ({
   edit: (product, id) => dispatch(updateProduct(product, id)),
   loadcategories: () => dispatch(fetchCategories()),
   setcategory: (categoryId, productId) =>
-    dispatch(assignCategory(categoryId, productId))
+    dispatch(assignCategory(categoryId, productId)),
+  removecategory: (categoryId, productId) =>
+    dispatch(unassignCategory(categoryId, productId))
 })
 
 export default connect(mapState, mapDispatch)(EditSingleProduct)

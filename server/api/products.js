@@ -65,7 +65,7 @@ router.post(`/:id`, async (req, res, next) => {
     next(error)
   }
 })
-router.post('/:id/productcategory', async (req,res,next)=>{
+router.post('/:id/productcategory', isAdmin, async (req,res,next)=>{
   try {
     const productcategory = await ProductCategory.create({
       productId:req.body.productId,
@@ -98,6 +98,16 @@ router.put('/:id', isAdmin, async (req, res, next) => {
 router.delete('/:id', isAdmin, async (req, res, next) => {
   try {
     await Product.destroy({where: {id: req.params.id}})
+    res.sendStatus(204)
+  } catch (err) {
+    next(err)
+  }
+})
+
+// removing assocation between category and product in edit view
+router.put('/:id/productcategory',isAdmin, async(req,res,next)=>{
+  try {
+    await ProductCategory.destroy({where:{productId:req.body.productId,categoryId:req.body.categoryId}})
     res.sendStatus(204)
   } catch (err) {
     next(err)
