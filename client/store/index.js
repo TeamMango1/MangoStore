@@ -2,17 +2,18 @@ import {createStore, combineReducers, applyMiddleware} from 'redux'
 import {createLogger} from 'redux-logger'
 import thunkMiddleware from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
-import user from './user'
-import singleProduct from './singleProduct'
-import allProducts from './allProductsReducer'
-import allUsers from './allUsers'
-import userView from './userView'
-import allCategories from './categoryStore'
-import assignCategory from './assignCategory'
 import cart from './cartReducer'
+import allCategories from './categoryStore'
+import allUsers from './allUsers'
+import assignCategory from './assignCategory'
+import user from './user'
+import userView from './userView'
+import allProducts from './allProductsReducer'
+import singleProduct from './singleProduct'
 import selectedProductFilter from './selectedProductFilter'
 import selectedCategoriesFilter from './selectedCategoriesFilter'
 import orders from './orders'
+import singleOrder from './singleOrder'
 
 const reducer = combineReducers({
   user,
@@ -25,7 +26,8 @@ const reducer = combineReducers({
   cart,
   allCategories,
   assignCategory,
-  orders
+  orders,
+  singleOrder
 })
 
 const middleware = composeWithDevTools(

@@ -11,7 +11,7 @@ const statuses = {
 
 router.get('/', async (req, res, next) => {
   try {
-    const Orders = await Order.findAll({
+    let query = {
       include: [
         {
           model: Product,
@@ -22,8 +22,30 @@ router.get('/', async (req, res, next) => {
           attributes: ['email', 'firstName', 'lastName']
         }
       ]
-    })
+    }
+    if (Object.keys(req.query).length !== 0)
+      query.where = {status: req.query.status}
+    const Orders = await Order.findAll(query)
     res.json(Orders)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.get('/:id', isAdmin, async (req, res, next) => {
+  try {
+    const result = await Order.findByPk(req.params.id, {
+      include: [
+        {
+          model: Product
+        },
+        {
+          model: User,
+          attributes: ['email', 'firstName', 'lastName']
+        }
+      ]
+    })
+    res.json(result)
   } catch (err) {
     next(err)
   }
@@ -41,6 +63,7 @@ router.put('/', isAdmin, async (req, res, next) => {
         where: {id}
       }
     )
+    console.log(order)
     res.json(order)
   } catch (err) {
     next(err)
@@ -51,6 +74,18 @@ router.delete('/', isAdmin, async (req, res, next) => {
   try {
     const id = req.body.orderId
     await Order.destroy({where: {id}})
+    res.sendStatus(200)
+  } catch (err) {
+    next(err)
+  }
+})
+
+router.delete('/products',isAdmin,async(req,res,next)=>{
+  try {
+    const orderId = req.body.orderId
+    const productId = req.body.productId
+
+    await ProductOrder.destroy({where: {orderId,productId}})
     res.sendStatus(200)
   } catch (err) {
     next(err)

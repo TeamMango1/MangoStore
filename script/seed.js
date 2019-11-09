@@ -30,6 +30,7 @@ const createUser = async () => {
       firstName: faker.name.firstName(),
       lastName: faker.name.lastName(),
       isAdmin: faker.random.boolean(),
+      passwordReset: false,
 
       // TESTING TODO
       unhashedPasswordForTesting: pass
@@ -45,7 +46,9 @@ const createProduct = async () => {
     let currentProduct = await Product.create({
       name: faker.commerce.productName(),
       description: faker.lorem.sentence(),
-      photoURL: faker.random.image(),
+      photoURL: `https://source.unsplash.com/random/300x300/?sig=${Math.floor(
+        Math.random() * 100
+      )}`,
       price: faker.commerce.price(),
       inventory: faker.random.number(),
       availibility: faker.random.boolean()

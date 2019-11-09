@@ -8,7 +8,8 @@ import {
   AdminEditSingleProduct,
   AdminUsers,
   AdminSingleUser,
-  AdminOrders
+  AdminOrders,
+  AdminSingleOrder
 } from './'
 
 class AdminHub extends React.Component {
@@ -18,14 +19,21 @@ class AdminHub extends React.Component {
         <AdminNavbar />
         <Switch>
           <Route exact path="/adminhub/products" component={AdminProducts} />
-          <Route exact path="/adminhub/products/:id" component={AdminSingleProduct} />
-          <Route exact path="/adminhub/products/:id/edit" component={AdminEditSingleProduct}/>
+          <Route
+            exact
+            path="/adminhub/products/:id"
+            component={AdminSingleProduct}
+          />
+          <Route
+            path="/adminhub/products/:id/edit"
+            component={AdminEditSingleProduct}
+          />
 
           <Route exact path="/adminhub/users" component={AdminUsers} />
           <Route path="/adminhub/users/:id" component={AdminSingleUser} />
 
-
-          <Route path="/adminhub/orders" component={AdminOrders} />
+          <Route exact path="/adminhub/orders" component={AdminOrders} />
+          <Route path="/adminhub/orders/:id" component={AdminSingleOrder} />
         </Switch>
       </React.Fragment>
     )

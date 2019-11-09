@@ -42,15 +42,15 @@ const User = db.define('user', {
     type: Sequelize.BOOLEAN,
     defaultValue: false
   },
-
-
-
-
+  passwordReset: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false
+  },
 
   // TESTING TODO
-  unhashedPasswordForTesting:{
+  unhashedPasswordForTesting: {
     type: Sequelize.STRING
-  },
+  }
 })
 
 module.exports = User
