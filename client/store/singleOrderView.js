@@ -4,14 +4,14 @@ import axios from 'axios'
 const GET_SINGLE_ORDER = 'GET_SINGLE_ORDER'
 
 //ACTION TYPE
-export const gotSingleOrder = order => ({type: GET_SINGLE_ORDER, order})
+const gotSingleOrder = order => ({type: GET_SINGLE_ORDER, order})
 
 
 //THUNK
 export const fetchSingleOrder = id => async dispatch => {
   try {
-    console.log(id)
     const {data} = await axios.get(`/api/orders/${id}`)
+    console.log('TUNK',data)
     dispatch(gotSingleOrder(data))
   } catch (error) {
     console.log(error)

@@ -5,13 +5,13 @@ import {Link} from 'react-router-dom'
 
 export class SingleOrderView extends React.Component {
   componentDidMount() {
-    console.log('mounting...')
     this.props.loadSingleOrder(this.props.match.params.id)
   }
 
   render() {
-    const products = this.props.singleOrder.products
+    console.log('PROPS',this.props)
 
+    const products = this.props.singleOrder.products
     if (products) {
       return (
         <div>
@@ -37,7 +37,7 @@ export class SingleOrderView extends React.Component {
 }
 
 const mapState = state => ({
-  singleOrder: state.singleOrder
+  singleOrder: state.singleOrderView
 })
 
 const mapDispatch = dispatch => ({
