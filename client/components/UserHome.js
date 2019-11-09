@@ -1,42 +1,53 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {fetchSingleUserOrders} from '../store/orders'
+import {Link} from 'react-router-dom'
 import PasswordReset from './PasswordReset'
 
-/**
- * COMPONENT
- */
-export const UserHome = props => {
-  const {email, passwordReset} = props
+export default class UserHome extends React.Component {
+  componentDidMount() {
+    // this.props.loadSingleUserOrders()
+    console.log(this.props)
+  }
 
-  return (
-    <div>
+  render() {
+  const {passwordReset} = this.props
+
+    return (
+      <div>
       {passwordReset ? (
         <PasswordReset />
       ) : (
         <div>
-          <h3>Welcome, {email}</h3>
+           <h2>Welcome</h2>
+        <h4>Your Orders</h4>
+        <ul>
+          {/* {this.props.orders.map(order => {
+            return (
+              <div key={order.id}>
+                <Link to={`/orders/${order.id}`}>Order Number #{order.id}</Link>
+              </div>
+            )
+          })} */}
+        </ul>
         </div>
       )}
     </div>
-  )
-}
-
-/**
- * CONTAINER
- */
-const mapState = state => {
-  return {
-    email: state.user.email,
-    passwordReset: state.user.passwordReset
+    )
   }
 }
 
-export default connect(mapState)(UserHome)
+// const mapState = state => ({
+//   orders: state.orders,
+//   userInfo: state.user,
+//   passwordReset: state.user.passwordReset
 
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
-}
+// })
+
+// const mapDispatch = dispatch => ({
+//   loadSingleUserOrders: (id) => dispatch(fetchSingleUserOrders(id))
+// })
+
+// export default connect(mapState, mapDispatch)(UserHome)
+
