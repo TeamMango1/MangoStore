@@ -30,7 +30,7 @@ router.get(`/singleUser`, isLoggedIn, async (req,res,next)=>{
   }
 })
 
-//GET Details on single order based on order ID
+//GET (api/orders/:id) Details on single order based on order ID
 
 router.get(`/:id`, isLoggedIn, async (req,res,next)=>{
   try{
@@ -47,6 +47,7 @@ router.get(`/:id`, isLoggedIn, async (req,res,next)=>{
     next(error)
   }
 })
+
 
 router.get('/', async (req, res, next) => {
   try {
