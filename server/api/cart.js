@@ -14,17 +14,6 @@ router.get('/', async (req, res, next) => {
     if (!req.user) {
       res.json(sessionCart)
     } else {
-      // const carts = await Order.findAll({
-      //   where: {userId: id, status: CART}
-      // })
-      // if (carts.length === 0) {
-      //   res.json([])
-      // } else {
-      //   const cart = carts[0]
-      //   const products = await cart.getProducts()
-      //   res.json(products)
-      // }
-
       const id = req.user.id
 
       const cartOrders = await Order.findOrCreate({
