@@ -32,21 +32,21 @@ class Routes extends Component {
     return (
       <Switch>
         {/* Routes placed here are available to all visitors */}
-        <Route path="/login" component={Login} />
-        <Route path="/signup" component={Signup} />
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/signup" component={Signup} />
         <Route exact path="/" component={AllProducts} />
         <Route exact path="/products" component={AllProducts} />
         <Route exact path="/product/add" component={AddProduct} />
-        <Route path="/products/:id" component={SingleProduct} />
-        <Route path="/categories" component={Categories} />
+        <Route exact path="/products/:id" component={SingleProduct} />
+        <Route exact path="/categories" component={Categories} />
+        <Route exact path="/cart" component={Cart} />
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
             <Route exact path="/home" component={UserHome} />
             <Route exact path="/products" component={AllProducts} />
-            <Route path="/products/:id" component={SingleProduct} />
-            <Route path="/users/:id" component={SingleUser} />
-            <Route exact path="/cart" component={Cart} />
+            <Route exact path="/products/:id" component={SingleProduct} />
+            <Route exact path="/users/:id" component={SingleUser} />
             <Route exact path="/product/add" component={AddProduct} />
             <Route exact path="/categories" component={Categories} />
             <Route exact path="/passwordreset" component={PasswordReset} />

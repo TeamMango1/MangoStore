@@ -36,7 +36,7 @@ class PasswordReset extends React.Component {
   render() {
     return (
       <div>
-        <div>Password Reset</div>
+        <div>Please reset your password before continuing-</div>
         <form onSubmit={this.handleSubmit}>
           <label htmlFor="password1">
             <small>Enter new password: </small>

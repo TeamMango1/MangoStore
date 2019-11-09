@@ -60,6 +60,12 @@ const createApp = () => {
       saveUninitialized: true
     })
   )
+  app.use((req, res, next) => {
+    if (!req.session.cart) {
+      req.session.cart = []
+    }
+    next()
+  })
   app.use(passport.initialize())
   app.use(passport.session())
 
