@@ -4,7 +4,6 @@ import {fetchProduct} from '../../store/singleProduct'
 import {updateProduct} from '../../store/allProductsReducer'
 import {fetchCategories} from '../../store/categoryStore'
 import {assignCategory} from '../../store/assignCategory'
-import {setCategoriesFilter} from '../../store/selectedCategoriesFilter'
 import Select from 'react-select'
 class EditSingleProduct extends React.Component {
   constructor() {
@@ -28,22 +27,28 @@ class EditSingleProduct extends React.Component {
   }
   handleAssignCategory(category) {
     this.props.setcategory(category.value, this.props.match.params.id)
+    this.props.loadSingleProduct(this.props.match.params.id)
   }
   render() {
-    let options = this.props.categories
-      .map(category => {
-        return {value: category.id, label: category.name}
-      })
-      .filter(option => {
-        if (this.props.categorylist.length === 0) {
-          return true
-        } else if (
-          this.props.categorylist.every(category => category !== option.value)
-        ) {
-          return true
+    const categorylist = this.props.categories.map(category => {
+      return {value: category.id, label: category.name}
+    })
+    let options = categorylist.filter(option => {
+      if (this.props.product.categories.length === 0) return true
+      else if (
+        this.props.product.categories.every(
+          category => category.id !== option.value))return true
+      return false
+    })
+    let deleteoptions = categorylist.filter(option => {
+      if (this.props.product.categories.length === 0) return false
+      else{
+        for(let i = 0; i <this.props.product.categories.length; i++){
+          if (this.props.product.categories[i].id===(option.value)) return true
         }
-        return false
-      })
+      }
+      return false
+    })
     return (
       <div>
         <form onSubmit={this.handleSumbit}>
@@ -108,21 +113,29 @@ class EditSingleProduct extends React.Component {
           </select>
           <button type="submit">SUBMIT</button>
         </form>
+
+        <br />
+        <h3>Add Categories</h3>
+        <br />
         <Select options={options} onChange={this.handleAssignCategory} />
+        <br />
+        <h3>Remove Categories</h3>
+        <br />
+        <Select options={deleteoptions} />
       </div>
     )
   }
 }
 const mapState = state => ({
   product: state.singleProduct,
-  categories: state.allCategories,
+  categories: state.allCategories
 })
 const mapDispatch = dispatch => ({
   loadSingleProduct: id => dispatch(fetchProduct(id)),
   edit: (product, id) => dispatch(updateProduct(product, id)),
   loadcategories: () => dispatch(fetchCategories()),
   setcategory: (categoryId, productId) =>
-    dispatch(assignCategory(categoryId, productId)),
+    dispatch(assignCategory(categoryId, productId))
 })
 
 export default connect(mapState, mapDispatch)(EditSingleProduct)
