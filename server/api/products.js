@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Product, Category, Review} = require('../db/models')
+const {Product, Category, Review, ProductCategory} = require('../db/models')
 const {isAdmin} = require('./middleware')
 module.exports = router
 
@@ -48,7 +48,6 @@ router.post('/', isAdmin, async (req, res, next) => {
     next(err)
   }
 })
-
 /**
  * POST new review on a product
  */
@@ -66,6 +65,18 @@ router.post(`/:id`, async (req, res, next) => {
     next(error)
   }
 })
+router.post('/:id/productcategory', async (req,res,next)=>{
+  try {
+    const productcategory = await ProductCategory.create({
+      productId:req.body.productId,
+      categoryId:req.body.categoryId
+    })
+    res.json(productcategory).status(204)
+  } catch (err) {
+    next(err)
+  }
+})
+
 
 /**
  * edit product (/api/products/)

@@ -1,11 +1,10 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
-
 import {removeProduct} from '../../store/allProductsReducer'
 
 const AdminProductCard = props => {
-  const {id, name, photoURL, categories, price, availibility} = props.product
+  const {id, name, photoURL, price, availibility} = props.product
   if (availibility) {
     return (
       <div className="col-4 card">
@@ -16,7 +15,6 @@ const AdminProductCard = props => {
           </div>
         </div>
         <div>${price}</div>
-        <div>Category: {categories[0].name}</div>
         <div>
           <button
             type="button"

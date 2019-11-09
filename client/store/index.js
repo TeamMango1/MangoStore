@@ -8,8 +8,10 @@ import allProducts from './allProductsReducer'
 import allUsers from './allUsers'
 import userView from './userView'
 import allCategories from './categoryStore'
+import assignCategory from './assignCategory'
 import cart from './cartReducer'
 import selectedProductFilter from './selectedProductFilter'
+import selectedCategoriesFilter from './selectedCategoriesFilter'
 import orders from './orders'
 
 const reducer = combineReducers({
@@ -19,8 +21,10 @@ const reducer = combineReducers({
   allProducts,
   singleProduct,
   selectedProductFilter,
+  selectedCategoriesFilter,
   cart,
   allCategories,
+  assignCategory,
   orders
 })
 
