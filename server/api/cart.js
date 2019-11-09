@@ -76,24 +76,32 @@ router.post('/', async (req, res, next) => {
  * remove an item from the cart
  */
 
-router.delete('/', isLoggedIn, async (req, res, next) => {
+router.delete('/', async (req, res, next) => {
   try {
-    const userId = req.user.id
-    const cartOrder = await Order.findOne({
-      where: {userId, status: CART}
-    })
-    if (!cartOrder) {
-      res.sendStatus(404) // no cart to delete from
-      return
-    }
     const productId = req.body.productId
-    await ProductOrder.destroy({
-      where: {
-        orderId: cartOrder.id,
-        productId
+    if (!req.user) {
+      const newCart = req.session.cart.filter(item => {
+        return item.id !== productId
+      })
+      req.session.cart = newCart
+      res.sendStatus(200)
+    } else {
+      const userId = req.user.id
+      const cartOrder = await Order.findOne({
+        where: {userId, status: CART}
+      })
+      if (!cartOrder) {
+        res.sendStatus(404) // no cart to delete from
+        return
       }
-    })
-    res.sendStatus(200)
+      await ProductOrder.destroy({
+        where: {
+          orderId: cartOrder.id,
+          productId
+        }
+      })
+      res.sendStatus(200)
+    }
   } catch (error) {
     next(error)
   }
