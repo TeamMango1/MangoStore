@@ -5,3 +5,19 @@ img {
 .cart-image {
   width: 10rem;
 }
+
+#singleOrderViewHeader{
+  display: flex;
+  justify-content: space-between;
+}
+
+#singleOrderViewProducts{
+  display: flex;
+
+}
+
+#SingleOrderProductDetails{
+  display: flex;
+  /* flex-direction: row; */
+
+}

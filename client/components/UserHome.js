@@ -21,28 +21,34 @@ export class UserHome extends React.Component {
   }
 
   render() {
+    const {passwordReset, userInfo} = this.props
 
-    const {passwordReset} = this.props
+    console.log(userInfo)
+
     let orders = this.props.filter
       ? this.props.orders.filter(order => {
           return order.status.toUpperCase() === this.props.filter.toUpperCase()
         })
       : this.props.orders
+
     return (
       <div>
         {passwordReset ? (
           <PasswordReset />
         ) : (
-          <div>
-            <h2>Welcome</h2>
-            <h4>Your Orders</h4>
-            <select onChange={this.handleChange}>
-              <option>None</option>
-              <option>Completed</option>
-              <option>Processing</option>
-              <option>Canceled</option>
-              <option>Cart</option>
-            </select>
+          <div className="container">
+            <h2>Welcome Back, {userInfo.firstName}!</h2>
+            <h4>Your Previous Orders</h4>
+            <div className="filter">
+              <select onChange={this.handleChange}>
+                <option value="None">All Orders</option>
+                <option value="CART">Cart</option>
+                <option value="PROCESSING">Processing</option>
+                <option value="COMPLETED">Completed</option>
+                <option value="CANCELED">Canceled</option>
+              </select>
+            </div>
+
             <ul>
               {orders.map(order => {
                 return (
