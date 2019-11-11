@@ -19,7 +19,6 @@ const USER_COUNT = 100
 const PRODUCT_COUNT = 100
 const REVIEW_COUNT = 100
 const CATEGORY_COUNT = 10
-
 faker.seed(SEED)
 
 const createUser = async () => {
@@ -51,7 +50,8 @@ const createProduct = async () => {
         Math.random() * 100
       )}`,
       price: faker.commerce.price(),
-      inventory: faker.random.number()
+      inventory: faker.random.number(),
+      availibility: faker.random.boolean()
     })
     return currentProduct
   } catch (error) {

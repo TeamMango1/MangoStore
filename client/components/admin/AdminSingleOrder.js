@@ -102,7 +102,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadOrder: async id => await dispatch(fetchSingleOrder(id)),
+
+  loadOrder:  id => dispatch(fetchSingleOrder(id)),
   editStatus: (id, status) => dispatch(editOrderStatus(id, status)),
   removePFO: (pId, oId) => dispatch(removeProductFromOrder(pId, oId))
 })

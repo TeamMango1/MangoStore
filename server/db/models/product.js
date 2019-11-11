@@ -20,6 +20,10 @@ const Product = db.define('product', {
   },
   inventory: {
     type: Sequelize.INTEGER
+  },
+  availibility:{
+    type: Sequelize.BOOLEAN,
+    defaultValue: true
   }
 })
 
