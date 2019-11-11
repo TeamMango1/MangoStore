@@ -43,6 +43,7 @@ export class UserHome extends React.Component {
               <select onChange={this.handleChange}>
                 <option value="None">All Orders</option>
                 <option value="PROCESSING">Processing</option>
+                <option value="PAID">Paid</option>
                 <option value="COMPLETED">Completed</option>
                 <option value="CANCELED">Canceled</option>
               </select>
