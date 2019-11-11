@@ -3,6 +3,7 @@ const {Order, Product, ProductOrder} = require('../db/models')
 const {isLoggedIn} = require('./middleware')
 
 const CART = 'CART'
+const PAID = 'PAID'
 
 /**
  *  GET a cart by user
@@ -55,6 +56,26 @@ router.post('/', async (req, res, next) => {
       })
       const product = await Product.findByPk(productId)
       res.json(product)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+/**
+ * checkout cart (change status to paid)
+ */
+router.put('/', async (req, res, next) => {
+  try {
+    if (!req.user) {
+      //TODO unlogged in user
+    } else {
+      const userId = req.user.id
+      await Order.update(
+        {status: PAID},
+        {where: {userId, status: CART}}
+      )
+      res.sendStatus(200)
     }
   } catch (error) {
     next(error)

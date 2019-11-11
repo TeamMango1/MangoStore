@@ -2,7 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import StripeCheckout from 'react-stripe-checkout'
 import CartItem from './CartItem'
-import {removeFromCart, fetchCart} from '../store/cartReducer'
+import {removeFromCart, fetchCart, checkoutCart} from '../store/cartReducer'
 
 class Cart extends React.Component {
   constructor() {
@@ -13,11 +13,10 @@ class Cart extends React.Component {
     this.props.getCart()
   }
 
-  handleToken(token, addresses) { // paid for
+  handleToken(token, addresses) {
+    // paid for
     console.log(token, addresses)
-
-
-
+    this.props.checkout()
   }
 
   render() {
@@ -37,8 +36,8 @@ class Cart extends React.Component {
             )
           })}
         </div>
-        <br/>
-        <div className = "d-flex justify-content-center">
+        <br />
+        <div className="d-flex justify-content-center">
           <StripeCheckout
             stripeKey="pk_test_kZmJSR4cNZc7FGBq3pfyRkaH00UmOKDepu"
             token={this.handleToken}
@@ -62,7 +61,8 @@ const mapState = state => {
 const mapProps = dispatch => {
   return {
     removeFromCart: id => dispatch(removeFromCart(id)),
-    getCart: () => dispatch(fetchCart())
+    getCart: () => dispatch(fetchCart()),
+    checkout: () => dispatch(checkoutCart())
   }
 }
 
