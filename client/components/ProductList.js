@@ -3,6 +3,7 @@ import ProductCard from './ProductCard'
 
 export default class ProductList extends React.Component {
   render() {
+    console.log(this.props.products)
     return (
       <div className="container">
         <div className="row">
