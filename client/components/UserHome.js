@@ -1,42 +1,86 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
+import {fetchSingleUserOrders} from '../store/orders'
+import {Link} from 'react-router-dom'
+import {setFilter, clearFilter} from '../store/selectedProductFilter'
 import PasswordReset from './PasswordReset'
 
-/**
- * COMPONENT
- */
-export const UserHome = props => {
-  const {email, passwordReset} = props
+export class UserHome extends React.Component {
+  constructor() {
+    super()
+    this.handleChange = this.handleChange.bind(this)
+  }
+  componentDidMount() {
+    this.props.loadSingleUserOrders()
+  }
 
-  return (
-    <div>
-      {passwordReset ? (
-        <PasswordReset />
-      ) : (
-        <div>
-          <h3>Welcome, {email}</h3>
-        </div>
-      )}
-    </div>
-  )
-}
+  handleChange(event) {
+    if (event.target.value === 'None') this.props.clearFilter()
+    else this.props.setFilter(event.target.value)
+  }
 
-/**
- * CONTAINER
- */
-const mapState = state => {
-  return {
-    email: state.user.email,
-    passwordReset: state.user.passwordReset
+  render() {
+    const {passwordReset, userInfo} = this.props
+
+    console.log(userInfo)
+
+    let orders = this.props.filter
+      ? this.props.orders.filter(order => {
+          return order.status.toUpperCase() === this.props.filter.toUpperCase()
+        })
+      : this.props.orders
+
+    return (
+      <div>
+        {passwordReset ? (
+          <PasswordReset />
+        ) : (
+          <div className="container">
+            <h2>Welcome Back, {userInfo.firstName}!</h2>
+            <h4>Your Previous Orders</h4>
+            <div className="filter">
+              <select onChange={this.handleChange}>
+                <option value="None">All Orders</option>
+                <option value="CART">Cart</option>
+                <option value="PROCESSING">Processing</option>
+                <option value="COMPLETED">Completed</option>
+                <option value="CANCELED">Canceled</option>
+              </select>
+            </div>
+
+            <ul>
+              {orders.map(order => {
+                return (
+                  <div key={order.id}>
+                    <div key={order.id}>
+                      <Link to={`/orders/${order.id}`}>
+                        Order Number #{order.id}
+                      </Link>
+                    </div>
+                    <div>Status: {order.status}</div>
+                  </div>
+                )
+              })}
+            </ul>
+          </div>
+        )}
+      </div>
+    )
   }
 }
 
-export default connect(mapState)(UserHome)
+const mapState = state => ({
+  orders: state.orders.orders,
+  userInfo: state.user,
+  filter: state.selectedProductFilter,
+  passwordReset: state.user.passwordReset
+})
 
-/**
- * PROP TYPES
- */
-UserHome.propTypes = {
-  email: PropTypes.string
-}
+const mapDispatch = dispatch => ({
+  loadSingleUserOrders: id => dispatch(fetchSingleUserOrders(id)),
+  setFilter: filter => dispatch(setFilter(filter)),
+  clearFilter: () => dispatch(clearFilter())
+})
+
+export default connect(mapState, mapDispatch)(UserHome)
