@@ -70,6 +70,7 @@ export class AdminSingleOrder extends React.Component {
                   onChange={this.handleSelectChange}
                 >
                   <option value="CART">Cart</option>
+                  <option value="PAID">Paid</option>
                   <option value="PROCESSING">Processing</option>
                   <option value="COMPLETED">Completed</option>
                   <option value="CANCELED">Canceled</option>
@@ -105,8 +106,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-
-  loadOrder:  id => dispatch(fetchSingleOrder(id)),
+  loadOrder: id => dispatch(fetchSingleOrder(id)),
   editStatus: (id, status) => dispatch(editOrderStatus(id, status)),
   removePFO: (pId, oId) => dispatch(removeProductFromOrder(pId, oId))
 })

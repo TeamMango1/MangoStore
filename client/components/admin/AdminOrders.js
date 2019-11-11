@@ -23,6 +23,7 @@ export class AdminOrders extends React.Component {
         <select onChange={this.handleChange}>
           <option value="none">no filter</option>
           <option value="CART">Cart</option>
+          <option value="PAID">Paid</option>
           <option value="PROCESSING">Processing</option>
           <option value="COMPLETED">Completed</option>
           <option value="CANCELED">Canceled</option>
