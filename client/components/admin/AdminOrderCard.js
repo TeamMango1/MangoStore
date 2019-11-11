@@ -63,6 +63,7 @@ class AdminOrderRow extends React.Component {
                   onChange={this.handleSelectChange}
                 >
                   <option value="CART">Cart</option>
+                  <option value="PAID">Paid</option>
                   <option value="PROCESSING">Processing</option>
                   <option value="COMPLETED">Completed</option>
                   <option value="CANCELED">Canceled</option>

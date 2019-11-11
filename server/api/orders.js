@@ -39,7 +39,11 @@ router.get(`/:id`, isLoggedIn, async (req,res,next)=>{
         id: req.params.id
       },
       include:[
-        {model:Product}
+        {model:Product},
+        {
+          model: User,
+          attributes: ['email', 'firstName', 'lastName']
+        }
       ]
     })
     res.json(singleOrder)
@@ -67,25 +71,6 @@ router.get('/', async (req, res, next) => {
       query.where = {status: req.query.status}
     const Orders = await Order.findAll(query)
     res.json(Orders)
-  } catch (err) {
-    next(err)
-  }
-})
-
-router.get('/:id', isAdmin, async (req, res, next) => {
-  try {
-    const result = await Order.findByPk(req.params.id, {
-      include: [
-        {
-          model: Product
-        },
-        {
-          model: User,
-          attributes: ['email', 'firstName', 'lastName']
-        }
-      ]
-    })
-    res.json(result)
   } catch (err) {
     next(err)
   }
