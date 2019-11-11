@@ -51,7 +51,7 @@ const createProduct = async () => {
       )}`,
       price: faker.commerce.price(),
       inventory: faker.random.number(),
-      availibility: faker.random.boolean()
+      availibility: true
     })
     return currentProduct
   } catch (error) {
