@@ -32,9 +32,10 @@ router.post('/signup', async (req, res, next) => {
         lastName: null
       }
     })
+    console.log(user)
     if (user) {
       await user.update({password, firstName, lastName})
-    }else{
+    } else {
       user = await User.create({email, password, firstName, lastName})
     }
     req.login(user, err => (err ? next(err) : res.json(user)))
