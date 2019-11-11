@@ -23,13 +23,13 @@ export class UserHome extends React.Component {
   render() {
     const {passwordReset, userInfo} = this.props
 
-    console.log(userInfo)
-
     let orders = this.props.filter
       ? this.props.orders.filter(order => {
-          return order.status.toUpperCase() === this.props.filter.toUpperCase()
+          return order.status === this.props.filter
         })
       : this.props.orders
+
+      console.log(orders)
 
     return (
       <div>
@@ -42,7 +42,6 @@ export class UserHome extends React.Component {
             <div className="filter">
               <select onChange={this.handleChange}>
                 <option value="None">All Orders</option>
-                <option value="CART">Cart</option>
                 <option value="PROCESSING">Processing</option>
                 <option value="COMPLETED">Completed</option>
                 <option value="CANCELED">Canceled</option>
