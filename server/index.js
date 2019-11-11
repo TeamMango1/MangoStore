@@ -128,3 +128,7 @@ if (require.main === module) {
 } else {
   createApp()
 }
+
+// const {sendPasswordResetEmail} = require("./utils")
+
+// sendPasswordResetEmail("google.com","nick@jasinski3.com")
