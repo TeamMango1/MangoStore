@@ -38,14 +38,18 @@ class Cart extends React.Component {
         </div>
         <br />
         <div className="d-flex justify-content-center">
-          <StripeCheckout
-            stripeKey="pk_test_kZmJSR4cNZc7FGBq3pfyRkaH00UmOKDepu"
-            token={this.handleToken}
-            amount={cartTotal}
-            name="Your Cart"
-            billingAddress
-            shippingAddress
-          />
+          {cart.length ? (
+            <StripeCheckout
+              stripeKey="pk_test_kZmJSR4cNZc7FGBq3pfyRkaH00UmOKDepu"
+              token={this.handleToken}
+              amount={cartTotal}
+              name="Your Cart"
+              billingAddress
+              shippingAddress
+            />
+          ) : (
+            <h2>Your cart is empty... buy our mangos</h2>
+          )}
         </div>
       </div>
     )

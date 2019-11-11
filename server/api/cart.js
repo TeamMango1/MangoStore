@@ -71,10 +71,26 @@ router.put('/', async (req, res, next) => {
       //TODO unlogged in user
     } else {
       const userId = req.user.id
-      await Order.update(
-        {status: PAID},
-        {where: {userId, status: CART}}
-      )
+      const cart = await Order.findOne({
+        where: {userId, status: CART},
+        include: [{model: Product}]
+      })
+
+      const products = await cart.getProducts()
+      for (let product of products) {
+        await ProductOrder.update(
+          {oldUnitPrice: product.price},
+          {
+            where: {
+              orderId: cart.id,
+              productId: product.id
+            }
+          }
+        )
+      }
+
+      await cart.update({status: PAID})
+
       res.sendStatus(200)
     }
   } catch (error) {
