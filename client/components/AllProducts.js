@@ -10,7 +10,7 @@ export class Products extends React.Component {
   constructor() {
     super()
     this.state = {
-      search: ''
+      search: '',
     }
 
     this.handleChange = this.handleChange.bind(this)
@@ -20,7 +20,7 @@ export class Products extends React.Component {
   }
   componentDidMount() {
     const values = queryString.parse(this.props.location.search)
-    this.props.loadProducts(values.page)
+    this.props.loadProducts(1)
     this.props.getCategories()
   }
 
