@@ -31,8 +31,12 @@ export class SingleOrderView extends React.Component {
               <ul>
                 {products.map(product => {
                   return (
-                    <div id='SingleOrderProductDetails'>
-                      <h6>{product.name}</h6>
+                    <div key={product.id} id='SingleOrderProductDetails'>
+                      {product.availibility ? <Link to={`/products/${product.id}`}><h6>{product.name}</h6></Link>
+                      :
+                      <Link to="/notavailible"><h6>{product.name}</h6></Link>
+                      }
+
                       <div>${product.price}</div>
                       <img src={product.photoURL} />
                     </div>

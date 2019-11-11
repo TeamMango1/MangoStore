@@ -12,32 +12,31 @@ const AdminProductCard = props => {
     click = props.diffClick(props.product)
     special = true
   }
-  if (availibility) {
-    return (
-      <div className="col-4 card">
-        <Link to={`/adminhub/products/${id}`}> {name}</Link>
+  return (
+    <div className="col-4 card">
+      <Link to={`/adminhub/products/${id}`}> {name}</Link>
+      <div>
         <div>
           <div>
-            <div>
-              <img src={photoURL} />
-            </div>
-          </div>
-          <div>${price}</div>
-          <div>
-            <button
-              type="button"
-              className="btn btn-danger"
-              onClick={() => {
-                special ? click() : props.delete(id)
-              }}
-            >
-              {` ${props.buttonName} `}
-            </button>
+            <img src={photoURL} />
           </div>
         </div>
+        <div>${price}</div>
+        {availibility ? <div>Availible</div> : <div>Not Availible </div>}
+        <div>
+          <button
+            type="button"
+            className="btn btn-danger"
+            onClick={() => {
+              special ? click() : props.delete(id)
+            }}
+          >
+            {` ${props.buttonName} `}
+          </button>
+        </div>
       </div>
-    )
-  } else return <div />
+    </div>
+  )
 }
 const mapState = (state, own) => ({
   buttonName: own.buttonName ? own.buttonName : 'Remove Product',

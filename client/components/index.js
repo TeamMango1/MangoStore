@@ -19,3 +19,5 @@ export {default as PasswordReset} from './PasswordReset'
 export {default as SingleOrderView} from './SingleOrderView'
 
 export {default as AdminHub} from './admin/AdminHub'
+
+export {default as NotAvailible} from './NotAvailible'
