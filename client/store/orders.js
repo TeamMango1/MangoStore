@@ -77,7 +77,7 @@ export default function(state = initialState, action) {
     case CHANGE_FILTER:
       return {...state, filter: action.filter}
     case GET_SINGLE_USER_ORDERS:
-      return {...state, orders:action.orders}
+      return {...state, orders:action.orders.filter(order => order.status !== 'CART')}
     default:
       return state
   }
