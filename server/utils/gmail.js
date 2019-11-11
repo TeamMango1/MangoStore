@@ -27,7 +27,7 @@ function sendEmail(subject, body, recipent) {
 }
 
 async function sendPasswordResetEmail(resetLink, recipent) {
-  const body = `An admin triggered a password reset for you.\nClick ${resetLink} to reset your password`
+  const body = `An admin triggered a password reset for you.\nGo to ${resetLink} to reset your password`
   await sendEmail('Mangonificent Passwword Reset', body, recipent)
 }
 

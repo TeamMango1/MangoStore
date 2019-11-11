@@ -130,5 +130,4 @@ if (require.main === module) {
 }
 
 // const {sendPasswordResetEmail} = require("./utils")
-
-// sendPasswordResetEmail("google.com","nick@jasinski3.com")
+// sendPasswordResetEmail("https://www.youtube.com/watch?v=oHg5SJYRHA0","")
