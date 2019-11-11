@@ -69,6 +69,9 @@ router.put('/', async (req, res, next) => {
   try {
     if (!req.user) {
       //TODO unlogged in user
+      const {email, address} = req.body
+      const order = await Order.create({status:PAID, email, address})
+
     } else {
       const userId = req.user.id
       const cart = await Order.findOne({
@@ -78,6 +81,8 @@ router.put('/', async (req, res, next) => {
 
       const products = await cart.getProducts()
       for (let product of products) {
+        product.inventory--
+        await product.save()
         await ProductOrder.update(
           {oldUnitPrice: product.price},
           {
