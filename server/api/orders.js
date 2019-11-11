@@ -9,6 +9,46 @@ const statuses = {
   CART: 'CART'
 }
 
+//GET all orders for a singleUser
+router.get(`/singleUser`, isLoggedIn, async (req,res,next)=>{
+
+  try{
+    let orders = await Order.findAll({
+      where:{
+        userId: req.user.id
+      },
+      include:[
+        {
+          model: Product
+        }
+      ]
+    })
+
+    res.json(orders)
+  }catch(error){
+    next(error)
+  }
+})
+
+//GET (api/orders/:id) Details on single order based on order ID
+
+router.get(`/:id`, isLoggedIn, async (req,res,next)=>{
+  try{
+    let singleOrder = await Order.findOne({
+      where:{
+        id: req.params.id
+      },
+      include:[
+        {model:Product}
+      ]
+    })
+    res.json(singleOrder)
+  } catch(error){
+    next(error)
+  }
+})
+
+
 router.get('/', async (req, res, next) => {
   try {
     let query = {

@@ -13,7 +13,8 @@ import singleProduct from './singleProduct'
 import selectedProductFilter from './selectedProductFilter'
 import selectedCategoriesFilter from './selectedCategoriesFilter'
 import orders from './orders'
-import singleOrder from './singleOrder'
+import singleOrderView from './singleOrderView'
+
 
 const reducer = combineReducers({
   user,
@@ -27,7 +28,7 @@ const reducer = combineReducers({
   allCategories,
   assignCategory,
   orders,
-  singleOrder
+  singleOrderView,
 })
 
 const middleware = composeWithDevTools(

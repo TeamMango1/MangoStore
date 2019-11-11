@@ -16,4 +16,6 @@ export {default as SingleUser} from './SingleUser'
 export {default as UserHome} from './UserHome'
 export {default as PasswordReset} from './PasswordReset'
 
+export {default as SingleOrderView} from './SingleOrderView'
+
 export {default as AdminHub} from './admin/AdminHub'
