@@ -1,9 +1,12 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import CartItem from './CartItem'
-import {removeFromCart} from '../store/cartReducer'
+import {removeFromCart, fetchCart} from '../store/cartReducer'
 
 class Cart extends React.Component {
+  componentDidMount() {
+    this.props.getCart()
+  }
   render() {
     const cart = this.props.cart ? this.props.cart : []
     return (
@@ -32,7 +35,8 @@ const mapState = state => {
 
 const mapProps = dispatch => {
   return {
-    removeFromCart: id => dispatch(removeFromCart(id))
+    removeFromCart: id => dispatch(removeFromCart(id)),
+    getCart: () => dispatch(fetchCart())
   }
 }
 

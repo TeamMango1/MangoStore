@@ -8,17 +8,24 @@ const CART = 'CART'
  *  GET a cart by user
  */
 
-router.get('/', isLoggedIn, async (req, res, next) => {
-  const id = req.user.id
+router.get('/', async (req, res, next) => {
+  const sessionCart = req.session.cart
   try {
-    const carts = await Order.findAll({
-      where: {userId: id, status: CART}
-    })
-    if (carts.length === 0) {
-      res.json([])
+    if (!req.user) {
+      res.json(sessionCart)
     } else {
-      const cart = carts[0]
-      const products = await cart.getProducts()
+      const id = req.user.id
+
+      const cartOrders = await Order.findOrCreate({
+        where: {userId: id, status: CART}
+      })
+      const cartOrder = cartOrders[0]
+      sessionCart.forEach(async product => {
+        await ProductOrder.findOrCreate({
+          where: {orderId: cartOrder.id, productId: product.id}
+        })
+      })
+      const products = await cartOrder.getProducts()
       res.json(products)
     }
   } catch (error) {
@@ -30,17 +37,25 @@ router.get('/', isLoggedIn, async (req, res, next) => {
  * add an item to cart
  */
 
-router.post('/', isLoggedIn, async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
-    const userId = req.user.id
     const productId = req.body.productId
-    const cartOrders = await Order.findOrCreate({
-      where: {userId, status: CART}
-    })
-    const cartOrder = cartOrders[0]
-    await ProductOrder.findOrCreate({where: {orderId: cartOrder.id, productId}})
-    const product = await Product.findByPk(productId)
-    res.json(product)
+    if (!req.user) {
+      const product = await Product.findByPk(productId)
+      req.session.cart.push(product)
+      res.json(product)
+    } else {
+      const userId = req.user.id
+      const cartOrders = await Order.findOrCreate({
+        where: {userId, status: CART}
+      })
+      const cartOrder = cartOrders[0]
+      await ProductOrder.findOrCreate({
+        where: {orderId: cartOrder.id, productId}
+      })
+      const product = await Product.findByPk(productId)
+      res.json(product)
+    }
   } catch (error) {
     next(error)
   }
@@ -50,24 +65,32 @@ router.post('/', isLoggedIn, async (req, res, next) => {
  * remove an item from the cart
  */
 
-router.delete('/', isLoggedIn, async (req, res, next) => {
+router.delete('/', async (req, res, next) => {
   try {
-    const userId = req.user.id
-    const cartOrder = await Order.findOne({
-      where: {userId, status: CART}
-    })
-    if (!cartOrder) {
-      res.sendStatus(404) // no cart to delete from
-      return
-    }
     const productId = req.body.productId
-    await ProductOrder.destroy({
-      where: {
-        orderId: cartOrder.id,
-        productId
+    if (!req.user) {
+      const newCart = req.session.cart.filter(item => {
+        return item.id !== productId
+      })
+      req.session.cart = newCart
+      res.sendStatus(200)
+    } else {
+      const userId = req.user.id
+      const cartOrder = await Order.findOne({
+        where: {userId, status: CART}
+      })
+      if (!cartOrder) {
+        res.sendStatus(404) // no cart to delete from
+        return
       }
-    })
-    res.sendStatus(200)
+      await ProductOrder.destroy({
+        where: {
+          orderId: cartOrder.id,
+          productId
+        }
+      })
+      res.sendStatus(200)
+    }
   } catch (error) {
     next(error)
   }

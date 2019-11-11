@@ -21,7 +21,9 @@ class Navbar extends React.Component {
                 {/* The navbar will show these links after you log in */}
                 {this.props.isAdmin ? (
                   <div className="nav-item">
-                    <Link className="nav-link" to="/adminhub/products">Manage Site</Link>
+                    <Link className="nav-link" to="/adminhub/products">
+                      Manage Site
+                    </Link>
                   </div>
                 ) : (
                   ''
@@ -47,9 +49,21 @@ class Navbar extends React.Component {
             ) : (
               <React.Fragment>
                 {/* The navbar will show these links before you log in */}
-                <Link to="/login">Login</Link>
-                <Link to="/signup">Sign Up</Link>
-                <Link to="/products">Products</Link>
+                <div className="nav-item">
+                  <Link to="/login" className="nav-link">
+                    Login
+                  </Link>
+                </div>
+                <div className="nav-item">
+                  <Link to="/signup" className="nav-link">
+                    Sign Up
+                  </Link>
+                </div>
+                <div className="nav-item">
+                  <Link to="/products" className="nav-link">
+                    Products
+                  </Link>
+                </div>
               </React.Fragment>
             )}
             <div className="nav-item">

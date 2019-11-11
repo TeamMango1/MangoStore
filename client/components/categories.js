@@ -15,13 +15,14 @@ class Categories extends React.Component {
     this.setState({[event.target.name]: event.target.value})
   }
   handleSumbit() {
-    // event.preventDefault()
+    event.preventDefault()
     this.props.addNewCategory(this.state)
     this.props.loadCategories()
     this.setState({name: ''})
   }
   render() {
     const categories = this.props.categories
+    console.log('categories;;;', categories)
     if (!categories) {
       return <div />
     } else {
