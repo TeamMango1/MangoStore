@@ -4,7 +4,7 @@ const NotAvailible = props => {
   return (
     <div>
       <br/>
-      ITEM IS NOT NotAvailible
+      ITEM IS NOT Availible
     </div>
   )
 }
