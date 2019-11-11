@@ -8,14 +8,14 @@ import {
   UserHome,
   SingleProduct,
   SingleUser,
-  AllUsers,
   AllProducts,
   AddProduct,
   Categories,
   Cart,
   AdminHub,
   SingleOrderView,
-  PasswordReset
+  PasswordReset,
+  NotAvailible
 } from './components'
 import {me} from './store'
 
@@ -41,6 +41,7 @@ class Routes extends Component {
         <Route exact path="/products/:id" component={SingleProduct} />
         <Route exact path="/categories" component={Categories} />
         <Route exact path="/cart" component={Cart} />
+
         {isLoggedIn && (
           <Switch>
             {/* Routes placed here are only available after logging in */}
@@ -52,6 +53,7 @@ class Routes extends Component {
             <Route exact path="/product/add" component={AddProduct} />
             <Route exact path="/categories" component={Categories} />
             <Route exact path="/passwordreset" component={PasswordReset} />
+            <Route exact path="/notavailible" component={NotAvailible} />
             {isAdmin && <Route path="/adminhub" component={AdminHub} />}
           </Switch>
         )}

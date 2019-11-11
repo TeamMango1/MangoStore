@@ -55,6 +55,9 @@ export class AdminSingleOrder extends React.Component {
   render() {
     const {order} = this.props
     const {user, products} = order
+    console.log('USER', user)
+    console.log('ORDER', order)
+
     return (
       <div>
         <table>
