@@ -17,8 +17,7 @@ class AddProduct extends React.Component {
       inventory: 1,
       availibility: true
     }
-    // this.newProductId = []
-    this.toggleCategorySelection = false
+    this.select=true
     this.handleChange = this.handleChange.bind(this)
     this.handleSumbit = this.handleSumbit.bind(this)
     this.handleAssignCategory = this.handleAssignCategory.bind(this)
@@ -41,7 +40,7 @@ class AddProduct extends React.Component {
       inventory: 1,
       availibility: true
     })
-    this.toggleCategorySelection = true
+    this.select=false
   }
   handleAssignCategory(category) {
     this.props.setcategory(category.value, this.props.products.id)
@@ -58,6 +57,9 @@ class AddProduct extends React.Component {
         }else if (this.props.categorylist.every(category=>category!==option.value)) return true
         return false
       })
+    let isEnabled;
+    if(this.state.name === '' || this.state.description === '') isEnabled=true
+    else isEnabled=false
     return (
       <div>
         <div>
@@ -71,6 +73,7 @@ class AddProduct extends React.Component {
                 name="name"
                 value={this.state.name}
                 onChange={this.handleChange}
+                placeholder='required'
                 required
               />
               <br />
@@ -82,6 +85,7 @@ class AddProduct extends React.Component {
                 rows="5"
                 maxLength="500"
                 wrap="hard"
+                placeholder='required'
                 defaultValue={this.state.description}
                 onChange={this.handleChange}
                 required
@@ -124,18 +128,10 @@ class AddProduct extends React.Component {
                 <option value={true}>TRUE</option>
                 <option value={false}>FALSE</option>
               </select>
-              {this.state.name !== '' && this.state.description !== '' ? (
-                <button type="submit">ADD THIS PRODUCT NOW!!!</button>
-              ) : (
-                <div />
-              )}
+              <button type="submit" disabled={isEnabled}>ADD THIS PRODUCT NOW!!!</button>
             </form>
             <br />
-            {this.toggleCategorySelection ? (
-              <Select options={options} onChange={this.handleAssignCategory} />
-            ) : (
-              <div />
-            )}
+            <Select options={options} onChange={this.handleAssignCategory} isDisabled={this.select}/>
           </div>
         </div>
       </div>
