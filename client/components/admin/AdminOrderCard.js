@@ -71,7 +71,7 @@ class AdminOrderRow extends React.Component {
             </tr>
             <tr>
               <td>User:</td>
-              <td>{order.user.email}</td>
+              <td>{order.user? order.user.email : ''}</td>
             </tr>
           </tbody>
         </table>

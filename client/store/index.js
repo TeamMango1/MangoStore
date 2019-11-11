@@ -5,13 +5,16 @@ import {composeWithDevTools} from 'redux-devtools-extension'
 import cart from './cartReducer'
 import allCategories from './categoryStore'
 import allUsers from './allUsers'
+import assignCategory from './assignCategory'
 import user from './user'
 import userView from './userView'
 import allProducts from './allProductsReducer'
 import singleProduct from './singleProduct'
 import selectedProductFilter from './selectedProductFilter'
+import selectedCategoriesFilter from './selectedCategoriesFilter'
 import orders from './orders'
-import singleOrder from './singleOrder'
+import singleOrderView from './singleOrderView'
+
 
 const reducer = combineReducers({
   user,
@@ -20,10 +23,12 @@ const reducer = combineReducers({
   allProducts,
   singleProduct,
   selectedProductFilter,
+  selectedCategoriesFilter,
   cart,
   allCategories,
+  assignCategory,
   orders,
-  singleOrder
+  singleOrderView,
 })
 
 const middleware = composeWithDevTools(

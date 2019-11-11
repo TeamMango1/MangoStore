@@ -3,9 +3,9 @@ import {connect} from 'react-redux'
 import Dialog from 'react-bootstrap-dialog'
 import {
   editOrderStatus,
-  fetchOrder,
+  fetchSingleOrder,
   removeProductFromOrder
-} from '../../store/singleOrder'
+} from '../../store/singleOrderView'
 import AdminProductList from './AdminProductList'
 
 const toTitle = upper =>
@@ -98,11 +98,12 @@ export class AdminSingleOrder extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  order: state.singleOrder
+  order: state.singleOrderView
 })
 
 const mapDispatchToProps = dispatch => ({
-  loadOrder: async id => await dispatch(fetchOrder(id)),
+
+  loadOrder:  id => dispatch(fetchSingleOrder(id)),
   editStatus: (id, status) => dispatch(editOrderStatus(id, status)),
   removePFO: (pId, oId) => dispatch(removeProductFromOrder(pId, oId))
 })
