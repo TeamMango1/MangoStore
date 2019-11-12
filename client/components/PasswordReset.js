@@ -26,20 +26,24 @@ class PasswordReset extends React.Component {
   }
   handleSubmit(evt) {
     evt.preventDefault()
-    if (this.state.pass1 !== this.state.pass2) {
+    if (this.state.pass1 === '' || this.state.pass2 === '') {
+      alert('please complete all fields')
+    } else if (this.state.pass1 !== this.state.pass2) {
       alert('passwords must match')
     } else {
       this.props.resetPassword(this.props.id, this.state.pass1)
-      this.props.history.push('/products')
+      this.props.history.push('/products?page=1')
     }
   }
   render() {
     return (
       <div>
-        <div>Please reset your password before continuing-</div>
+        <div className="ml-5 mb-4">
+          Please reset your password before continuing-
+        </div>
         <form onSubmit={this.handleSubmit}>
-          <label htmlFor="password1">
-            <small>Enter new password: </small>
+          <label className="ml-5 mr-2" htmlFor="password1">
+            <div>Enter new password: </div>
           </label>
           <input
             name="password1"
@@ -47,8 +51,9 @@ class PasswordReset extends React.Component {
             defaultValue={this.state.pass1}
             onChange={this.pass1HandleChange}
           />
-          <label htmlFor="password2">
-            <small>Enter password again: </small>
+          <br />
+          <label className="ml-5 mr-2" htmlFor="password2">
+            <div>Enter password again: </div>
           </label>
           <input
             name="password2"
@@ -56,7 +61,7 @@ class PasswordReset extends React.Component {
             defaultValue={this.state.pass2}
             onChange={this.pass2HandleChange}
           />
-          <input type="submit" value="Submit" />
+          <input className="ml-2" type="submit" value="Submit" />
         </form>
       </div>
     )

@@ -15,22 +15,27 @@ const AuthForm = props => {
       <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="email">
-            <small>Email</small>
+            <div className="mx-5">Email:</div>
           </label>
-          <input name="email" type="text" />
+          <input className="ml-4" name="email" type="text" />
         </div>
         <div>
           <label htmlFor="password">
-            <small>Password</small>
+            <div className="mx-5">Password:</div>
           </label>
           <input name="password" type="password" />
         </div>
         <div>
-          <button type="submit">{displayName}</button>
+          <button className="ml-5" type="submit">
+            {displayName}
+          </button>
         </div>
-        {error && error.response && <div> {error.response.data} </div>}
+        {error &&
+          error.response && <div className="ml-5"> {error.response.data} </div>}
       </form>
-      <a href="/auth/google">{displayName} with Google</a>
+      <a href="/auth/google" className="ml-5">
+        {displayName} with Google
+      </a>
     </div>
   )
 }
@@ -43,36 +48,40 @@ const SignupForm = props => {
       <form onSubmit={handleSubmit} name={name}>
         <div>
           <label htmlFor="email">
-            <small>Email</small>
+            <small className="mx-5">Email:</small>
           </label>
           <input name="email" type="text" />
         </div>
         <React.Fragment>
           <div>
             <label htmlFor="firstname">
-              <small>Firstname</small>
+              <small className="mx-5">First Name:</small>
             </label>
             <input name="firstname" type="text" />
           </div>
           <div>
             <label htmlFor="lastname">
-              <small>Lastname</small>
+              <small className="mx-5">Last Name:</small>
             </label>
             <input name="lastname" type="text" />
           </div>
         </React.Fragment>
         <div>
           <label htmlFor="password">
-            <small>Password</small>
+            <small className="mx-5">Password</small>
           </label>
           <input name="password" type="password" />
         </div>
         <div>
-          <button type="submit">{displayName}</button>
+          <button className="mx-5" type="submit">
+            {displayName}
+          </button>
         </div>
         {error && error.response && <div> {error.response.data} </div>}
       </form>
-      <a href="/auth/google">{displayName} with Google</a>
+      <a href="/auth/google" className="mx-5">
+        {displayName} with Google
+      </a>
     </div>
   )
 }
