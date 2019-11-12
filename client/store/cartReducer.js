@@ -38,10 +38,10 @@ export const addToCart = productId => {
   }
 }
 
-export const checkoutCart = () => {
+export const checkoutCart = (address, email) => {
   return async dispatch => {
     try {
-      await axios.put('/api/cart')
+      await axios.put('/api/cart', {address, email})
       dispatch(checkedOutCart())
     } catch (err) {
       console.log(err)
