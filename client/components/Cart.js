@@ -5,6 +5,26 @@ import CartItem from './CartItem'
 import {removeFromCart, fetchCart, checkoutCart} from '../store/cartReducer'
 import {toast} from 'react-toastify'
 
+const addressToString = add => {
+  const {
+    shipping_address_city,
+    shipping_address_country,
+    shipping_address_country_code,
+    shipping_address_line1,
+    shipping_address_state,
+    shipping_name,
+    billing_address_city,
+    billing_address_country,
+    billing_address_country_code,
+    billing_address_line1,
+    billing_address_state,
+    billing_name
+  } = add
+  const shipping = `${shipping_name}\n${shipping_address_line1}\n${shipping_address_city} ${shipping_address_state}\n${shipping_address_country_code}`
+  const billing = `${billing_name}\n${billing_address_line1}\n${billing_address_city} ${shipping_address_state}\n${shipping_address_country_code}`
+  return {shipping, billing}
+}
+
 class Cart extends React.Component {
   constructor() {
     super()
@@ -16,8 +36,10 @@ class Cart extends React.Component {
 
   handleToken(token, addresses) {
     // paid for
-    console.log(token, addresses)
-    this.props.checkout()
+    // console.log(token, addresses)
+    const shipping = addressToString(addresses).shipping
+    console.log("SHIPPING:\t",shipping)
+    this.props.checkout(shipping, token.email)
   }
 
   render() {
@@ -70,7 +92,7 @@ const mapProps = dispatch => {
       toast.success('Removed From Cart')
     },
     getCart: () => dispatch(fetchCart()),
-    checkout: () => dispatch(checkoutCart())
+    checkout: (address,email) => dispatch(checkoutCart(address,email))
   }
 }
 

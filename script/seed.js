@@ -12,7 +12,7 @@ const {
   ProductOrder
 } = require('../server/db/models')
 
-const SEED = 42069
+const SEED = 42070
 
 const ORDER_COUNT = 40
 const USER_COUNT = 100
