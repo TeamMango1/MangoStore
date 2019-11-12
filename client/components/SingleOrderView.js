@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleOrder} from '../store/singleOrderView'
 import {Link} from 'react-router-dom'
+import toTitle from '../../utils/toTitle'
 
 export class SingleOrderView extends React.Component {
   componentDidMount() {
@@ -20,21 +21,26 @@ export class SingleOrderView extends React.Component {
               <Link to="/home">Go Back</Link>
               <div id="singleOrderDetails">
                 <h2>
-                  Order Number {singleOrder.id} is {singleOrder.status}
+                  Order Number {singleOrder.id} is {toTitle(singleOrder.status)}
                 </h2>
                 <h4>Date Ordered: {singleOrder.createdAt} </h4>
               </div>
             </div>
 
-            <div id='singleOrderViewProducts'>
+            <div id="singleOrderViewProducts">
               <ul>
                 {products.map(product => {
                   return (
-                    <div key={product.id} id='SingleOrderProductDetails'>
-                      {product.availibility ? <Link to={`/products/${product.id}`}><h6>{product.name}</h6></Link>
-                      :
-                      <Link to="/notavailible"><h6>{product.name}</h6></Link>
-                      }
+                    <div key={product.id} id="SingleOrderProductDetails">
+                      {product.availibility ? (
+                        <Link to={`/products/${product.id}`}>
+                          <h6>{product.name}</h6>
+                        </Link>
+                      ) : (
+                        <Link to="/notavailible">
+                          <h6>{product.name}</h6>
+                        </Link>
+                      )}
 
                       <div>${product.price}</div>
                       <img src={product.photoURL} />
