@@ -27,8 +27,13 @@ function sendEmail(subject, body, recipent) {
 }
 
 async function sendPasswordResetEmail(resetLink, recipent) {
-  const body = `An admin triggered a password reset for you.\nGo to ${resetLink} to reset your password`
+  try{
+      const body = `An admin triggered a password reset for you.\nGo to ${resetLink} to reset your password`
   await sendEmail('Mangonificent Passwword Reset', body, recipent)
+  } catch(err){
+    console.log(err)
+  }
+
 }
 
 module.exports = {sendEmail, sendPasswordResetEmail}
