@@ -40,6 +40,7 @@ class Cart extends React.Component {
     const shipping = addressToString(addresses).shipping
     console.log("SHIPPING:\t",shipping)
     this.props.checkout(shipping, token.email)
+    toast.success("Your cart was ordered!")
   }
 
   render() {
