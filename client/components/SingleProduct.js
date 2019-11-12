@@ -9,10 +9,12 @@ class SingleProduct extends React.Component {
     super()
     this.state = {
       reviewText: '',
-      rating: null
+      rating: null,
+      quantity: 1
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleNumChange = this.handleNumChange.bind(this)
   }
   componentDidMount() {
     const projectId = this.props.match.params.id
@@ -22,6 +24,11 @@ class SingleProduct extends React.Component {
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
+    })
+  }
+  handleNumChange(event) {
+    this.setState({
+      quantity: event.target.value
     })
   }
   handleSubmit(event) {
@@ -59,7 +66,7 @@ class SingleProduct extends React.Component {
                   </tr>
                   <tr>
                     <td>Price</td>
-                    <td>${singleProduct.price/100}</td>
+                    <td>${singleProduct.price / 100}</td>
                   </tr>
                   <tr>
                     {singleProduct.inventory === 0 ? (
@@ -78,15 +85,23 @@ class SingleProduct extends React.Component {
                 </tbody>
               </table>
               <p>{singleProduct.description}</p>
-              <button
-                type="button"
-                onClick={() => {
-                  this.props.addToCart(singleProduct.id)
-                  toast.success('The item was added to your cart!')
-                }}
-              >
-                Add to cart
-              </button>
+              <div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    this.props.addToCart(singleProduct.id)
+                    toast.success('The item was added to your cart!')
+                  }}
+                >
+                  Add to cart
+                </button>
+                <input
+                  type="number"
+                  min="1"
+                  value={this.state.quantity}
+                  onChange={this.handleNumChange}
+                ></input>
+              </div>
             </div>
           </div>
           <div>
