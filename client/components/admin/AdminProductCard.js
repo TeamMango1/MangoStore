@@ -1,6 +1,7 @@
 import React from 'react'
 import {Link} from 'react-router-dom'
 import {connect} from 'react-redux'
+import {toast} from 'react-toastify'
 import {removeProduct} from '../../store/allProductsReducer'
 
 const AdminProductCard = props => {
@@ -21,7 +22,7 @@ const AdminProductCard = props => {
             <img src={photoURL} />
           </div>
         </div>
-        <div>${price}</div>
+        <div>${price/100}</div>
         {availibility ? <div>Availible</div> : <div>Not Availible </div>}
         <div>
           <button
@@ -44,7 +45,10 @@ const mapState = (state, own) => ({
 })
 
 const mapDeleteDispatch = dispatch => ({
-  delete: id => dispatch(removeProduct(id))
+  delete: id => {
+    dispatch(removeProduct(id))
+    toast.success('Deleted The Product!')
+  }
 })
 
 export default connect(mapState, mapDeleteDispatch)(AdminProductCard)
