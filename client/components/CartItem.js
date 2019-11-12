@@ -2,27 +2,30 @@ import React from 'react'
 import {Link} from 'react-router-dom'
 
 class CartItem extends React.Component {
-  constructor() {
-    super()
-    this.state = {
-      quantity: 0
-    }
-    this.quaitityChange = this.quaitityChange.bind(this)
-  }
+  // constructor() {
+  //   super()
+  // this.state = {
+  //   quantity: 0
+  // }
+  // this.quantityChange = this.quantityChange.bind(this)
+  // }
 
-  componentDidMount() {
-    console.log('AAAAAAA:', this.props.item.quantity)
-    this.setState({quantity: this.props.item.quantity})
-  }
+  // componentDidMount() {
+  //   console.log('AAAAAAA:', this.props.item.quantity)
+  //   this.setState({quantity: this.props.item.quantity})
+  // }
 
-  quaitityChange(event) {
-    const value = event.target.value
-    this.setState({quantity: value})
-  }
+  // quantityChange(event) {
+  //   const value = event.target.value
+  //   // this.setState({quantity: value})
+  //   // this will be too painful to do right now
+  // }
 
   render() {
     const {id, name, photoURL, price} = this.props.item
-    const {quantity} = this.state
+    const {quantity} = this.props.item.ProductOrder
+      ? this.props.item.ProductOrder
+      : {quantity: 0}
     return (
       <div className="col-4 card">
         <Link to={`/products/${id}`} className="text-center">
@@ -37,6 +40,7 @@ class CartItem extends React.Component {
           </div>
           <div className="text-center">${price / 100}</div>
           <input
+            onChange={this.quantityChange}
             type="number"
             min="1"
             className="text-center"

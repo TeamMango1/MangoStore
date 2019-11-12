@@ -42,7 +42,7 @@ class Cart extends React.Component {
     const shipping = addressToString(addresses).shipping
     console.log('SHIPPING:\t', shipping)
     this.props.checkout(shipping, token.email)
-    toast.success("Your cart was ordered!")
+    toast.success('Your cart was ordered!')
   }
 
   render() {
@@ -52,7 +52,7 @@ class Cart extends React.Component {
       <div className="container">
         <div className="row">
           {cart.map(item => {
-            cartTotal += item.price
+            cartTotal += item.price * item.ProductOrder.quantity
             return (
               <CartItem
                 key={item.id}
