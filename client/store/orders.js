@@ -25,10 +25,9 @@ export const fetchSingleUserOrders = () => async dispatch => {
   }
 }
 
-export const fetchOrders = () => async dispatch => {
+export const fetchOrders = pageNum => async dispatch => {
   try {
     const {data} = await axios.get('/api/orders')
-    console.log(data)
     dispatch(gotOrders(data))
   } catch (err) {
     console.error(err)

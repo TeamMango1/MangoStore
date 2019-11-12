@@ -3,12 +3,27 @@ const {User} = require('../db/models')
 const {isAdmin} = require('./middleware')
 module.exports = router
 
+
+const paginate = page => {
+  const offset = (page - 1) * 20
+  const limit = 21
+
+  return {
+    offset,
+    limit
+  }
+}
+
 /**
  *  GET all users (api/users)
  */
 router.get('/', isAdmin, async (req, res, next) => {
   try {
-    let allUsers = await User.findAll()
+    console.log('REQQUERY',typeof(Number(req.query.pageNum)))
+    let allUsers = await User.findAll({
+      ...paginate(Number(req.query.pageNum)),
+      order:[['firstName','ASC']]
+    })
     res.json(allUsers).status(200)
   } catch (error) {
     next(error)
