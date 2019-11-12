@@ -92,7 +92,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    loadOrders: (pageNum) => dispatch(fetchOrders(pageNum)),
+    loadOrders: pageNum => dispatch(fetchOrders(pageNum)),
     changeFilter: f => dispatch(changeFilter(f))
   }
 }
