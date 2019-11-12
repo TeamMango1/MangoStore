@@ -19,7 +19,7 @@ const paginate = page => {
  */
 router.get('/', isAdmin, async (req, res, next) => {
   try {
-    console.log('REQQUERY',typeof(Number(req.query.pageNum)))
+    console.log('REQ  QUERY',req.query)
     let allUsers = await User.findAll({
       ...paginate(Number(req.query.pageNum)),
       order:[['firstName','ASC']]
