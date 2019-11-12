@@ -21,7 +21,7 @@ const AdminProductCard = props => {
             <img src={photoURL} />
           </div>
         </div>
-        <div>${price}</div>
+        <div>${price/100}</div>
         {availibility ? <div>Availible</div> : <div>Not Availible </div>}
         <div>
           <button
