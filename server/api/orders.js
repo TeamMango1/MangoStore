@@ -1,17 +1,15 @@
 const router = require('express').Router()
 const {Order, Product, User, ProductOrder} = require('../db/models')
 const {isLoggedIn, isAdmin} = require('./middleware')
-
-
+const {orderStatusChangeEmail} = require('../utils')
 //GET all orders for a singleUser
-router.get(`/singleUser`, isLoggedIn, async (req,res,next)=>{
-
-  try{
+router.get(`/singleUser`, isLoggedIn, async (req, res, next) => {
+  try {
     let orders = await Order.findAll({
-      where:{
+      where: {
         userId: req.user.id
       },
-      include:[
+      include: [
         {
           model: Product
         }
@@ -19,21 +17,21 @@ router.get(`/singleUser`, isLoggedIn, async (req,res,next)=>{
     })
 
     res.json(orders)
-  }catch(error){
+  } catch (error) {
     next(error)
   }
 })
 
 //GET (api/orders/:id) Details on single order based on order ID
 
-router.get(`/:id`, isLoggedIn, async (req,res,next)=>{
-  try{
+router.get(`/:id`, isLoggedIn, async (req, res, next) => {
+  try {
     let singleOrder = await Order.findOne({
-      where:{
+      where: {
         id: req.params.id
       },
-      include:[
-        {model:Product},
+      include: [
+        {model: Product},
         {
           model: User,
           attributes: ['email', 'firstName', 'lastName']
@@ -41,11 +39,10 @@ router.get(`/:id`, isLoggedIn, async (req,res,next)=>{
       ]
     })
     res.json(singleOrder)
-  } catch(error){
+  } catch (error) {
     next(error)
   }
 })
-
 
 router.get('/', async (req, res, next) => {
   try {
@@ -79,10 +76,14 @@ router.put('/', isAdmin, async (req, res, next) => {
         status
       },
       {
-        where: {id}
+        where: {id},
+        include: [{model: User, attributes: ['email']}]
       }
     )
-    console.log(order)
+    // console.log(order.dataValues)
+    // console.log(order.userId)
+
+    // orderStatusChangeEmail(order, order.user.email)
     res.json(order)
   } catch (err) {
     next(err)
@@ -99,12 +100,12 @@ router.delete('/', isAdmin, async (req, res, next) => {
   }
 })
 
-router.delete('/products',isAdmin,async(req,res,next)=>{
+router.delete('/products', isAdmin, async (req, res, next) => {
   try {
     const orderId = req.body.orderId
     const productId = req.body.productId
 
-    await ProductOrder.destroy({where: {orderId,productId}})
+    await ProductOrder.destroy({where: {orderId, productId}})
     res.sendStatus(200)
   } catch (err) {
     next(err)
