@@ -13,26 +13,7 @@ router.get('/', async (req, res, next) => {
   const sessionCart = req.session.cart
   try {
     if (!req.user) {
-      const compiledCart = []
-      for (let i = 0; i < sessionCart.length; i++) {
-        console.log(i)
-        let index = -1
-        for (let j = 0; j < compiledCart.length; i++) {
-          if (compiledCart[j].id === sessionCart[i].id) {
-            index = j
-            break
-          }
-        }
-        if (index === -1) {
-          const temp = sessionCart[i]
-          temp.ProductOrder = {}
-          temp.ProductOrder.quantity = 1
-          compiledCart.push(temp)
-        } else {
-          compiledCart[index].ProductOrder.quantity++
-        }
-      }
-      res.json(compiledCart)
+      res.json(sessionCart)
     } else {
       const id = req.user.id
 
@@ -45,7 +26,7 @@ router.get('/', async (req, res, next) => {
           where: {orderId: cartOrder.id, productId: product.id}
         })
         const po = pos[0]
-        po.quantity++
+        po.quantity += Number(product.ProductOrder.quantity)
         await po.save()
       })
       req.session.cart = []
@@ -64,12 +45,40 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     let {productId, quantity} = req.body
-    console.log('QUAN:\t', quantity)
     if (!req.user) {
       const product = await Product.findByPk(productId)
-      for (let i = 0; i < quantity; i++) {
-        req.session.cart.push(product)
+
+      let index = -1
+      for (let j = 0; j < req.session.cart.length; j++) {
+        if (req.session.cart[j].id === product.id) {
+          index = j
+          break
+        }
       }
+      if (index === -1) {
+        const {
+          id,
+          name,
+          description,
+          photoURL,
+          price,
+          inventory,
+          availibility
+        } = product
+        req.session.cart.push({
+          id,
+          name,
+          description,
+          photoURL,
+          price,
+          inventory,
+          availibility,
+          ProductOrder: {quantity}
+        })
+      } else {
+        req.session.cart[index].ProductOrder.quantity += quantity
+      }
+
       res.json(product)
     } else {
       const userId = req.user.id
@@ -98,7 +107,6 @@ router.put('/', async (req, res, next) => {
     const sessionCart = req.session.cart,
       {email, address} = req.body
     if (!req.user) {
-      console.log('creating user:\t', req.body, '\n\n\n')
       const user = await User.create({email}) // attach the user to the seession?
       const order = await Order.create({status: PAID, email, address})
       user.addOrder(order)
