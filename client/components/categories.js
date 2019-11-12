@@ -23,11 +23,10 @@ class Categories extends React.Component {
   render() {
     const categories = this.props.categories
     let isdisabled;
-    if(this.state.name === '') isdisabled = false
+    if(this.state.name === '') isdisabled = true
     else{
-      isdisabled = categories.every(category => category!==this.state.name)
+      isdisabled = !categories.every(category => category.name !== this.state.name)
     }
-
     if (!categories) {
       return <div />
     } else {
