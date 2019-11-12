@@ -1,6 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {fetchProducts} from '../store/allProductsReducer'
+import queryString from 'query-string'
 import ProductList from './ProductList'
 import {setFilter, clearFilter} from '../store/selectedProductFilter'
 import {fetchCategories} from '../store/categoryStore'
@@ -9,14 +10,17 @@ export class Products extends React.Component {
   constructor() {
     super()
     this.state = {
-      search: ''
+      search: '',
     }
 
     this.handleChange = this.handleChange.bind(this)
     this.searchHandleChange = this.searchHandleChange.bind(this)
+    this.handleNextClick = this.handleNextClick.bind(this)
+    this.handlePrevClick = this.handlePrevClick.bind(this)
   }
   componentDidMount() {
-    this.props.loadProducts()
+    const values = queryString.parse(this.props.location.search)
+    this.props.loadProducts(1)
     this.props.getCategories()
   }
 
@@ -29,8 +33,19 @@ export class Products extends React.Component {
       search: event.target.value
     })
   }
+  handleNextClick() {
+    const values = queryString.parse(this.props.location.search)
+    this.props.loadProducts(Number(values.page) + 1)
+    this.props.history.push(`/products?page=${Number(values.page) + 1}`)
+  }
+  handlePrevClick() {
+    const values = queryString.parse(this.props.location.search)
+    this.props.loadProducts(Number(values.page) - 1)
+    this.props.history.push(`/products?page=${Number(values.page) - 1}`)
+  }
 
   render() {
+    const values = queryString.parse(this.props.location.search)
     let products = ''
     if (this.state.search !== '') {
       products = this.props.allProducts.filter(product =>
@@ -65,6 +80,16 @@ export class Products extends React.Component {
         <div>
           <ProductList products={products} />
         </div>
+        {values.page > 1 ? (
+          <button type="button" onClick={this.handlePrevClick}>
+            Previous Page
+          </button>
+        ) : (
+          <div />
+        )}
+        <button type="button" onClick={this.handleNextClick}>
+          Next Page
+        </button>
       </div>
     )
   }
@@ -78,7 +103,7 @@ const mapState = state => ({
 })
 
 const mapDispatch = dispatch => ({
-  loadProducts: () => dispatch(fetchProducts()),
+  loadProducts: pageNumber => dispatch(fetchProducts(pageNumber)),
   setFilter: filter => dispatch(setFilter(filter)),
   clearFilter: () => dispatch(clearFilter()),
   getCategories: () => dispatch(fetchCategories())

@@ -10,6 +10,7 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
+const paginate = require('express-paginate')
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -128,3 +129,6 @@ if (require.main === module) {
 } else {
   createApp()
 }
+
+// const {sendPasswordResetEmail} = require("./utils")
+// sendPasswordResetEmail("https://www.youtube.com/watch?v=oHg5SJYRHA0","")

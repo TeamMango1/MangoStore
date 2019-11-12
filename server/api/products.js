@@ -3,13 +3,25 @@ const {Product, Category, Review, ProductCategory} = require('../db/models')
 const {isAdmin} = require('./middleware')
 module.exports = router
 
+const paginate = page => {
+  const offset = (page - 1) * 20
+  const limit = 21
+
+  return {
+    offset,
+    limit
+  }
+}
+
 /**
  * get all products (/api/projects)
  */
 router.get('/', async (req, res, next) => {
   try {
     const products = await Product.findAll({
-      include: [{model: Category}]
+      include: [{model: Category}],
+      ...paginate(req.query.pageNumber),
+      order: [['id', 'ASC']]
     })
     res.json(products)
   } catch (err) {
@@ -65,18 +77,17 @@ router.post(`/:id`, async (req, res, next) => {
     next(error)
   }
 })
-router.post('/:id/productcategory', isAdmin, async (req,res,next)=>{
+router.post('/:id/productcategory', isAdmin, async (req, res, next) => {
   try {
     const productcategory = await ProductCategory.create({
-      productId:req.body.productId,
-      categoryId:req.body.categoryId
+      productId: req.body.productId,
+      categoryId: req.body.categoryId
     })
     res.json(productcategory).status(204)
   } catch (err) {
     next(err)
   }
 })
-
 
 /**
  * edit product (/api/products/)
@@ -105,9 +116,11 @@ router.delete('/:id', isAdmin, async (req, res, next) => {
 })
 
 // removing assocation between category and product in edit view
-router.put('/:id/productcategory',isAdmin, async(req,res,next)=>{
+router.put('/:id/productcategory', isAdmin, async (req, res, next) => {
   try {
-    await ProductCategory.destroy({where:{productId:req.body.productId,categoryId:req.body.categoryId}})
+    await ProductCategory.destroy({
+      where: {productId: req.body.productId, categoryId: req.body.categoryId}
+    })
     res.sendStatus(204)
   } catch (err) {
     next(err)
