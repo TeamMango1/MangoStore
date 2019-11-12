@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import queryString from 'query-string'
 import {
   fetchUsers,
   deleteUser,
@@ -8,11 +9,43 @@ import {
 } from '../../store/allUsers'
 import AdminUserCard from './AdminUserCard'
 
-class AllUsers extends React.Component {
-  componentDidMount() {
-    this.props.loadUsers()
+export class AllUsers extends React.Component {
+  constructor(){
+    super()
+    this.state = {
+      page:1
+    }
+
+    this.handleNextClick = this.handleNextClick.bind(this)
+    this.handlePrevClick = this.handlePrevClick.bind(this)
+
   }
+
+  componentDidMount() {
+    const values = queryString.parse(this.props.location.search)
+    this.setState({page: Number(values.page)})
+    this.props.loadUsers(values.page)
+  }
+
+  async handleNextClick(){
+    await this.props.loadUsers(this.state.page + 1)
+    this.props.history.push(`/adminhub/users?page=${this.state.page + 1}`)
+    this.setState({ page: this.state.page + 1})
+    console.log(this.state)
+  }
+
+  async handlePrevClick(){
+    await this.props.loadUsers(this.state.page - 1)
+    this.props.history.push(`/adminhub/users?page=${this.state.page - 1}`)
+    this.setState({ page: this.state.page - 1})
+    console.log(this.state)
+
+  }
+
+
   render() {
+    const values = queryString.parse(this.props.location.search)
+
     return (
       <div className="container">
         <div className="row">
@@ -26,6 +59,16 @@ class AllUsers extends React.Component {
             />
           ))}
         </div>
+        <button type="button" onClick={this.handleNextClick}>
+          Next Page
+        </button>
+        {values.page > 1 ? (
+          <button type="button" onClick={this.handlePrevClick}>
+            Previous Page
+          </button>
+        ) : (
+          <div />
+        )}
       </div>
     )
   }
@@ -39,7 +82,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    loadUsers: () => dispatch(fetchUsers()),
+    loadUsers: pageNum => dispatch(fetchUsers(pageNum)),
     deleteUser: id => dispatch(deleteUser(id)),
     promoteUser: id => dispatch(promoteUser(id)),
     triggerPasswordReset: id => dispatch(triggerPasswordReset(id))
