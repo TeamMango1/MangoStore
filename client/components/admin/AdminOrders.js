@@ -13,14 +13,14 @@ export class AdminOrders extends React.Component {
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleNextClick = this.handleNextClick.bind(this)
+    this.handlePrevClick = this.handlePrevClick.bind(this)
   }
 
 
   componentDidMount() {
     const values = queryString.parse(this.props.location.search)
-    this.setState({ page:Number(values.page) })
+    this.setState({ page: Number(values.page)})
     this.props.loadOrders(values.page)
-    console.log('STATE::::', this.state)
   }
 
   handleChange(event) {
@@ -28,15 +28,24 @@ export class AdminOrders extends React.Component {
     this.props.changeFilter(value === 'none' ? null : value)
   }
 
-  handleNextClick(){
-    this.setState({page: this.state.page += 1})
-    console.log('STATE::::', this.state)
-    this.props.loadOrders(this.state.page)
+  async handleNextClick(){
+    await this.props.loadOrders(this.state.page + 1)
     this.props.history.push(`/adminhub/orders?page=${this.state.page + 1}`)
+    this.setState({ page: this.state.page + 1})
+
   }
+
+  async handlePrevClick(){
+    await this.props.loadOrders(this.state.page - 1)
+    this.props.history.push(`/adminhub/orders?page=${this.state.page - 1}`)
+    this.setState({ page: this.state.page - 1})
+  }
+
 
   render() {
     console.log('ADMINPROPS:', this.props)
+
+    const num = queryString.parse(this.props.location.search)
 
     const orders = this.props.filter && this.props.orders
       ? this.props.orders.filter(
@@ -62,6 +71,13 @@ export class AdminOrders extends React.Component {
         <button type="button" onClick={this.handleNextClick}>
           Next Page
         </button>
+        {num.page > 1 ? (
+          <button type="button" onClick={this.handlePrevClick}>
+            Previous Page
+          </button>
+        ) : (
+          <div />
+        )}
       </div>
     )
   }

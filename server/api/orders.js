@@ -47,8 +47,8 @@ router.get(`/:id`, isLoggedIn, async (req,res,next)=>{
 })
 
 const paginate = page => {
-  const offset = (page - 1) * 20
-  const limit = 21
+  const offset = (page - 1) * 10
+  const limit = 10
 
   return {
     offset,
