@@ -44,24 +44,47 @@ router.get(`/:id`, isLoggedIn, async (req, res, next) => {
   }
 })
 
+const paginate = page => {
+  const offset = (page - 1) * 10
+  const limit = 10
+
+  return {
+    offset,
+    limit
+  }
+}
+
 router.get('/', async (req, res, next) => {
   try {
-    let query = {
-      include: [
-        {
-          model: Product,
-          attributes: ['name']
-        },
-        {
-          model: User,
-          attributes: ['email', 'firstName', 'lastName']
-        }
-      ]
-    }
-    if (Object.keys(req.query).length !== 0)
-      query.where = {status: req.query.status}
-    const Orders = await Order.findAll(query)
-    res.json(Orders)
+    // let query = {
+    //   include: [
+    //     {
+    //       model: Product,
+    //       attributes: ['name']
+    //     },
+    //     {
+    //       model: User,
+    //       attributes: ['email', 'firstName', 'lastName']
+    //     },
+
+    //   ],
+    //   order: [['id', 'ASC']]
+
+    // }
+    // if (Object.keys(req.query).length !== 0)
+    //   query.where = {status: req.query.status}
+    // const Orders = await Order.findAll(query)
+    console.log(req.query.pageNum)
+    const orders = await Order.findAll({
+      include:[
+        {model: Product, attributes:['name']},
+        {model: User, attributes:['email', 'firstName', 'lastName']}
+      ],
+      ...paginate(req.query.pageNum),
+      order:[['id','ASC']]
+
+    })
+    res.json(orders)
   } catch (err) {
     next(err)
   }

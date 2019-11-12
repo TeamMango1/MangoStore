@@ -16,20 +16,20 @@ export class Products extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.searchHandleChange = this.searchHandleChange.bind(this)
+
     this.handleNextClick = this.handleNextClick.bind(this)
     this.handlePrevClick = this.handlePrevClick.bind(this)
   }
   componentDidMount() {
     const values = queryString.parse(this.props.location.search)
-    this.setState({
-      page: Number(values.page)
-    })
+    this.setState({ page: Number(values.page) })
+    console.log("vales.page",values.page)
     this.props.loadProducts(values.page)
     this.props.getCategories()
   }
 
   handleChange(event) {
-    if (event.target.value === 'none') this.props.clearFilter()
+    if (event.target.value === 'filter') this.props.clearFilter()
     else this.props.setFilter(event.target.value)
   }
   searchHandleChange(event) {
@@ -53,6 +53,7 @@ export class Products extends React.Component {
   }
 
   render() {
+    console.log("PROPS", this.props)
     const values = queryString.parse(this.props.location.search)
     let products = ''
     if (this.state.search !== '') {
@@ -72,32 +73,50 @@ export class Products extends React.Component {
 
     return (
       <div className="container">
-        <select className="col-4 custom-select" onChange={this.handleChange}>
-          <option>none</option>
-          {this.props.categories.map(category => {
-            return <option key={category.id}>{category.name}</option>
-          })}
-        </select>
-        <br />
-        <input
-          name="search"
-          onChange={this.searchHandleChange}
-          defaultValue={this.state.search}
-          placeholder="search"
-        />
-        <div>
+        <div className="row justify-content-md-center">
+          <select
+            className="col-4 custom-select mx-5"
+            onChange={this.handleChange}
+          >
+            <option>filter</option>
+            {this.props.categories.map(category => {
+              return <option key={category.id}>{category.name}</option>
+            })}
+          </select>
+          <br />
+          <input
+            name="search"
+            onChange={this.searchHandleChange}
+            defaultValue={this.state.search}
+            placeholder="search"
+            className="col-4 mx-5"
+          />
+        </div>
+        <div className="mt-5">
           <ProductList products={products} />
         </div>
-        {values.page > 1 ? (
-          <button type="button" onClick={this.handlePrevClick}>
-            Previous Page
-          </button>
-        ) : (
-          <div />
-        )}
-        <button type="button" onClick={this.handleNextClick}>
-          Next Page
-        </button>
+        <div className="container">
+          <div className="row justify-content-md-center">
+            {values.page > 1 ? (
+              <button
+                className="btn btn-outline-dark mx-5 col-2"
+                type="button"
+                onClick={this.handlePrevClick}
+              >
+                Previous Page
+              </button>
+            ) : (
+              <div />
+            )}
+            <button
+              className="btn btn-outline-dark mx-5 col-2"
+              type="button"
+              onClick={this.handleNextClick}
+            >
+              Next Page
+            </button>
+          </div>
+        </div>
       </div>
     )
   }

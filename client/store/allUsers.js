@@ -22,9 +22,9 @@ const changeUserInfo = userId => ({type: CHANGE_USER_INFO, userId})
 /**
  * THUNK CREATORS
  */
-export const fetchUsers = () => async dispatch => {
+export const fetchUsers = pageNum => async dispatch => {
   try {
-    const res = await axios.get('/api/users')
+    const res = await axios.get('/api/users', {params:{pageNum}})
     dispatch(getUsers(res.data || defaultUsers))
   } catch (err) {
     console.error(err)

@@ -6,11 +6,11 @@ const ProductCard = props => {
   if (availibility) {
     return (
       <div className="col-4 card">
+        <div>
+          <h3 className="card-title text-center mt-2">{name}</h3>
+        </div>
         <Link to={`/products/${id}`}>
           <div>
-            <div>
-              <h3 className="card-title">{name}</h3>
-            </div>
             <div>
               <div>
                 <img className="card-image-top" src={photoURL} />
@@ -19,6 +19,7 @@ const ProductCard = props => {
             <div>${price/100}</div>
           </div>
         </Link>
+        <h3 className="text-center">${price}</h3>
       </div>
     )
   } else {

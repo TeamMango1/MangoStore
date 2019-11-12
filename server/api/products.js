@@ -17,10 +17,11 @@ const paginate = page => {
  * get all products (/api/projects)
  */
 router.get('/', async (req, res, next) => {
+  console.log('REQQQQQ', req.query)
   try {
     const products = await Product.findAll({
       include: [{model: Category}],
-      ...paginate(req.query.pageNumber),
+      ...paginate(req.query.pageNum),
       order: [['id', 'ASC']]
     })
     res.json(products)
