@@ -1,5 +1,5 @@
 const router = require('express').Router()
-const {Order, Product, ProductOrder} = require('../db/models')
+const {Order, Product, ProductOrder, User} = require('../db/models')
 const {isLoggedIn} = require('./middleware')
 
 const CART = 'CART'
@@ -67,11 +67,22 @@ router.post('/', async (req, res, next) => {
  */
 router.put('/', async (req, res, next) => {
   try {
+    const sessionCart = req.session.cart,
+      {email, address} = req.body
     if (!req.user) {
-      //TODO unlogged in user
-      const {email, address} = req.body
-      const order = await Order.create({status:PAID, email, address})
-
+      console.log('creating user:\t', req.body, '\n\n\n')
+      const user = await User.create({email}) // attach the user to the seession?
+      const order = await Order.create({status: PAID, email, address})
+      user.addOrder(order)
+      for (const product of sessionCart) {
+        await ProductOrder.create({
+          orderId: order.id,
+          productId: product.id,
+          quantity: 1,
+          oldUnitPrice: product.price
+        })
+      }
+      req.session.cart = []
     } else {
       const userId = req.user.id
       const cart = await Order.findOne({
@@ -81,23 +92,19 @@ router.put('/', async (req, res, next) => {
 
       const products = await cart.getProducts()
       for (let product of products) {
-        product.inventory--
-        await product.save()
-        await ProductOrder.update(
-          {oldUnitPrice: product.price},
-          {
-            where: {
-              orderId: cart.id,
-              productId: product.id
-            }
+        const po = await ProductOrder.findOne({
+          where: {
+            orderId: cart.id,
+            productId: product.id
           }
-        )
+        })
+        product.inventory -= po.quantity
+        product.save()
+        await po.update({oldUnitPrice: product.price})
       }
-
-      await cart.update({status: PAID})
-
-      res.sendStatus(200)
+      await cart.update({status: PAID, address})
     }
+    res.sendStatus(200)
   } catch (error) {
     next(error)
   }
