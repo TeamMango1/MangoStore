@@ -2,7 +2,6 @@ import React from 'react'
 import {connect} from 'react-redux'
 import {fetchSingleOrder} from '../store/singleOrderView'
 import {Link} from 'react-router-dom'
-import * as moment from 'moment'
 
 export class SingleOrderView extends React.Component {
   componentDidMount() {
