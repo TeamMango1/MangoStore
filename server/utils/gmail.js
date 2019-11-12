@@ -28,7 +28,12 @@ function sendEmail(subject, body, recipent) {
 
 async function sendPasswordResetEmail(resetLink, recipent) {
   const body = `An admin triggered a password reset for you.\nGo to ${resetLink} to reset your password`
-  await sendEmail('Mangonificent Passwword Reset', body, recipent)
+  return sendEmail('Mangonificent Password Reset', body, recipent)
+}
+
+async function sendOrderDeliveredEmail(order, recipent){
+  const body = `Your order ${order.id} was delivered!`
+  return sendEmail("Mangonificent ")
 }
 
 module.exports = {sendEmail, sendPasswordResetEmail}
