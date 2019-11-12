@@ -52,7 +52,9 @@ class Cart extends React.Component {
       <div className="container">
         <div className="row">
           {cart.map(item => {
-            cartTotal += item.price * item.ProductOrder.quantity
+            const multi = item.ProductOrder? item.ProductOrder.quantity : 1
+            cartTotal +=
+              item.price * multi
             return (
               <CartItem
                 key={item.id}

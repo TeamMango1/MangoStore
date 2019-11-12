@@ -89,7 +89,7 @@ class SingleProduct extends React.Component {
                 <button
                   type="button"
                   onClick={() => {
-                    this.props.addToCart(singleProduct.id)
+                    this.props.addToCart(singleProduct.id, this.state.quantity)
                     toast.success('The item was added to your cart!')
                   }}
                 >
@@ -160,7 +160,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    addToCart: id => dispatch(addToCart(id)),
+    addToCart: (id, amt) => dispatch(addToCart(id, amt)),
     fetchProduct: id => dispatch(fetchProduct(id)),
     postReview: (review, productId, userId) =>
       dispatch(postReview(review, productId, userId))

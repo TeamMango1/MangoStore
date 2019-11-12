@@ -64,7 +64,7 @@ router.get('/', async (req, res, next) => {
 router.post('/', async (req, res, next) => {
   try {
     let {productId, quantity} = req.body
-    quantity = 1
+    console.log('QUAN:\t', quantity)
     if (!req.user) {
       const product = await Product.findByPk(productId)
       for (let i = 0; i < quantity; i++) {
@@ -80,9 +80,8 @@ router.post('/', async (req, res, next) => {
       const pos = await ProductOrder.findOrCreate({
         where: {orderId: cartOrder.id, productId}
       })
-      const po = pos[0]
-      po.quantity += quantity
-      await po.save()
+      pos[0].quantity += Number(quantity)
+      await pos[0].save()
       const product = await Product.findByPk(productId)
       res.json(product)
     }
