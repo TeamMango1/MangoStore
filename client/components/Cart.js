@@ -2,8 +2,9 @@ import React from 'react'
 import {connect} from 'react-redux'
 import StripeCheckout from 'react-stripe-checkout'
 import CartItem from './CartItem'
-import {removeFromCart, fetchCart, checkoutCart} from '../store/cartReducer'
 import {toast} from 'react-toastify'
+import {removeFromCart, fetchCart, checkoutCart} from '../store/cartReducer'
+import {me} from '../store/user'
 
 const addressToString = add => {
   const {
@@ -32,14 +33,16 @@ class Cart extends React.Component {
   }
   componentDidMount() {
     this.props.getCart()
+    this.props.checkUser()
   }
 
   handleToken(token, addresses) {
     // paid for
     // console.log(token, addresses)
     const shipping = addressToString(addresses).shipping
-    console.log("SHIPPING:\t",shipping)
+    console.log('SHIPPING:\t', shipping)
     this.props.checkout(shipping, token.email)
+    toast.success('Your cart was ordered!')
   }
 
   render() {
@@ -49,7 +52,9 @@ class Cart extends React.Component {
       <div className="container">
         <div className="row">
           {cart.map(item => {
-            cartTotal += item.price
+            const multi = item.ProductOrder? item.ProductOrder.quantity : 1
+            cartTotal +=
+              item.price * multi
             return (
               <CartItem
                 key={item.id}
@@ -69,6 +74,7 @@ class Cart extends React.Component {
               name="Your Cart"
               billingAddress
               shippingAddress
+              email={this.props.email}
             />
           ) : (
             <h2>Your cart is empty... buy our mangos</h2>
@@ -81,7 +87,8 @@ class Cart extends React.Component {
 
 const mapState = state => {
   return {
-    cart: state.cart
+    cart: state.cart,
+    email: state.user ? state.user.email : ''
   }
 }
 
@@ -91,8 +98,9 @@ const mapProps = dispatch => {
       dispatch(removeFromCart(id))
       toast.success('Removed From Cart')
     },
+    checkUser: () => dispatch(me()),
     getCart: () => dispatch(fetchCart()),
-    checkout: (address,email) => dispatch(checkoutCart(address,email))
+    checkout: (address, email) => dispatch(checkoutCart(address, email))
   }
 }
 

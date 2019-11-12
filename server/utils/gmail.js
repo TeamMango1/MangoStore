@@ -1,5 +1,5 @@
-const send = require("gmail-send");
-const EMAIL_CONFIG = require("../../emailConfig.json")
+const send = require('gmail-send')
+const EMAIL_CONFIG = require('../../emailConfig.json')
 
 /**
  *
@@ -26,6 +26,7 @@ function sendEmail(subject, body, recipent) {
   )
 }
 
+<<<<<<< HEAD
 async function sendPasswordResetEmail(resetLink, recipent) {
   try{
       const body = `An admin triggered a password reset for you.\nGo to ${resetLink} to reset your password`
@@ -34,6 +35,43 @@ async function sendPasswordResetEmail(resetLink, recipent) {
     console.log(err)
   }
 
+=======
+function sendPasswordResetEmail(resetLink, recipent) {
+  const body = `An admin triggered a password reset for you.\nGo to ${resetLink} to reset your password`
+  return sendEmail('Mangonificent Password Reset', body, recipent)
+>>>>>>> f21839d7b74a90d20ca8ce1d25657dcbbc5129fd
 }
 
-module.exports = {sendEmail, sendPasswordResetEmail}
+function orderStatusChangeEmail(order, recipent) {
+  switch (order.status) {
+    case 'CANCELED': {
+      return orderCanceled(order, recipent)
+    }
+    case 'PROCESSING': {
+      return orderProceessing(order,recipent)
+    }
+    case 'COMPLETED': {
+      return orderDelivered(order, recipent)
+    }
+    default: {
+      return null
+    }
+  }
+}
+
+function orderCanceled(order, recipent) {
+  const body = `Your order ${order.id} was canceled.\nRIP`
+  return sendEmail('Mangonificent Order Canceled', body, recipent)
+}
+
+function orderProceessing(order, recipent) {
+  const body = `Your order ${order.id} has begun processing!`
+  return sendEmail('Mangonificent Order Processing!', body, recipent)
+}
+
+function orderDelivered(order, recipent) {
+  const body = `Your order ${order.id} was delivered!`
+  return sendEmail('Mangonificent Order Delivered!', body, recipent)
+}
+
+module.exports = {sendEmail, sendPasswordResetEmail, orderStatusChangeEmail}

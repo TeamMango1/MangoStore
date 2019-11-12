@@ -9,10 +9,12 @@ class SingleProduct extends React.Component {
     super()
     this.state = {
       reviewText: '',
-      rating: null
+      rating: null,
+      quantity: 1
     }
     this.handleChange = this.handleChange.bind(this)
     this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleNumChange = this.handleNumChange.bind(this)
   }
   componentDidMount() {
     const projectId = this.props.match.params.id
@@ -22,6 +24,11 @@ class SingleProduct extends React.Component {
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value
+    })
+  }
+  handleNumChange(event) {
+    this.setState({
+      quantity: event.target.value
     })
   }
   handleSubmit(event) {
@@ -59,7 +66,7 @@ class SingleProduct extends React.Component {
                   </tr>
                   <tr>
                     <td>Price</td>
-                    <td>${singleProduct.price}</td>
+                    <td>${singleProduct.price / 100}</td>
                   </tr>
                   <tr>
                     {singleProduct.inventory === 0 ? (
@@ -78,55 +85,77 @@ class SingleProduct extends React.Component {
                 </tbody>
               </table>
               <p>{singleProduct.description}</p>
-              <button
-                type="button"
-                onClick={() => {
-                  this.props.addToCart(singleProduct.id)
-                  toast.success('The item was added to your cart!')
-                }}
-              >
-                Add to cart
-              </button>
+              <div>
+                <button
+                  type="button"
+                  onClick={() => {
+                    this.props.addToCart(singleProduct.id, this.state.quantity)
+                    toast.success('The item was added to your cart!')
+                  }}
+                >
+                  Add to cart
+                </button>
+                <input
+                  type="number"
+                  min="1"
+                  value={this.state.quantity}
+                  onChange={this.handleNumChange}
+                ></input>
+              </div>
             </div>
           </div>
-          <div>
-            <div>Reviews </div>
-            {this.props.isLoggedIn ? (
-              <div>
-                <form onSubmit={this.handleSubmit}>
-                  <label htmlFor="rating">Rating</label>
-                  <input
-                    name="rating"
-                    type="number"
-                    min="1"
-                    max="5"
-                    onChange={this.handleChange}
-                  />
-                  <br />
-                  <textarea
-                    name="reviewText"
-                    cols="50"
-                    rows="5"
-                    maxLength="4000"
-                    wrap="hard"
-                    defaultValue={this.state.reviewText}
-                    onChange={this.handleChange}
-                  />
-                  <button type="submit">Add Review</button>
-                </form>
+          <div className="container mt-3">
+            <div className="row justify-content-md-center">
+              <h3 className="">Reviews</h3>
+            </div>
+            <div className="row justify-content-md-center">
+              {this.props.isLoggedIn ? (
+                <div>
+                  <form onSubmit={this.handleSubmit}>
+                    <label className="mx-1" htmlFor="rating">
+                      Rating
+                    </label>
+                    <input
+                      name="rating"
+                      type="number"
+                      min="1"
+                      max="5"
+                      onChange={this.handleChange}
+                      className=""
+                    />
+                    <br />
+                    <div className="row align-items-center">
+                      <textarea
+                        name="reviewText"
+                        cols="50"
+                        rows="5"
+                        maxLength="4000"
+                        wrap="hard"
+                        defaultValue={this.state.reviewText}
+                        onChange={this.handleChange}
+                      />
+                      <button
+                        className="btn btn-outline-primary mx-2"
+                        type="submit"
+                      >
+                        Add Review
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              ) : (
+                <div />
+              )}
+              <div className="mt-2">
+                {reviews.map(review => {
+                  return (
+                    <div key={review.id}>
+                      <div>Ratings: {review.rating} Stars </div>
+                      <p>Reviews: {review.reviewText}</p>
+                    </div>
+                  )
+                })}
               </div>
-            ) : (
-              <div />
-            )}
-            <div>
-              {reviews.map(review => {
-                return (
-                  <div key={review.id}>
-                    <div>Ratings: {review.rating} Stars </div>
-                    <p>Reviews: {review.reviewText}</p>
-                  </div>
-                )
-              })}
             </div>
           </div>
         </div>
@@ -145,7 +174,7 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    addToCart: id => dispatch(addToCart(id)),
+    addToCart: (id, amt) => dispatch(addToCart(id, amt)),
     fetchProduct: id => dispatch(fetchProduct(id)),
     postReview: (review, productId, userId) =>
       dispatch(postReview(review, productId, userId))
