@@ -1,8 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import {toast} from 'react-toastify'
-import {fetchProduct} from '../store/singleProduct'
-import {postReview} from '../store/singleProduct'
+import {fetchProduct, postReview} from '../store/singleProduct'
 import {addToCart} from '../store/cartReducer'
 
 class SingleProduct extends React.Component {
@@ -83,7 +82,7 @@ class SingleProduct extends React.Component {
                 type="button"
                 onClick={() => {
                   this.props.addToCart(singleProduct.id)
-                  toast.success("The item was added to your cart!")
+                  toast.success('The item was added to your cart!')
                 }}
               >
                 Add to cart

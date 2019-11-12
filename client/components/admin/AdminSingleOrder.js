@@ -1,5 +1,6 @@
 import React from 'react'
 import {connect} from 'react-redux'
+import {toast} from 'react-toastify'
 import Dialog from 'react-bootstrap-dialog'
 import {
   editOrderStatus,
@@ -40,6 +41,7 @@ export class AdminSingleOrder extends React.Component {
   }
   handleCancelChange() {
     this.setState({toBeConfirmed: null})
+    toast.success('Canceled The Status Change!')
   }
   handleConfirmChange() {
     this.props.editStatus(this.props.order.id, this.state.toBeConfirmed)
@@ -47,6 +49,7 @@ export class AdminSingleOrder extends React.Component {
       option: state.toBeConfirmed,
       toBeConfirmed: null
     }))
+    toast.success('The Status Was Changed!')
   }
   async componentDidMount() {
     await this.props.loadOrder(this.props.match.params.id)
@@ -108,7 +111,10 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   loadOrder: id => dispatch(fetchSingleOrder(id)),
   editStatus: (id, status) => dispatch(editOrderStatus(id, status)),
-  removePFO: (pId, oId) => dispatch(removeProductFromOrder(pId, oId))
+  removePFO: (pId, oId) => {
+    dispatch(removeProductFromOrder(pId, oId))
+    toast.success("The Product Was Removed From The Order!")
+  }
 })
 
 export default connect(mapStateToProps, mapDispatchToProps)(AdminSingleOrder)
