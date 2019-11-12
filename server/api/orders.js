@@ -2,12 +2,6 @@ const router = require('express').Router()
 const {Order, Product, User, ProductOrder} = require('../db/models')
 const {isLoggedIn, isAdmin} = require('./middleware')
 
-const statuses = {
-  PROCESSING: 'PROCESSING',
-  COMPLETED: 'COMPLETED',
-  CANCELED: 'CANCELED',
-  CART: 'CART'
-}
 
 //GET all orders for a singleUser
 router.get(`/singleUser`, isLoggedIn, async (req,res,next)=>{
