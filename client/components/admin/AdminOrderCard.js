@@ -2,6 +2,7 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Dialog from 'react-bootstrap-dialog'
 import {Link} from "react-router-dom"
+import {toast} from 'react-toastify'
 
 import {editOrderStatus, deleteOrder} from '../../store/orders'
 
@@ -40,6 +41,7 @@ class AdminOrderRow extends React.Component {
   }
   handleCancelChange() {
     this.setState({toBeConfirmed: null})
+    toast.success("Canceled The Status Change!")
   }
   handleConfirmChange() {
     this.props.editStatus(this.props.order.id, this.state.toBeConfirmed)
@@ -47,6 +49,7 @@ class AdminOrderRow extends React.Component {
       option: state.toBeConfirmed,
       toBeConfirmed: null
     }))
+    toast.success("The Status Was Changed!")
   }
   render() {
     const order = this.props.order

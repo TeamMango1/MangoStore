@@ -1,7 +1,7 @@
 import React from 'react'
 import {connect} from 'react-redux'
-import {fetchProduct} from '../store/singleProduct'
-import {postReview} from '../store/singleProduct'
+import {toast} from 'react-toastify'
+import {fetchProduct, postReview} from '../store/singleProduct'
 import {addToCart} from '../store/cartReducer'
 
 class SingleProduct extends React.Component {
@@ -28,29 +28,24 @@ class SingleProduct extends React.Component {
     event.preventDefault()
     const projectId = this.props.match.params.id
 
-
     this.props.postReview(
-
       this.state,
       this.props.match.params.id,
       this.props.userId
     )
     this.setState({
-      reviewText:'',
+      reviewText: '',
       rating: null
     })
     this.props.fetchProduct(projectId)
   }
-
 
   render() {
     const {singleProduct} = this.props
     let categories = singleProduct.categories
     let reviews = singleProduct.review
 
-
     if (categories && reviews) {
-
       return (
         <div className="container">
           <div className="row">
@@ -85,7 +80,10 @@ class SingleProduct extends React.Component {
               <p>{singleProduct.description}</p>
               <button
                 type="button"
-                onClick={() => this.props.addToCart(singleProduct.id)}
+                onClick={() => {
+                  this.props.addToCart(singleProduct.id)
+                  toast.success('The item was added to your cart!')
+                }}
               >
                 Add to cart
               </button>
