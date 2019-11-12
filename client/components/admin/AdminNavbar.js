@@ -16,7 +16,7 @@ const AdminNavbar = () => {
       </li>
       <li className="nav-item">
         <NavLink
-          to="/adminhub/users"
+          to="/adminhub/users?page=1"
           className="nav-link"
           activeClassName="nav-link active"
           href="#"
@@ -26,7 +26,7 @@ const AdminNavbar = () => {
       </li>
       <li className="nav-item">
         <NavLink
-          to="/adminhub/orders"
+          to="/adminhub/orders?page=1"
           className="nav-link"
           activeClassName="nav-link active"
           href="#"

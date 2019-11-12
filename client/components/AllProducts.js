@@ -16,6 +16,7 @@ export class Products extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.searchHandleChange = this.searchHandleChange.bind(this)
+
     this.handleNextClick = this.handleNextClick.bind(this)
     this.handlePrevClick = this.handlePrevClick.bind(this)
   }
