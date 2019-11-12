@@ -27,9 +27,7 @@ export const fetchSingleUserOrders = () => async dispatch => {
 
 export const fetchOrders = pageNum => async dispatch => {
   try {
-    console.log('PAGENUM FROM THUNK:::',pageNum)
-    const {data} = await axios.get('/api/orders',{params:{pageNum}})
-    console.log('DATAFROM THUNK:::', data)
+    const {data} = await axios.get('/api/orders')
     dispatch(gotOrders(data))
   } catch (err) {
     console.error(err)

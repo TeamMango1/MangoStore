@@ -25,6 +25,7 @@ export class AdminProducts extends React.Component {
     if (event.target.value === 'none') this.props.clearFilter()
     else this.props.setFilter(event.target.value)
   }
+
   searchHandleChange(event) {
     this.setState({
       search: event.target.value
