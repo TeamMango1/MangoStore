@@ -109,8 +109,9 @@ const mapState = state => {
 
 const mapDispatch = dispatch => {
   return {
-    handleClick() {
-      dispatch(logout())
+    async handleClick() {
+      await dispatch(logout())
+      dispatch(fetchCart())
     },
     loadCart() {
       dispatch(fetchCart())
