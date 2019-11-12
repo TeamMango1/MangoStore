@@ -59,7 +59,7 @@ class SingleProduct extends React.Component {
                   </tr>
                   <tr>
                     <td>Price</td>
-                    <td>${singleProduct.price}</td>
+                    <td>${singleProduct.price/100}</td>
                   </tr>
                   <tr>
                     {singleProduct.inventory === 0 ? (

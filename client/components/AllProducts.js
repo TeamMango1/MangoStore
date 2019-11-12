@@ -16,14 +16,14 @@ export class Products extends React.Component {
 
     this.handleChange = this.handleChange.bind(this)
     this.searchHandleChange = this.searchHandleChange.bind(this)
+
     this.handleNextClick = this.handleNextClick.bind(this)
     this.handlePrevClick = this.handlePrevClick.bind(this)
   }
   componentDidMount() {
     const values = queryString.parse(this.props.location.search)
-    this.setState({
-      page: Number(values.page)
-    })
+    this.setState({ page: Number(values.page) })
+    console.log("vales.page",values.page)
     this.props.loadProducts(values.page)
     this.props.getCategories()
   }
@@ -53,6 +53,7 @@ export class Products extends React.Component {
   }
 
   render() {
+    console.log("PROPS", this.props)
     const values = queryString.parse(this.props.location.search)
     let products = ''
     if (this.state.search !== '') {

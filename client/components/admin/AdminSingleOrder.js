@@ -82,7 +82,7 @@ export class AdminSingleOrder extends React.Component {
             </tr>
             <tr>
               <td>User:</td>
-              <td>{user.email}</td>
+              <td>{user ? user.email : 'No user assigned to this order...'}</td>
             </tr>
           </tbody>
         </table>
@@ -113,7 +113,7 @@ const mapDispatchToProps = dispatch => ({
   editStatus: (id, status) => dispatch(editOrderStatus(id, status)),
   removePFO: (pId, oId) => {
     dispatch(removeProductFromOrder(pId, oId))
-    toast.success("The Product Was Removed From The Order!")
+    toast.success('The Product Was Removed From The Order!')
   }
 })
 

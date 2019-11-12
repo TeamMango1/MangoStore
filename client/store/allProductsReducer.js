@@ -21,10 +21,11 @@ export const editProduct = (product, id) => {
   return {type: EDIT_PRODUCT, product, id}
 }
 //THUNK
-export const fetchProducts = pageNumber => {
+export const fetchProducts = pageNum => {
   return async dispatch => {
     try {
-      const {data} = await axios.get('/api/products', {params: {pageNumber}})
+      const {data} = await axios.get('/api/products',{params:{pageNum}})
+      console.log('DATA:::', data)
       dispatch(gotProducts(data))
     } catch (err) {
       console.log('ERROR', err)
