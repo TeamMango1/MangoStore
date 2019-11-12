@@ -5,6 +5,7 @@ import {fetchSingleUserOrders} from '../store/orders'
 import {Link} from 'react-router-dom'
 import {setFilter, clearFilter} from '../store/selectedProductFilter'
 import PasswordReset from './PasswordReset'
+import OrderCard from './OrderCard'
 
 export class UserHome extends React.Component {
   constructor() {
@@ -29,7 +30,7 @@ export class UserHome extends React.Component {
         })
       : this.props.orders
 
-      console.log(orders)
+    console.log(orders)
 
     return (
       <div>
@@ -50,18 +51,9 @@ export class UserHome extends React.Component {
             </div>
 
             <ul>
-              {orders.map(order => {
-                return (
-                  <div key={order.id}>
-                    <div key={order.id}>
-                      <Link to={`/orders/${order.id}`}>
-                        Order Number #{order.id}
-                      </Link>
-                    </div>
-                    <div>Status: {order.status}</div>
-                  </div>
-                )
-              })}
+              {orders.map(order => (
+                <OrderCard key={order.id} order={order} />
+              ))}
             </ul>
           </div>
         )}
