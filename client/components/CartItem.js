@@ -15,7 +15,7 @@ const CartItem = props => {
             src={photoURL}
           />
         </div>
-        <div className="text-center">${price}</div>
+        <div className="text-center">${price/100}</div>
         <div className="text-center">
           <button
             type="button"
