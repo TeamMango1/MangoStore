@@ -22,7 +22,12 @@ class Categories extends React.Component {
   }
   render() {
     const categories = this.props.categories
-    console.log('categories;;;', categories)
+    let isdisabled;
+    if(this.state.name === '') isdisabled = false
+    else{
+      isdisabled = categories.every(category => category!==this.state.name)
+    }
+
     if (!categories) {
       return <div />
     } else {
@@ -42,7 +47,7 @@ class Categories extends React.Component {
                 onChange={this.handleChange}
                 required
               />
-              <button type="submit">ADD CATEGORY</button>
+              <button type="submit" disabled={isdisabled}>ADD CATEGORY</button>
             </form>
           </div>
         </div>
