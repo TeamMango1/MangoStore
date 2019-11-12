@@ -3,6 +3,7 @@ const {Order, Product, ProductOrder} = require('../db/models')
 const {isLoggedIn} = require('./middleware')
 
 const CART = 'CART'
+const PAID = 'PAID'
 
 /**
  *  GET a cart by user
@@ -55,6 +56,47 @@ router.post('/', async (req, res, next) => {
       })
       const product = await Product.findByPk(productId)
       res.json(product)
+    }
+  } catch (error) {
+    next(error)
+  }
+})
+
+/**
+ * checkout cart (change status to paid)
+ */
+router.put('/', async (req, res, next) => {
+  try {
+    if (!req.user) {
+      //TODO unlogged in user
+      const {email, address} = req.body
+      const order = await Order.create({status:PAID, email, address})
+
+    } else {
+      const userId = req.user.id
+      const cart = await Order.findOne({
+        where: {userId, status: CART},
+        include: [{model: Product}]
+      })
+
+      const products = await cart.getProducts()
+      for (let product of products) {
+        product.inventory--
+        await product.save()
+        await ProductOrder.update(
+          {oldUnitPrice: product.price},
+          {
+            where: {
+              orderId: cart.id,
+              productId: product.id
+            }
+          }
+        )
+      }
+
+      await cart.update({status: PAID})
+
+      res.sendStatus(200)
     }
   } catch (error) {
     next(error)

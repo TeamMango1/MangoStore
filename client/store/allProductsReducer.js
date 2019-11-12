@@ -1,5 +1,5 @@
 import axios from 'axios'
-import history from '../history';
+import history from '../history'
 const initialState = []
 
 //action type
@@ -14,17 +14,17 @@ export const gotProducts = products => {
 export const addProduct = product => {
   return {type: ADD_PRODUCT, product}
 }
-export const deleteProduct = id =>{
+export const deleteProduct = id => {
   return {type: DELETE_PRODUCT, id}
 }
-export const editProduct = (product, id) =>{
-  return {type:EDIT_PRODUCT, product,id}
+export const editProduct = (product, id) => {
+  return {type: EDIT_PRODUCT, product, id}
 }
 //THUNK
-export const fetchProducts = () => {
+export const fetchProducts = pageNumber => {
   return async dispatch => {
     try {
-      const {data} = await axios.get('/api/products')
+      const {data} = await axios.get('/api/products', {params: {pageNumber}})
       dispatch(gotProducts(data))
     } catch (err) {
       console.log('ERROR', err)
@@ -42,23 +42,23 @@ export const postProduct = product => {
   }
 }
 export const removeProduct = id => {
-  return async dispatch =>{
+  return async dispatch => {
     try {
       await axios.delete(`/api/products/${id}`)
       dispatch(deleteProduct(id))
     } catch (err) {
-      console.log('ERROR',err)
+      console.log('ERROR', err)
     }
   }
 }
-export const updateProduct = (product, id) =>{
-  return async dispatch =>{
-    try{
+export const updateProduct = (product, id) => {
+  return async dispatch => {
+    try {
       await axios.put(`/api/products/${id}`, product)
       dispatch(editProduct(product, id))
       history.push('/adminhub/products')
-    } catch(err){
-      console.log('ERROR',err)
+    } catch (err) {
+      console.log('ERROR', err)
     }
   }
 }
@@ -70,12 +70,15 @@ export default (state = initialState, action) => {
     case ADD_PRODUCT:
       return action.product
     case DELETE_PRODUCT:
-      return state.filter(product=> product.id!==action.id )
+      return state.filter(product => product.id !== action.id)
     case EDIT_PRODUCT:
-      return state.map(product=>{
-        if(product.id === action.id ){
-          return {id:action.id, ...action.product}
-        } else{ return product}})
+      return state.map(product => {
+        if (product.id === action.id) {
+          return {id: action.id, ...action.product}
+        } else {
+          return product
+        }
+      })
     default:
       return state
   }

@@ -51,7 +51,7 @@ const createProduct = async () => {
       )}`,
       price: faker.commerce.price(),
       inventory: faker.random.number(),
-      availibility: faker.random.boolean()
+      availibility: true
     })
     return currentProduct
   } catch (error) {
@@ -83,7 +83,7 @@ const createCategory = async () => {
 const createOrder = async () => {
   try {
     let currentOrder = await Order.create({
-      status: Order.rawAttributes.status.values[Math.floor(Math.random() * 4)]
+      status: Order.rawAttributes.status.values[Math.floor(Math.random() * 5)]
     })
     return currentOrder
   } catch (error) {
