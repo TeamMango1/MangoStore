@@ -26,20 +26,9 @@ function sendEmail(subject, body, recipent) {
   )
 }
 
-<<<<<<< HEAD
-async function sendPasswordResetEmail(resetLink, recipent) {
-  try{
-      const body = `An admin triggered a password reset for you.\nGo to ${resetLink} to reset your password`
-  await sendEmail('Mangonificent Passwword Reset', body, recipent)
-  } catch(err){
-    console.log(err)
-  }
-
-=======
 function sendPasswordResetEmail(resetLink, recipent) {
   const body = `An admin triggered a password reset for you.\nGo to ${resetLink} to reset your password`
   return sendEmail('Mangonificent Password Reset', body, recipent)
->>>>>>> f21839d7b74a90d20ca8ce1d25657dcbbc5129fd
 }
 
 function orderStatusChangeEmail(order, recipent) {
