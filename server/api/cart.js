@@ -13,7 +13,25 @@ router.get('/', async (req, res, next) => {
   const sessionCart = req.session.cart
   try {
     if (!req.user) {
-      res.json(sessionCart)
+      const compiledCart = []
+      for(let i = 0 ;i< sessionCart.length;i++){
+        console.log(i)
+        let index = -1
+        for(let j = 0; j < compiledCart.length;i++){
+          if (compiledCart[j].id===sessionCart[i].id){
+            index=j
+            break
+          }
+        }
+        if(index === -1){
+          const temp = sessionCart[i]
+          temp.quantity = 1
+          compiledCart.push(temp)
+        }else{
+          compiledCart[index].quantity ++;
+        }
+      }
+      res.json(compiledCart)
     } else {
       const id = req.user.id
 
@@ -40,10 +58,13 @@ router.get('/', async (req, res, next) => {
 
 router.post('/', async (req, res, next) => {
   try {
-    const productId = req.body.productId
+    let {productId, quantity} = req.body
+    quantity =1
     if (!req.user) {
       const product = await Product.findByPk(productId)
-      req.session.cart.push(product)
+      for (let i = 0; i < quantity; i++) {
+        req.session.cart.push(product)
+      }
       res.json(product)
     } else {
       const userId = req.user.id
@@ -51,9 +72,11 @@ router.post('/', async (req, res, next) => {
         where: {userId, status: CART}
       })
       const cartOrder = cartOrders[0]
-      await ProductOrder.findOrCreate({
+      const po = await ProductOrder.findOrCreate({
         where: {orderId: cartOrder.id, productId}
       })
+      po.quantity += quantity
+      await po.save()
       const product = await Product.findByPk(productId)
       res.json(product)
     }
