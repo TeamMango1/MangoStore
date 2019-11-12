@@ -3,6 +3,7 @@ import {connect} from 'react-redux'
 import StripeCheckout from 'react-stripe-checkout'
 import CartItem from './CartItem'
 import {removeFromCart, fetchCart, checkoutCart} from '../store/cartReducer'
+import {toast} from 'react-toastify'
 
 class Cart extends React.Component {
   constructor() {
@@ -64,7 +65,10 @@ const mapState = state => {
 
 const mapProps = dispatch => {
   return {
-    removeFromCart: id => dispatch(removeFromCart(id)),
+    removeFromCart: id => {
+      dispatch(removeFromCart(id))
+      toast.success('Removed From Cart')
+    },
     getCart: () => dispatch(fetchCart()),
     checkout: () => dispatch(checkoutCart())
   }
