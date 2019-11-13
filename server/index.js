@@ -10,7 +10,7 @@ const sessionStore = new SequelizeStore({db})
 const PORT = process.env.PORT || 8080
 const app = express()
 const socketio = require('socket.io')
-const paginate = require('express-paginate')
+const seed = require('../script/seed')
 module.exports = app
 
 // This is a global Mocha hook, used for resource cleanup.
@@ -115,6 +115,7 @@ const startListening = () => {
 const syncDb = () => db.sync()
 
 async function bootApp() {
+  await seed()
   await sessionStore.sync()
   await syncDb()
   await createApp()
