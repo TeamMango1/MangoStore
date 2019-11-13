@@ -16,10 +16,9 @@ const ProductCard = props => {
                 <img className="card-image-top" src={photoURL} />
               </div>
             </div>
-            <div>${price/100}</div>
           </div>
+        <h3 className="text-center">${price/100}</h3>
         </Link>
-        <h3 className="text-center">${price}</h3>
       </div>
     )
   } else {
