@@ -9,7 +9,7 @@ const middlewares = [thunkMiddleware]
 
 const mockStore = configureMockStore(middlewares)
 
-import Navbar from './navbar'
+import AdminNavbar from './AdminNavbar'
 
 describe('Admin Navigation', () => {
   const initialState = {
@@ -35,47 +35,11 @@ describe('Admin Navigation', () => {
   it('navbar shows correct links for an admin', () => {
     const wrapper = mount(
       <Provider store={fakeStore}>
-        <Navbar />
+        <AdminNavbar />
       </Provider>
     )
 
-    const links = ['adminhub', 'products', 'home', '#', 'cart']
-    for (let i; i < links.length; i++) {
-      expect(
-        wrapper
-          .find('a')
-          .at(i)
-          .props().href
-      ).to.be.equal(links[i])
-    }
-  })
-
-  it('navbar shows correct links for a non admin', () => {
-    const wrapper = mount(
-      <Provider store={fakeStore}>
-        <Navbar />
-      </Provider>
-    )
-
-    const links = ['products', 'home', '#', 'cart']
-    for (let i; i < links.length; i++) {
-      expect(
-        wrapper
-          .find('a')
-          .at(i)
-          .props().href
-      ).to.be.equal(links[i])
-    }
-  })
-
-  it('navbar shows correct links for a guest', () => {
-    const wrapper = mount(
-      <Provider store={fakeStore}>
-        <Navbar />
-      </Provider>
-    )
-
-    const links = ['login', 'signup', 'products', 'cart']
+    const links = ['adminhub/products', 'adminhub/users', 'adminhub/orders']
     for (let i; i < links.length; i++) {
       expect(
         wrapper
