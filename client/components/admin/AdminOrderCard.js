@@ -1,13 +1,11 @@
 import React from 'react'
 import {connect} from 'react-redux'
 import Dialog from 'react-bootstrap-dialog'
-import {Link} from "react-router-dom"
+import {Link} from 'react-router-dom'
 import {toast} from 'react-toastify'
 
 import {editOrderStatus, deleteOrder} from '../../store/orders'
-
-const toTitle = upper =>
-  upper[0].toUpperCase() + upper.substring(1).toLowerCase()
+import toTitle from '../../../utils/toTitle'
 
 class AdminOrderRow extends React.Component {
   constructor() {
@@ -41,7 +39,7 @@ class AdminOrderRow extends React.Component {
   }
   handleCancelChange() {
     this.setState({toBeConfirmed: null})
-    toast.success("Canceled The Status Change!")
+    toast.success('Canceled The Status Change!')
   }
   handleConfirmChange() {
     this.props.editStatus(this.props.order.id, this.state.toBeConfirmed)
@@ -49,13 +47,15 @@ class AdminOrderRow extends React.Component {
       option: state.toBeConfirmed,
       toBeConfirmed: null
     }))
-    toast.success("The Status Was Changed!")
+    toast.success('The Status Was Changed!')
   }
   render() {
     const order = this.props.order
     return (
       <div className="col-4 card">
-        <Link to = {`orders/${order.id}`}><h4>Order {order.id}</h4></Link>
+        <Link to={`orders/${order.id}`}>
+          <h4>Order {order.id}</h4>
+        </Link>
         <table>
           <tbody>
             <tr>
@@ -75,7 +75,7 @@ class AdminOrderRow extends React.Component {
             </tr>
             <tr>
               <td>User:</td>
-              <td>{order.user? order.user.email : ''}</td>
+              <td>{order.user ? order.user.email : ''}</td>
             </tr>
           </tbody>
         </table>

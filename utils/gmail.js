@@ -1,5 +1,5 @@
 const send = require('gmail-send')
-const EMAIL_CONFIG = require('../../emailConfig.json')
+const EMAIL_CONFIG = require('../emailConfig.json')
 
 /**
  *

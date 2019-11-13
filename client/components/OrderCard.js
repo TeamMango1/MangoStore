@@ -2,9 +2,8 @@ import React from 'react'
 import {connect} from 'react-redux'
 import Dialog from 'react-bootstrap-dialog'
 import {Link} from 'react-router-dom'
+import toTitle from '../../utils/toTitle'
 
-const toTitle = upper =>
-  upper[0].toUpperCase() + upper.substring(1).toLowerCase()
 
 class OrderCard extends React.Component {
   render() {

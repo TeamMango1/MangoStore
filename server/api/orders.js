@@ -1,7 +1,7 @@
 const router = require('express').Router()
 const {Order, Product, User, ProductOrder} = require('../db/models')
 const {isLoggedIn, isAdmin} = require('./middleware')
-const {orderStatusChangeEmail} = require('../utils')
+const {orderStatusChangeEmail} = require('../../utils/gmail')
 //GET all orders for a singleUser
 router.get(`/singleUser`, isLoggedIn, async (req, res, next) => {
   try {
@@ -76,13 +76,12 @@ router.get('/', async (req, res, next) => {
     // const Orders = await Order.findAll(query)
     console.log(req.query.pageNum)
     const orders = await Order.findAll({
-      include:[
-        {model: Product, attributes:['name']},
-        {model: User, attributes:['email', 'firstName', 'lastName']}
+      include: [
+        {model: Product, attributes: ['name']},
+        {model: User, attributes: ['email', 'firstName', 'lastName']}
       ],
       ...paginate(req.query.pageNum),
-      order:[['id','ASC']]
-
+      order: [['id', 'ASC']]
     })
     res.json(orders)
   } catch (err) {

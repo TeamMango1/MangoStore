@@ -8,9 +8,7 @@ import {
   removeProductFromOrder
 } from '../../store/singleOrderView'
 import AdminProductList from './AdminProductList'
-
-const toTitle = upper =>
-  upper[0].toUpperCase() + upper.substring(1).toLowerCase()
+import toTitle from '../../../utils/toTitle'
 
 export class AdminSingleOrder extends React.Component {
   constructor() {
