@@ -14,6 +14,7 @@ class Navbar extends React.Component {
   componentDidMount() {
     this.props.loadCart()
   }
+  
   handleClick() {
     this.props.loadProducts(1)
     // this.props.history.push(`/products?page=1`)
