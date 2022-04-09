@@ -49,7 +49,7 @@
     "fs": "0.0.1-security",
     "gmail-send": "^1.8.10",
     "history": "^4.9.0",
-    "moment": "^2.24.0",
+    "moment": "^2.29.2",
     "morgan": "^1.9.1",
     "net": "^1.0.2",
     "nodemailer": "^6.3.1",
