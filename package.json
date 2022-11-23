@@ -72,7 +72,7 @@
     "redux-thunk": "^2.3.0",
     "sequelize": ">=5.15.1",
     "sinon": "^7.5.0",
-    "socket.io": "^2.2.0",
+    "socket.io": "^2.5.0",
     "tls": "0.0.1"
   },
   "devDependencies": {
